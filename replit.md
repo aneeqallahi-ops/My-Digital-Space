@@ -21,7 +21,8 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 ```text
 artifacts-monorepo/
 ├── artifacts/              # Deployable applications
-│   └── api-server/         # Express API server
+│   ├── api-server/         # Express API server
+│   └── portfolio/          # Personal portfolio website (Aneeq Allahi)
 ├── lib/                    # Shared libraries
 │   ├── api-spec/           # OpenAPI spec + Orval codegen config
 │   ├── api-client-react/   # Generated React Query hooks
@@ -49,6 +50,19 @@ Every package extends `tsconfig.base.json` which sets `composite: true`. The roo
 - `pnpm run typecheck` — runs `tsc --build --emitDeclarationOnly` using project references
 
 ## Packages
+
+### `artifacts/portfolio` (`@workspace/portfolio`)
+
+Personal portfolio website for Aneeq Allahi. React + Vite SPA, frontend-only (no backend). Served at `/`.
+
+- **Entry**: `src/main.tsx`
+- **App router**: `src/App.tsx` — single "/" route rendering the Home page
+- **Home page**: `src/pages/home.tsx` — full single-page layout with all sections
+- **Styling**: `src/index.css` — dark editorial theme, Playfair Display headings, Inter body
+- **Photo**: `public/aneeq-headshot.png` — referenced as `/aneeq-headshot.png` URL
+- **Sections**: Hero, About, Consulting Work, Passion Projects, AI & Automation, Academic Projects, Experience, Certifications
+- **Animations**: Framer Motion for scroll-triggered entrance animations
+- All content uses placeholder text — user fills in real content incrementally
 
 ### `artifacts/api-server` (`@workspace/api-server`)
 
