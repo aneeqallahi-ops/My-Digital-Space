@@ -57,7 +57,7 @@ function Hero() {
               <div className="flex items-center gap-3">
                 <span className="text-primary font-medium tracking-widest uppercase text-sm" data-testid="text-hero-subtitle">Senior Analyst</span>
                 <span className="text-muted-foreground/40 text-sm">@</span>
-                <img src="/intellia-logo.png" alt="Intellia" className="h-5 w-auto opacity-80" data-testid="img-intellia-logo-hero" />
+                <img src="/intellia-logo.png" alt="Intellia" className="h-8 w-auto opacity-100" data-testid="img-intellia-logo-hero" />
               </div>
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-semibold leading-[1.1]" data-testid="text-hero-title">
                 Aneeq Allahi
@@ -73,18 +73,21 @@ function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.4 }}
           >
-            <div className="relative w-80 md:w-[420px] lg:w-full">
+            <div className="relative w-80 md:w-[420px] lg:w-full" style={{ isolation: "isolate" }}>
               <img 
                 src="/aneeq-headshot.png" 
                 alt="Aneeq Allahi" 
-                className="w-full h-auto object-contain drop-shadow-2xl"
-                style={{ filter: "drop-shadow(0 0 60px rgba(0,0,0,0.8)) brightness(0.95) contrast(1.05)" }}
+                className="w-full h-auto object-contain"
+                style={{
+                  mixBlendMode: "screen",
+                  filter: "brightness(1.25) contrast(1.8) saturate(0.85)",
+                  maskImage: "radial-gradient(ellipse 65% 82% at 58% 36%, black 40%, rgba(0,0,0,0.6) 62%, transparent 82%)",
+                  WebkitMaskImage: "radial-gradient(ellipse 65% 82% at 58% 36%, black 40%, rgba(0,0,0,0.6) 62%, transparent 82%)",
+                }}
                 data-testid="img-hero-headshot"
               />
               {/* Fade into background at the bottom */}
-              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
-              {/* Subtle side fade */}
-              <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background/60 to-transparent pointer-events-none" />
+              <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent pointer-events-none" />
             </div>
           </motion.div>
         </div>
@@ -178,7 +181,7 @@ function ConsultingWork() {
         <div className="space-y-3 mb-16">
           <div className="flex items-center gap-3">
             <span className="text-primary tracking-widest uppercase text-xs font-semibold">Intellia Work</span>
-            <img src="/intellia-logo.png" alt="Intellia" className="h-4 w-auto opacity-60" data-testid="img-intellia-logo-consulting" />
+            <img src="/intellia-logo.png" alt="Intellia" className="h-6 w-auto opacity-80" data-testid="img-intellia-logo-consulting" />
           </div>
           <h2 className="text-3xl md:text-5xl font-serif font-semibold">Consulting Engagements</h2>
         </div>
@@ -297,7 +300,7 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
           <h3 className="text-xl font-serif font-medium text-foreground">{role}</h3>
           {logoSrc ? (
             <div className="flex items-center gap-2 md:justify-end mt-1">
-              <img src={logoSrc} alt={company} className="h-4 w-auto opacity-70" data-testid="img-intellia-logo-experience" />
+              <img src={logoSrc} alt={company} className="h-6 w-auto opacity-80" data-testid="img-intellia-logo-experience" />
             </div>
           ) : (
             <p className="text-muted-foreground font-medium">{company}</p>
