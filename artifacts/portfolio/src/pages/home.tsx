@@ -54,7 +54,11 @@ function Hero() {
             style={{ y, opacity }}
           >
             <div className="space-y-4">
-              <h2 className="text-primary font-medium tracking-widest uppercase text-sm" data-testid="text-hero-subtitle">Senior Analyst @ Intellia</h2>
+              <div className="flex items-center gap-3">
+                <span className="text-primary font-medium tracking-widest uppercase text-sm" data-testid="text-hero-subtitle">Senior Analyst</span>
+                <span className="text-muted-foreground/40 text-sm">@</span>
+                <img src="/intellia-logo.png" alt="Intellia" className="h-5 w-auto opacity-80" data-testid="img-intellia-logo-hero" />
+              </div>
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-semibold leading-[1.1]" data-testid="text-hero-title">
                 Aneeq Allahi
               </h1>
@@ -64,20 +68,23 @@ function Hero() {
             </p>
           </motion.div>
           <motion.div 
-            className="lg:col-span-5 flex justify-end"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+            className="lg:col-span-5 flex justify-end items-end"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.4 }}
           >
-            <div className="relative w-72 h-80 md:w-96 md:h-[28rem] group">
-              <div className="absolute inset-0 border border-primary/30 translate-x-4 translate-y-4 transition-transform group-hover:translate-x-2 group-hover:translate-y-2" />
+            <div className="relative w-80 md:w-[420px] lg:w-full">
               <img 
                 src="/aneeq-headshot.png" 
                 alt="Aneeq Allahi" 
-                className="w-full h-full object-cover filter grayscale-[20%] contrast-125 brightness-90 relative z-10"
+                className="w-full h-auto object-contain drop-shadow-2xl"
+                style={{ filter: "drop-shadow(0 0 60px rgba(0,0,0,0.8)) brightness(0.95) contrast(1.05)" }}
                 data-testid="img-hero-headshot"
               />
-              <div className="absolute inset-0 bg-primary/10 mix-blend-overlay z-20 pointer-events-none" />
+              {/* Fade into background at the bottom */}
+              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+              {/* Subtle side fade */}
+              <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background/60 to-transparent pointer-events-none" />
             </div>
           </motion.div>
         </div>
@@ -168,7 +175,13 @@ function ConsultingWork() {
   return (
     <section id="consulting" className="py-32" data-testid="section-consulting">
       <div className="max-w-6xl mx-auto px-6">
-        <SectionHeading title="Consulting Engagements" subtitle="Intellia Work" />
+        <div className="space-y-3 mb-16">
+          <div className="flex items-center gap-3">
+            <span className="text-primary tracking-widest uppercase text-xs font-semibold">Intellia Work</span>
+            <img src="/intellia-logo.png" alt="Intellia" className="h-4 w-auto opacity-60" data-testid="img-intellia-logo-consulting" />
+          </div>
+          <h2 className="text-3xl md:text-5xl font-serif font-semibold">Consulting Engagements</h2>
+        </div>
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
           initial="hidden"
@@ -273,7 +286,7 @@ function OtherProjects() {
   );
 }
 
-function TimelineItem({ role, company, dates, description, isCurrent = false }: { role: string, company: string, dates: string, description: string, isCurrent?: boolean }) {
+function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = false }: { role: string, company: string, dates: string, description: string, logoSrc?: string, isCurrent?: boolean }) {
   return (
     <div className="relative pl-8 md:pl-0">
       <div className="md:hidden absolute left-0 top-2 w-2 h-2 rounded-full bg-primary" />
@@ -282,7 +295,13 @@ function TimelineItem({ role, company, dates, description, isCurrent = false }: 
       <div className="grid md:grid-cols-2 gap-8 items-start">
         <div className="md:text-right md:pr-12">
           <h3 className="text-xl font-serif font-medium text-foreground">{role}</h3>
-          <p className="text-muted-foreground font-medium">{company}</p>
+          {logoSrc ? (
+            <div className="flex items-center gap-2 md:justify-end mt-1">
+              <img src={logoSrc} alt={company} className="h-4 w-auto opacity-70" data-testid="img-intellia-logo-experience" />
+            </div>
+          ) : (
+            <p className="text-muted-foreground font-medium">{company}</p>
+          )}
           <span className="text-sm text-primary font-semibold mt-1 inline-block">{dates}</span>
         </div>
         <div className="md:pl-12">
@@ -304,6 +323,7 @@ function Experience() {
           <TimelineItem 
             role="Senior Analyst"
             company="Intellia"
+            logoSrc="/intellia-logo.png"
             dates="[Start Year] — Present"
             description="[Placeholder: Description of core responsibilities, strategic engagements led, and overarching impact at Intellia.]"
             isCurrent={true}
