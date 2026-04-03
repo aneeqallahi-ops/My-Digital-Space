@@ -166,14 +166,12 @@ function About() {
 
 function ProjectCard({ title, category, description, id, onClick }: { title: string, category: string, description: string, id: string, onClick: () => void }) {
   return (
-    <motion.div 
+    <motion.button 
       variants={fadeUpVariant}
-      className="group border border-border/50 bg-card/20 p-8 hover:bg-card/60 transition-colors duration-500 flex flex-col h-full cursor-pointer"
+      className="group border border-border/50 bg-card/20 p-8 hover:bg-card/60 transition-colors duration-500 flex flex-col h-full text-left w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       data-testid={`card-${id}`}
       onClick={onClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onClick(); }}
+      onKeyDown={(e) => { if (e.key === " ") { e.preventDefault(); onClick(); } }}
     >
       <span className="text-primary text-xs uppercase tracking-widest mb-4 block font-semibold">{category}</span>
       <h3 className="text-xl font-serif font-medium mb-4 group-hover:text-primary transition-colors">{title}</h3>
@@ -184,7 +182,7 @@ function ProjectCard({ title, category, description, id, onClick }: { title: str
           <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
         </svg>
       </div>
-    </motion.div>
+    </motion.button>
   );
 }
 
