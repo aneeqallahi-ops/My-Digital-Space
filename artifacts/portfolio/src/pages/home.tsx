@@ -1,6 +1,16 @@
 import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { ProjectModal, CertModal } from "@/components/ProjectModal";
+import {
+  consultingProjects,
+  passionProjects,
+  aiProjects,
+  academicProjects,
+  certifications,
+  type ProjectItem,
+  type CertificationItem,
+} from "@/data/projects";
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -154,12 +164,16 @@ function About() {
   );
 }
 
-function ProjectCard({ title, category, description, id }: { title: string, category: string, description: string, id: string }) {
+function ProjectCard({ title, category, description, id, onClick }: { title: string, category: string, description: string, id: string, onClick: () => void }) {
   return (
     <motion.div 
       variants={fadeUpVariant}
-      className="group border border-border/50 bg-card/20 p-8 hover:bg-card/60 transition-colors duration-500 flex flex-col h-full"
+      className="group border border-border/50 bg-card/20 p-8 hover:bg-card/60 transition-colors duration-500 flex flex-col h-full cursor-pointer"
       data-testid={`card-${id}`}
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onClick(); }}
     >
       <span className="text-primary text-xs uppercase tracking-widest mb-4 block font-semibold">{category}</span>
       <h3 className="text-xl font-serif font-medium mb-4 group-hover:text-primary transition-colors">{title}</h3>
@@ -174,7 +188,7 @@ function ProjectCard({ title, category, description, id }: { title: string, cate
   );
 }
 
-function ConsultingWork() {
+function ConsultingWork({ onOpen }: { onOpen: (p: ProjectItem) => void }) {
   return (
     <section id="consulting" className="py-32" data-testid="section-consulting">
       <div className="max-w-6xl mx-auto px-6">
@@ -192,31 +206,16 @@ function ConsultingWork() {
           viewport={{ once: true, margin: "-50px" }}
           variants={staggerContainer}
         >
-          <ProjectCard 
-            id="consulting-1"
-            category="Strategy" 
-            title="[Strategy Engagement Client A]" 
-            description="[Placeholder: Description of the strategic initiative, the core problem solved, and the measurable impact delivered for the client.]" 
-          />
-          <ProjectCard 
-            id="consulting-2"
-            category="Operations" 
-            title="[Operational Transformation]" 
-            description="[Placeholder: Details on an operational overhaul, focusing on efficiency gains and process optimization.]" 
-          />
-          <ProjectCard 
-            id="consulting-3"
-            category="Growth" 
-            title="[Market Entry Strategy]" 
-            description="[Placeholder: Overview of a market entry analysis, competitive landscaping, and the resulting roadmap.]" 
-          />
+          {consultingProjects.map((p) => (
+            <ProjectCard key={p.id} id={p.id} category={p.category} title={p.title} description={p.description} onClick={() => onOpen(p)} />
+          ))}
         </motion.div>
       </div>
     </section>
   );
 }
 
-function OtherProjects() {
+function OtherProjects({ onOpen }: { onOpen: (p: ProjectItem) => void }) {
   return (
     <section id="projects" className="py-32 bg-card/30" data-testid="section-other-projects">
       <div className="max-w-6xl mx-auto px-6 space-y-32">
@@ -225,18 +224,9 @@ function OtherProjects() {
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
           <SectionHeading title="Passion Projects" subtitle="Explorations" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ProjectCard 
-              id="passion-1"
-              category="Venture" 
-              title="[Entrepreneurial Pursuit]" 
-              description="[Placeholder: A side project or venture being explored outside of core consulting hours.]" 
-            />
-            <ProjectCard 
-              id="passion-2"
-              category="Research" 
-              title="[Industry Deep Dive]" 
-              description="[Placeholder: A published essay or deep research piece into a specific market vertical.]" 
-            />
+            {passionProjects.map((p) => (
+              <ProjectCard key={p.id} id={p.id} category={p.category} title={p.title} description={p.description} onClick={() => onOpen(p)} />
+            ))}
           </div>
         </motion.div>
 
@@ -244,18 +234,9 @@ function OtherProjects() {
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
           <SectionHeading title="AI & Automation" subtitle="Applied Tech" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ProjectCard 
-              id="ai-1"
-              category="LLM Application" 
-              title="[Internal Knowledge Tool]" 
-              description="[Placeholder: Development of an LLM-based tool to parse proprietary datasets and accelerate research.]" 
-            />
-            <ProjectCard 
-              id="ai-2"
-              category="Workflow" 
-              title="[Process Automation Pipeline]" 
-              description="[Placeholder: Architecture of an automated pipeline to handle repetitive analytical tasks.]" 
-            />
+            {aiProjects.map((p) => (
+              <ProjectCard key={p.id} id={p.id} category={p.category} title={p.title} description={p.description} onClick={() => onOpen(p)} />
+            ))}
           </div>
         </motion.div>
 
@@ -263,24 +244,9 @@ function OtherProjects() {
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
           <SectionHeading title="Academic Research" subtitle="Foundation" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <ProjectCard 
-              id="academic-1"
-              category="Thesis" 
-              title="[Undergraduate Thesis]" 
-              description="[Placeholder: Summary of primary academic research focus and methodologies.]" 
-            />
-            <ProjectCard 
-              id="academic-2"
-              category="Publication" 
-              title="[Academic Paper]" 
-              description="[Placeholder: Details of a co-authored paper or significant university project.]" 
-            />
-            <ProjectCard 
-              id="academic-3"
-              category="Case Study" 
-              title="[Business Case Analysis]" 
-              description="[Placeholder: A comprehensive case study from business education.]" 
-            />
+            {academicProjects.map((p) => (
+              <ProjectCard key={p.id} id={p.id} category={p.category} title={p.title} description={p.description} onClick={() => onOpen(p)} />
+            ))}
           </div>
         </motion.div>
 
@@ -350,22 +316,27 @@ function Experience() {
   );
 }
 
-function Certifications() {
+function Certifications({ onOpen }: { onOpen: (c: CertificationItem) => void }) {
   return (
     <section id="certifications" className="py-32 bg-card/30" data-testid="section-certifications">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeading title="Credentials" subtitle="Certifications" />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="p-6 border border-border/50 bg-background flex flex-col items-center text-center group hover:border-primary/50 transition-colors" data-testid={`card-certification-${i}`}>
+          {certifications.map((cert, i) => (
+            <button
+              key={cert.id}
+              onClick={() => onOpen(cert)}
+              className="p-6 border border-border/50 bg-background flex flex-col items-center text-center group hover:border-primary/50 transition-colors cursor-pointer w-full"
+              data-testid={`card-certification-${i + 1}`}
+            >
               <div className="w-12 h-12 bg-card/50 flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
                 <svg className="w-6 h-6 text-muted-foreground group-hover:text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                 </svg>
               </div>
-              <h4 className="text-sm font-medium text-foreground mb-1">[Certification Title]</h4>
-              <p className="text-xs text-muted-foreground">[Issuer] • [Year]</p>
-            </div>
+              <h4 className="text-sm font-medium text-foreground mb-1">{cert.title}</h4>
+              <p className="text-xs text-muted-foreground">{cert.issuer} · {cert.year}</p>
+            </button>
           ))}
         </div>
       </div>
@@ -384,6 +355,9 @@ function Footer() {
 }
 
 export default function Home() {
+  const [activeProject, setActiveProject] = useState<ProjectItem | null>(null);
+  const [activeCert, setActiveCert] = useState<CertificationItem | null>(null);
+
   useEffect(() => {
     document.documentElement.classList.remove('dark');
   }, []);
@@ -394,12 +368,14 @@ export default function Home() {
       <main>
         <Hero />
         <About />
-        <ConsultingWork />
-        <OtherProjects />
+        <ConsultingWork onOpen={setActiveProject} />
+        <OtherProjects onOpen={setActiveProject} />
         <Experience />
-        <Certifications />
+        <Certifications onOpen={setActiveCert} />
       </main>
       <Footer />
+      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
+      <CertModal cert={activeCert} onClose={() => setActiveCert(null)} />
     </div>
   );
 }
