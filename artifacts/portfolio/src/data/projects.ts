@@ -7,6 +7,7 @@ export type ProjectItem = {
   outcomes: string[];
   tools: string[];
   externalUrl?: string;
+  externalUrlLabel?: string;
 };
 
 export type CertificationItem = {
@@ -136,16 +137,19 @@ export const aiProjects: ProjectItem[] = [
 export const academicProjects: ProjectItem[] = [
   {
     id: "academic-1",
-    category: "Thesis",
-    title: "[Undergraduate Thesis]",
-    description: "[Placeholder: Summary of primary academic research focus and methodologies.]",
-    extendedDescription: "[Placeholder: Full description of the thesis — the research question posed, the theoretical framework applied, the methodology used (qualitative, quantitative, or mixed), the primary data collection process, key findings, and how the conclusions contributed to the field. Mention the supervising faculty and the grade/distinction if received.]",
+    category: "Research Project - Product Development",
+    title: "Aghaaz — Validating a Digital Micro-Investment Platform for Pakistan's Underserved Market",
+    description: "Conceptualised and validated a Shariah-compliant digital micro-investment application targeting Pakistan's sub-0.1% capital market participation rate, deploying conjoint analysis, Kansei engineering, and Van Westendorp PSM to derive evidence-based product architecture and pricing.",
+    extendedDescription: "Aghaaz was conceptualised to address structural gaps in Pakistan's financial ecosystem — a 38% financial literacy rate, a capital market participation rate below 0.1%, and an 81% unbanked adult population — by providing a low-entry, Shariah-compliant digital micro-investment platform. The product validation workstream was structured across three analytical deliverables. In Deliverable 1, a market gap was identified through NLP-driven sentiment analysis of 1,500+ app store reviews across three incumbent platforms (K-Trade, Trikl, Finqalab), surfacing recurring pain points around UX complexity and lack of personalisation. A perceptual map was constructed along user experience and personalised value-addition axes, identifying a clear whitespace for Aghaaz's positioning. In Deliverable 2, a fractional factorial conjoint design was deployed — shortlisting 20 orthogonal bundles from 144 possible attribute combinations (3x4x2x3x2) across five attributes: investment type, support features, payment model, initial investment threshold, and Shariah compliance. Regression analysis on 49 respondents identified Shariah-compliant portfolios (estimate = 0.201, p = 0.021), trustworthiness (estimate = 0.064, p = 0.005), and empowerment (estimate = 0.048, p = 0.04) as statistically significant preference drivers. Hierarchical clustering via Ward's D2 method segmented respondents into two behavioural clusters: cautious low-risk investors and engagement-driven higher-risk users. Kansei analysis across four emotive dimensions confirmed the freemium model eroded trust (estimate = -0.352, p = 0.004), validating the commission-based pricing architecture. Van Westendorp PSM analysis produced an Indifference Price Point of 0.16% commission, within an acceptable range of 0.13% to 0.18%. In Deliverable 3, a TAM-SAM-SOM market sizing model projected a realistic SOM of 26,117 users in Year 1 (Lahore + Islamabad) scaling to 60,250 by Year 3 (Punjab + Karachi), applying a 3.75% customer acquisition rate and 63% industry-standard churn. A phased influencer marketing strategy across awareness, engagement, and conversion stages was validated through TURF analysis across five creative executions, with A/B testing confirming the funky engagement-led creative significantly outperformed feature-led ads (chi-square, p < 0.05).",
     outcomes: [
-      "[Outcome 1: e.g., Thesis awarded [Grade / Distinction] by [University / Department]]",
-      "[Outcome 2: e.g., Dataset of X responses / X cases analysed]",
-      "[Outcome 3: e.g., Findings contributed to [specific academic or policy discussion]]",
+      "Identified statistically significant preference drivers via conjoint regression, with Shariah-compliance and trust emerging as primary utility weights across both respondent clusters",
+      "Determined optimal commission rate of 0.16% via Van Westendorp PSM, corroborated against an industry benchmark of 0.15%",
+      "Projected a 3-year geographic SOM rollout from 26,117 to 60,250 users using a TAM-SAM-SOM framework with scenario-based customer acquisition modelling",
+      "Validated creative strategy through TURF and chi-square A/B testing, confirming statistically significant differences in ad conversion likelihood at the 5% significance level",
     ],
-    tools: ["[Research Software]", "[Statistical Method]", "[Survey Tool]", "[Citation Manager]"],
+    tools: ["Conjoint Analysis", "Kansei Engineering", "Van Westendorp PSM", "TURF Analysis", "A/B Testing", "Hierarchical Clustering", "TAM-SAM-SOM Modelling", "Fractional Factorial Design", "Sentiment Analysis", "Influencer Marketing Strategy", "Market Sizing"],
+    externalUrl: "https://drive.google.com/drive/folders/1kt18vamyRCZsJxVp-lSSbO5JrqYa0stz?usp=drive_link",
+    externalUrlLabel: "View Full Project",
   },
   {
     id: "academic-2",
@@ -173,6 +177,7 @@ export const academicProjects: ProjectItem[] = [
     ],
     tools: ["RStudio", "Regression Modeling", "K-Means Clustering", "Ollama (LLM)", "ggplot2", "Data Cleaning", "Feature Engineering", "Business Analytics"],
     externalUrl: "https://drive.google.com/drive/folders/1Re5i-Tsp4oEn2F0tRBaGyly7c_iyGNWJ?usp=sharing",
+    externalUrlLabel: "Click here to access the report",
   },
 ];
 

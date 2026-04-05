@@ -135,7 +135,7 @@ export function ProjectModal({ project, onClose }: { project: ProjectItem | null
                       className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:opacity-70 transition-opacity"
                       data-testid={`modal-external-link-${project.id}`}
                     >
-                      Click here to access the report
+                      {project.externalUrlLabel ?? "View Project"}
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                         <path strokeLinecap="square" strokeLinejoin="miter" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
