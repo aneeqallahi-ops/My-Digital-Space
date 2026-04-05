@@ -79,10 +79,10 @@ export function ProjectModal({ project, onClose }: { project: ProjectItem | null
             onClick={onClose}
           />
 
-          {/* Scroll container — top-aligned so close button stays reachable on tall content */}
-          <div className="relative z-10 flex justify-center w-full h-full py-8 px-4 md:px-8 overflow-y-auto pointer-events-none">
+          {/* Scroll container — centers the panel */}
+          <div className="relative z-10 flex items-center justify-center w-full h-full p-4 md:p-8 overflow-y-auto pointer-events-none">
             <motion.div
-              className="w-full max-w-2xl bg-background border border-border/60 shadow-2xl pointer-events-auto self-start"
+              className="w-full max-w-2xl bg-background border border-border/60 shadow-2xl pointer-events-auto"
               variants={panelVariants}
               initial="hidden"
               animate="visible"
