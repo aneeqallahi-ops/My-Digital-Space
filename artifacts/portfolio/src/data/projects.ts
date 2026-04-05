@@ -57,6 +57,22 @@ export const consultingProjects: ProjectItem[] = [
     ],
     tools: ["[Market Research Tool]", "[Financial Modelling]", "[Survey Platform]", "[Framework]"],
   },
+  {
+    id: "consulting-4",
+    category: "Research",
+    title: "Consumer Sentiment Analysis — Frozen Food Sector",
+    description: "Deployed a mixed-methods primary research framework across the KLI region to deconstruct consumer purchasing behaviour, psychographic drivers, and trust barriers within Pakistan's frozen food category — surfacing actionable intelligence across the 4P marketing matrix for a leading national FMCG player.",
+    extendedDescription: "Engaged as part of a student consultancy team retained by a leading frozen food manufacturer in Pakistan under a confidentiality agreement. The engagement addressed a core market tension: high brand awareness coexisting with a persistent consumer trust deficit. The workstream ran across three sequential phases — quantitative survey distribution, semi-structured qualitative interviews, and data interpretation — to triangulate attitudinal and behavioural signals at scale across Karachi, Lahore, and Islamabad, yielding 260+ survey responses and 37 in-depth interviews.",
+    outcomes: [
+      "Quantified a category-wide trust crisis: 63% of respondents perceived frozen food as nutritionally deficient, exposing the strategic gap the client needed to close",
+      "Mapped substitution behaviour to root causes — freshness, hygiene, and price sensitivity — with over half of consumers actively defecting to street vendors",
+      "Diagnosed a pricing perception problem: 75% viewed frozen food as a premium product, yet only 22% felt that premium was justified",
+      "Identified high-value distribution blindspots in key urban zones where availability gaps were directly driving customer loss",
+      "Reframed the marketing spend debate: hygiene and taste drove purchase decisions while social media and promotions had near-zero influence",
+      "Delivered a four-vector strategic framework spanning transparency, packaging, logistics, and loyalty — directly tied to each identified consumer pain point",
+    ],
+    tools: ["Mixed-Methods Research Design", "Quantitative Survey Instrumentation", "Semi-Structured Interview Protocol", "Consumer Sentiment Analysis", "4P Marketing Framework", "Psychographic Segmentation", "Thematic Coding"],
+  },
 ];
 
 export const passionProjects: ProjectItem[] = [
