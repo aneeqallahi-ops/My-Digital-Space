@@ -1,0 +1,22 @@
+Add a new consulting engagement card to the Consulting Engagements section. It should follow the exact same structure and styling as the existing cards.
+Card details (short view):
+
+Category tag: STRATEGY
+Title: Affiliate Sales Model Architecture for a Leading Omni-Channel Electronics Retailer
+Short description: Executed a three-phase diagnostic engagement to design a best-fit corporate affiliate sales model — spanning competitive due diligence, primary qualitative research, and a full go-to-market strategy with affiliate lifecycle mapping — for Pakistan's largest omni-channel electronics retailer operating across 24 phygital stores in 18 cities.
+
+When the card is clicked, it should open a modal following the exact same structure and styling as the existing modals.
+Modal details (expanded view):
+Category tag: STRATEGY
+Title: Affiliate Sales Model Architecture for a Leading Omni-Channel Electronics Retailer
+Full narrative (use this as the body paragraph):
+Pakistan's pioneering omni-channel electronics retailer — operating a high-traffic e-commerce platform alongside a network of 24 phygital stores across 18 cities — sought to institutionalise a structured corporate affiliate sales program anchored in university ecosystems across Karachi, Lahore, and Islamabad (KLI). The client lacked a defined affiliate acquisition funnel, an onboarding and training protocol, and a retention architecture beyond baseline monetary incentives. Our engagement was scoped across three sequential phases: Phase 1A/1B (Due Diligence), Phase 2 (Student Sentiment Analysis), and Phase 3 (Marketing Strategy & Affiliate Journey Mapping). Phase 1 involved a granular company snapshot — deconstructing the client's unique value proposition, key partner ecosystem (fintech integrations including Buy-Now-Pay-Later rails and insurance overlays), 3PL-dependent fulfillment model, and omni-channel marketing architecture. Concurrently, Phase 1B benchmarked top-performing e-commerce players with active affiliate programs in India and Bangladesh — including Flipkart (~40% Indian e-commerce market share), Amazon India, and Snapdeal — extracting commission-per-sale structures, average revenue-per-affiliate metrics, affiliate tenure distributions, and loyalty/non-monetary incentive frameworks. Phase 2 deployed a primary research methodology across a random, representative sample from KLI universities to quantify student sentiment across key dimensions: incentive expectation curves (monetised vs. non-monetised), time-commitment elasticity, brand affinity scores with conversion potential, preferred training modalities, and structural participation drivers. Phase 3 synthesised these inputs into a full marketing strategy roadmap and an end-to-end affiliate lifecycle map covering onboarding communication protocols, post-onboarding lead generation and corporate client outreach workflows, and a multi-tiered retention and re-engagement funnel.
+Key Outcomes section (use the same bullet format as existing modals):
+
+Benchmarked 3+ South Asian e-commerce affiliate models across commission architecture, affiliate retention mechanics, and revenue-per-affiliate KPIs to establish a replicable baseline for the client
+Designed a primary research framework targeting KLI university cohorts to surface incentive preference distributions and structural participation drivers
+Architected a full affiliate lifecycle playbook spanning onboarding protocols, post-onboarding B2B outreach workflows, and a non-monetary incentive retention funnel
+
+Tools & Skills section (use the same tag/badge format as existing modals):
+Competitive Benchmarking Primary Research Design Affiliate Model Architecture Omni-Channel Strategy Student Sentiment Mapping Market Segmentation Go-to-Market Strategy Stakeholder Journey Mapping
+Do not change any existing styling, layout, or functionality. 
