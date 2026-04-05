@@ -79,10 +79,10 @@ export function ProjectModal({ project, onClose }: { project: ProjectItem | null
             onClick={onClose}
           />
 
-          {/* Scroll container — centers the panel */}
-          <div className="relative z-10 flex items-center justify-center w-full h-full p-4 md:p-8 overflow-y-auto pointer-events-none">
+          {/* Scroll container — top-aligned so header is always reachable */}
+          <div className="relative z-10 flex justify-center w-full h-full py-8 px-4 md:px-8 overflow-y-auto pointer-events-none">
             <motion.div
-              className="w-full max-w-2xl bg-background border border-border/60 shadow-2xl pointer-events-auto"
+              className="w-full max-w-2xl bg-background border border-border/60 shadow-2xl pointer-events-auto self-start"
               variants={panelVariants}
               initial="hidden"
               animate="visible"
@@ -172,10 +172,10 @@ export function CertModal({ cert, onClose }: { cert: CertificationItem | null; o
             onClick={onClose}
           />
 
-          {/* Scroll container — centers the panel */}
-          <div className="relative z-10 flex items-center justify-center w-full h-full p-4 md:p-8 overflow-y-auto pointer-events-none">
+          {/* Scroll container — top-aligned so header is always reachable */}
+          <div className="relative z-10 flex justify-center w-full h-full py-8 px-4 md:px-8 overflow-y-auto pointer-events-none">
             <motion.div
-              className="w-full max-w-lg bg-background border border-border/60 shadow-2xl pointer-events-auto"
+              className="w-full max-w-lg bg-background border border-border/60 shadow-2xl pointer-events-auto self-start"
               variants={panelVariants}
               initial="hidden"
               animate="visible"
