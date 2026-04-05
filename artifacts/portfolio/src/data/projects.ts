@@ -21,15 +21,15 @@ export const consultingProjects: ProjectItem[] = [
   {
     id: "consulting-1",
     category: "Strategy",
-    title: "[Strategy Engagement Client A]",
-    description: "[Placeholder: Description of the strategic initiative, the core problem solved, and the measurable impact delivered for the client.]",
-    extendedDescription: "[Placeholder: Full narrative of the engagement — the client context, the challenge at hand, Aneeq's role in the project team, the analytical approach taken, the key findings surfaced, and the recommendations presented to leadership. Include any notable moments or pivots during the engagement.]",
+    title: "Affiliate Sales Model Architecture for a Leading Omni-Channel Electronics Retailer",
+    description: "Executed a three-phase diagnostic engagement to design a best-fit corporate affiliate sales model — spanning competitive due diligence, primary qualitative research, and a full go-to-market strategy with affiliate lifecycle mapping — for Pakistan's largest omni-channel electronics retailer operating across 24 phygital stores in 18 cities.",
+    extendedDescription: "Pakistan's pioneering omni-channel electronics retailer — operating a high-traffic e-commerce platform alongside a network of 24 phygital stores across 18 cities — sought to institutionalise a structured corporate affiliate sales program anchored in university ecosystems across Karachi, Lahore, and Islamabad (KLI). The client lacked a defined affiliate acquisition funnel, an onboarding and training protocol, and a retention architecture beyond baseline monetary incentives. Our engagement was scoped across three sequential phases: Phase 1A/1B (Due Diligence), Phase 2 (Student Sentiment Analysis), and Phase 3 (Marketing Strategy & Affiliate Journey Mapping). Phase 1 involved a granular company snapshot — deconstructing the client's unique value proposition, key partner ecosystem including fintech integrations with Buy-Now-Pay-Later rails and insurance overlays, 3PL-dependent fulfillment model, and omni-channel marketing architecture. Phase 1B benchmarked top-performing e-commerce players with active affiliate programs in India and Bangladesh — including Flipkart (~40% Indian e-commerce market share), Amazon India, and Snapdeal — extracting commission-per-sale structures, average revenue-per-affiliate metrics, affiliate tenure distributions, and loyalty and non-monetary incentive frameworks.",
     outcomes: [
-      "[Outcome 1: e.g., Delivered a market sizing model covering X segments across Y geographies]",
-      "[Outcome 2: e.g., Identified $Xm in addressable cost savings through process benchmarking]",
-      "[Outcome 3: e.g., Final strategy deck presented to C-suite; adopted as FY roadmap]",
+      "Benchmarked 3+ South Asian e-commerce affiliate models across commission architecture, affiliate retention mechanics, and revenue-per-affiliate KPIs to establish a replicable baseline for the client",
+      "Designed a primary research framework targeting KLI university cohorts to surface incentive preference distributions and structural participation drivers",
+      "Architected a full affiliate lifecycle playbook spanning onboarding protocols, post-onboarding B2B outreach workflows, and a non-monetary incentive retention funnel",
     ],
-    tools: ["[Framework A]", "[Tool B]", "[Methodology C]", "[Software D]"],
+    tools: ["Competitive Benchmarking", "Primary Research Design", "Affiliate Model Architecture", "Omni-Channel Strategy", "Student Sentiment Mapping", "Market Segmentation", "Go-to-Market Strategy", "Stakeholder Journey Mapping"],
   },
   {
     id: "consulting-2",
