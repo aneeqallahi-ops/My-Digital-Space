@@ -79,10 +79,10 @@ export function ProjectModal({ project, onClose }: { project: ProjectItem | null
             onClick={onClose}
           />
 
-          {/* Scroll container — centers the panel */}
-          <div className="relative z-10 flex items-center justify-center w-full h-full p-4 md:p-8 overflow-y-auto pointer-events-none">
+          {/* Scroll container — top-aligned so close button stays reachable on tall content */}
+          <div className="relative z-10 flex justify-center w-full h-full py-8 px-4 md:px-8 overflow-y-auto pointer-events-none">
             <motion.div
-              className="w-full max-w-2xl bg-background border border-border/60 shadow-2xl pointer-events-auto"
+              className="w-full max-w-2xl bg-background border border-border/60 shadow-2xl pointer-events-auto self-start"
               variants={panelVariants}
               initial="hidden"
               animate="visible"
@@ -135,7 +135,7 @@ export function ProjectModal({ project, onClose }: { project: ProjectItem | null
                       className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:opacity-70 transition-opacity"
                       data-testid={`modal-external-link-${project.id}`}
                     >
-                      View Project
+                      Click here to access the report
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                         <path strokeLinecap="square" strokeLinejoin="miter" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>

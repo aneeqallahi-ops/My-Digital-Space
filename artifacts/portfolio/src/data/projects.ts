@@ -147,15 +147,16 @@ export const academicProjects: ProjectItem[] = [
   {
     id: "academic-3",
     category: "Case Study",
-    title: "[Business Case Analysis]",
-    description: "[Placeholder: A comprehensive case study from business education.]",
-    extendedDescription: "[Placeholder: The case study context — the company or situation analysed, the course or programme it was produced for, the frameworks applied (e.g., Porter's Five Forces, BCG Matrix), the key recommendation put forward, and any recognition received (top submission, faculty commendation, etc.)]",
+    title: "Gendered Wages in Focus: A Business Analytics Approach to Gender-Based Wage Disparities",
+    description: "A data-driven investigation into the UK gender pay gap, analyzing 48,000+ employer records across industries, regions, and company sizes using regression modeling, K-means clustering, and LLM-assisted feature engineering in RStudio — revealing that Banking & Financial Services leads with a 23% pay disparity.",
+    extendedDescription: "This project applies a full business analytics pipeline to UK government-mandated gender pay gap data spanning 2017–2022, covering 48,721 employer records across England, Scotland, Wales, and Northern Ireland. The workflow began with multi-stage data cleaning in RStudio, followed by feature engineering — including sector classification, industry category, and geolocation — extracted from company names, SIC codes, and postcodes using Ollama, a locally hosted LLM. A multiple linear regression model identified Banking & Financial Services, Tech & IT, and Consultancy as the strongest predictors of male-favoring pay gaps, while K-means clustering (k=2, selected via elbow method) revealed that even female-majority workplaces still pay men more — though by 1.6% less than male-dominated firms. Findings support targeted policy recommendations around high-gap industries, regional incentive structures, and bonus equity reform.",
     outcomes: [
-      "[Outcome 1: e.g., Produced as part of [Course] at [Institution]]",
-      "[Outcome 2: e.g., Received [Grade / Commendation] from faculty]",
-      "[Outcome 3: e.g., Case analysis shared / used as an example in subsequent cohort]",
+      "Analyzed 48,721 employer records across 5 years and all 4 UK nations using R",
+      "Banking & Financial Services identified as the worst offender at 23% mean hourly pay gap favoring men",
+      "Public sector consistently outperformed private sector in closing the gender pay gap year-on-year",
     ],
-    tools: ["[Framework A]", "[Framework B]", "[Analysis Tool]", "[Presentation Tool]"],
+    tools: ["RStudio", "Regression Modeling", "K-Means Clustering", "Ollama (LLM)", "ggplot2", "Data Cleaning", "Feature Engineering", "Business Analytics"],
+    externalUrl: "https://drive.google.com/drive/folders/1Re5i-Tsp4oEn2F0tRBaGyly7c_iyGNWJ?usp=sharing",
   },
 ];
 
