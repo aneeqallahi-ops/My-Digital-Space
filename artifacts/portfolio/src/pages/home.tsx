@@ -67,7 +67,7 @@ function Hero() {
               <div className="flex items-center gap-3">
                 <span className="text-primary font-medium tracking-widest uppercase text-sm" data-testid="text-hero-subtitle">Senior Analyst</span>
                 <span className="text-muted-foreground/40 text-sm">@</span>
-                <img src="/intellia-logo.png" alt="Intellia" className="h-24 w-auto" style={{ filter: "brightness(0) saturate(100%)" }} data-testid="img-intellia-logo-hero" />
+                <img src="/intellia-logo.png" alt="Intellia" className="h-24 w-auto" data-testid="img-intellia-logo-hero" />
               </div>
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-semibold leading-[1.1]" data-testid="text-hero-title">
                 Aneeq Allahi
@@ -193,7 +193,7 @@ function ConsultingWork({ onOpen }: { onOpen: (p: ProjectItem) => void }) {
         <div className="space-y-3 mb-16">
           <div className="flex items-center gap-3">
             <span className="text-primary tracking-widest uppercase text-xs font-semibold">Intellia Work</span>
-            <img src="/intellia-logo.png" alt="Intellia" className="h-20 w-auto" style={{ filter: "brightness(0) saturate(100%)" }} data-testid="img-intellia-logo-consulting" />
+            <img src="/intellia-logo.png" alt="Intellia" className="h-20 w-auto" data-testid="img-intellia-logo-consulting" />
           </div>
           <h2 className="text-3xl md:text-5xl font-serif font-semibold">Consulting Engagements</h2>
         </div>
@@ -264,7 +264,7 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
           <h3 className="text-xl font-serif font-medium text-foreground">{role}</h3>
           {logoSrc ? (
             <div className="flex items-center gap-2 md:justify-end mt-1">
-              <img src={logoSrc} alt={company} className="h-20 w-auto" style={{ filter: "brightness(0) saturate(100%)" }} data-testid="img-intellia-logo-experience" />
+              <img src={logoSrc} alt={company} className="h-20 w-auto" data-testid="img-intellia-logo-experience" />
             </div>
           ) : (
             <p className="text-muted-foreground font-medium">{company}</p>
