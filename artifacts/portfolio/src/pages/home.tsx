@@ -224,16 +224,14 @@ function OtherProjects({ onOpen }: { onOpen: (p: ProjectItem) => void }) {
         </motion.div>
 
         {/* AI & Automation */}
-        <div id="ai">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
-            <SectionHeading title="AI & Automation" subtitle="Applied Tech" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {aiProjects.map((p) => (
-                <ProjectCard key={p.id} id={p.id} category={p.category} title={p.title} description={p.description} onClick={() => onOpen(p)} />
-              ))}
-            </div>
-          </motion.div>
-        </div>
+        <motion.div id="ai" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
+          <SectionHeading title="AI & Automation" subtitle="Applied Tech" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {aiProjects.map((p) => (
+              <ProjectCard key={p.id} id={p.id} category={p.category} title={p.title} description={p.description} onClick={() => onOpen(p)} />
+            ))}
+          </div>
+        </motion.div>
 
         {/* Academic */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
