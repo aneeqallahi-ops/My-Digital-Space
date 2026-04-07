@@ -141,9 +141,7 @@ function About() {
             <p data-testid="text-about-bio">
               I'm a LUMS Management Sciences graduate (High Distinction, 2025) working at the intersection of strategy consulting, product management, and AI & automation. I'm drawn to problems that are structurally complex and humanly consequential — whether that's restructuring healthcare delivery, building AI-native products, or designing systems that scale.
             </p>
-            <p data-testid="text-about-role">
-              At Intellia AI, I lead high-stakes consulting engagements spanning market entry strategy, financial modelling, and value creation planning — translating analytical rigour into decisions with measurable, real-world impact.
-            </p>
+            <p data-testid="text-about-role">At Intellia AI, I engage high-stakes consulting projects spanning market entry strategy, financial modelling, and value creation planning — translating analytical rigour into decisions with measurable, real-world impact.</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 not-prose">
               <div className="border-l-2 border-primary/30 pl-6">
                 <h3 className="text-foreground font-medium mb-2">Strategy & Consulting</h3>
@@ -253,7 +251,6 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
     <div className="relative pl-8 md:pl-0">
       <div className="md:hidden absolute left-0 top-2 w-2 h-2 rounded-full bg-primary" />
       <div className="hidden md:block absolute left-[50%] -ml-1 top-2 w-2 h-2 rounded-full bg-primary" />
-      
       <div className="grid md:grid-cols-2 gap-8 items-start">
         <div className="md:text-right md:pr-12">
           <h3 className="text-xl font-serif font-medium text-foreground">{role}</h3>
