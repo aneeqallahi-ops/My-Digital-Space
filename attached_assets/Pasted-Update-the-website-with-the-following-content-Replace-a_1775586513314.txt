@@ -1,0 +1,45 @@
+Update the website with the following content. Replace all placeholders exactly as specified — do not change any styling, layout, or structure.
+ABOUT SECTION:
+Replace the first [Placeholder: Brief professional bio...] paragraph with:
+
+I'm a LUMS Management Sciences graduate (High Distinction, 2025) working at the intersection of strategy consulting, product management, and AI & automation. I'm drawn to problems that are structurally complex and humanly consequential — whether that's restructuring healthcare delivery, building AI-native products, or designing systems that scale.
+
+Replace the second [Placeholder: Details regarding his current role at Intellia...] paragraph with:
+
+At Intellia AI, I lead high-stakes consulting engagements spanning market entry strategy, financial modelling, and value creation planning — translating analytical rigour into decisions with measurable, real-world impact.
+
+Replace the three expertise card placeholders:
+
+Strategy & Consulting: High-level business strategy, market entry analysis, JV structuring, and operational scale for enterprise and public-sector clients.
+Product Management: End-to-end product lifecycle ownership — from user research and roadmapping to technical execution and growth optimisation.
+AI & Automation: Leveraging LLMs, conversational agents, and workflow automations (n8n, web-scraping pipelines) to drive measurable operational value.
+
+
+EXPERIENCE TIMELINE:
+Entry 1:
+
+Role: Senior Analyst
+Company: Intellia AI
+Dates: July 2025 — Present
+Description: Lead multi-sector consulting engagements with measurable outcomes: facilitated a $1B JV negotiation in KSA through a 2,000+ data-point commercial viability analysis; co-developed a 3-year value creation plan for an oncology clinic to offset a $50M net loss; and built a forecasting model that reduced patient acquisition costs by 10%. Fast-tracked from Analyst to Senior Analyst.
+
+Entry 2:
+
+Role: Associate Product Manager
+Company: SnackOut
+Dates: February 2025 — April 2025
+Description: Built a conversational AI customer support agent that reduced operational costs by ~70%; implemented automated SEO blog generation via a locally hosted n8n server; and developed an AI-powered restaurant directory through automated web-scraping and form-filling agents.
+
+Entry 3:
+
+Role: Product Management Intern
+Company: EZOffice
+Dates: June 2024 — August 2024
+Description: Redesigned error messaging and inline guides to reduce helpdesk tickets; updated tutorial video content to align with the latest module functionalities, boosting engagement; and streamlined module workflows to improve operational efficiency and asset management capabilities.
+
+Entry 4:
+
+Role: Creative Lead
+Company: Digital Khokha
+Dates: July 2021 — October 2022
+Description: Owned end-to-end creative content strategy: social media direction, copywriting, article and blog production, pitch deck proposals, marketing plans, website content, and campaign conceptualisation across digital and conventional channels.
