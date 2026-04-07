@@ -39,6 +39,7 @@ function Nav() {
           <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-link-about">About</a>
           <a href="#consulting" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-link-consulting">Consulting</a>
           <a href="#projects" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-link-projects">Projects</a>
+          <a href="#ai" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-link-ai">AI & Automation</a>
           <a href="#experience" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-link-experience">Experience</a>
         </div>
       </div>
@@ -138,23 +139,23 @@ function About() {
           <SectionHeading title="The Intersections" subtitle="About" />
           <div className="prose prose-lg prose-invert text-muted-foreground font-light leading-relaxed">
             <p data-testid="text-about-bio">
-              <em>[Placeholder: Brief professional bio highlighting background, intellectual interests, and the unique perspective Aneeq brings to consulting.]</em>
+              I'm a LUMS Management Sciences graduate (High Distinction, 2025) working at the intersection of strategy consulting, product management, and AI & automation. I'm drawn to problems that are structurally complex and humanly consequential — whether that's restructuring healthcare delivery, building AI-native products, or designing systems that scale.
             </p>
             <p data-testid="text-about-role">
-              <em>[Placeholder: Details regarding his current role at Intellia, focusing on management consulting and the kinds of high-impact problems he tackles day-to-day.]</em>
+              At Intellia AI, I lead high-stakes consulting engagements spanning market entry strategy, financial modelling, and value creation planning — translating analytical rigour into decisions with measurable, real-world impact.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 not-prose">
               <div className="border-l-2 border-primary/30 pl-6">
                 <h3 className="text-foreground font-medium mb-2">Strategy & Consulting</h3>
-                <p className="text-sm text-muted-foreground"><em>[Placeholder: Focus on high-level business strategy, market entry, and operational scale.]</em></p>
+                <p className="text-sm text-muted-foreground">High-level business strategy, market entry analysis, JV structuring, and operational scale for enterprise and public-sector clients.</p>
               </div>
               <div className="border-l-2 border-primary/30 pl-6">
                 <h3 className="text-foreground font-medium mb-2">Product Management</h3>
-                <p className="text-sm text-muted-foreground"><em>[Placeholder: Focus on product lifecycle, user research, and technical execution.]</em></p>
+                <p className="text-sm text-muted-foreground">End-to-end product lifecycle ownership — from user research and roadmapping to technical execution and growth optimisation.</p>
               </div>
               <div className="border-l-2 border-primary/30 pl-6">
                 <h3 className="text-foreground font-medium mb-2">AI & Automation</h3>
-                <p className="text-sm text-muted-foreground"><em>[Placeholder: Focus on leveraging LLMs and workflow automations for enterprise value.]</em></p>
+                <p className="text-sm text-muted-foreground">Leveraging LLMs, conversational agents, and workflow automations (n8n, web-scraping pipelines) to drive measurable operational value.</p>
               </div>
             </div>
           </div>
@@ -190,13 +191,7 @@ function ConsultingWork({ onOpen }: { onOpen: (p: ProjectItem) => void }) {
   return (
     <section id="consulting" className="py-32" data-testid="section-consulting">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="space-y-3 mb-16">
-          <div className="flex items-center gap-3">
-            <span className="text-primary tracking-widest uppercase text-xs font-semibold">Intellia Work</span>
-            <img src="/intellia-logo.png" alt="Intellia" className="h-20 w-auto" data-testid="img-intellia-logo-consulting" />
-          </div>
-          <h2 className="text-3xl md:text-5xl font-serif font-semibold">Consulting Engagements</h2>
-        </div>
+        <SectionHeading subtitle="Consulting" title="Consulting Engagements" />
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
           initial="hidden"
@@ -229,14 +224,16 @@ function OtherProjects({ onOpen }: { onOpen: (p: ProjectItem) => void }) {
         </motion.div>
 
         {/* AI & Automation */}
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
-          <SectionHeading title="AI & Automation" subtitle="Applied Tech" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {aiProjects.map((p) => (
-              <ProjectCard key={p.id} id={p.id} category={p.category} title={p.title} description={p.description} onClick={() => onOpen(p)} />
-            ))}
-          </div>
-        </motion.div>
+        <div id="ai">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
+            <SectionHeading title="AI & Automation" subtitle="Applied Tech" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {aiProjects.map((p) => (
+                <ProjectCard key={p.id} id={p.id} category={p.category} title={p.title} description={p.description} onClick={() => onOpen(p)} />
+              ))}
+            </div>
+          </motion.div>
+        </div>
 
         {/* Academic */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
@@ -264,7 +261,8 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
           <h3 className="text-xl font-serif font-medium text-foreground">{role}</h3>
           {logoSrc ? (
             <div className="flex items-center gap-2 md:justify-end mt-1">
-              <img src={logoSrc} alt={company} className="h-20 w-auto" data-testid="img-intellia-logo-experience" />
+              <img src={logoSrc} alt={company} className="h-8 w-auto" data-testid={`img-logo-${company.toLowerCase().replace(/\s+/g, '-')}`} />
+              <p className="text-muted-foreground font-medium">{company}</p>
             </div>
           ) : (
             <p className="text-muted-foreground font-medium">{company}</p>
@@ -289,23 +287,32 @@ function Experience() {
           
           <TimelineItem 
             role="Senior Analyst"
-            company="Intellia"
+            company="Intellia AI"
             logoSrc="/intellia-logo.png"
-            dates="[Start Year] — Present"
-            description="[Placeholder: Description of core responsibilities, strategic engagements led, and overarching impact at Intellia.]"
+            dates="July 2025 — Present"
+            description="Lead multi-sector consulting engagements with measurable outcomes: facilitated a $1B JV negotiation in KSA through a 2,000+ data-point commercial viability analysis; co-developed a 3-year value creation plan for an oncology clinic to offset a $50M net loss; and built a forecasting model that reduced patient acquisition costs by 10%. Fast-tracked from Analyst to Senior Analyst."
             isCurrent={true}
           />
           <TimelineItem 
-            role="[Previous Role]"
-            company="[Previous Company]"
-            dates="[Start Year] — [End Year]"
-            description="[Placeholder: Details on prior experience, foundational skills built, and significant deliverables.]"
+            role="Associate Product Manager"
+            company="SnackOut"
+            logoSrc="/snackout-logo.png"
+            dates="February 2025 — April 2025"
+            description="Built a conversational AI customer support agent that reduced operational costs by ~70%; implemented automated SEO blog generation via a locally hosted n8n server; and developed an AI-powered restaurant directory through automated web-scraping and form-filling agents."
           />
           <TimelineItem 
-            role="[Initial Role]"
-            company="[Initial Company]"
-            dates="[Start Year] — [End Year]"
-            description="[Placeholder: Early career details establishing analytical and strategic acumen.]"
+            role="Product Management Intern"
+            company="EZOffice"
+            logoSrc="/ezo-logo.png"
+            dates="June 2024 — August 2024"
+            description="Redesigned error messaging and inline guides to reduce helpdesk tickets; updated tutorial video content to align with the latest module functionalities, boosting engagement; and streamlined module workflows to improve operational efficiency and asset management capabilities."
+          />
+          <TimelineItem 
+            role="Creative Lead"
+            company="Digital Khokha"
+            logoSrc="/digital-khokha-logo.png"
+            dates="July 2021 — October 2022"
+            description="Owned end-to-end creative content strategy: social media direction, copywriting, article and blog production, pitch deck proposals, marketing plans, website content, and campaign conceptualisation across digital and conventional channels."
           />
 
         </div>
