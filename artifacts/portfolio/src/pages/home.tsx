@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ProjectModal, CertModal } from "@/components/ProjectModal";
+import { ResumeModal } from "@/components/ResumeModal";
 import {
   consultingProjects,
   passionProjects,
@@ -47,7 +48,7 @@ function Nav() {
   );
 }
 
-function Hero() {
+function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -77,6 +78,18 @@ function Hero() {
             <p className="text-xl md:text-2xl text-muted-foreground max-w-xl font-light leading-relaxed" data-testid="text-hero-tagline">
               Orchestrating strategy, driving product, and unlocking scale through AI & automation.
             </p>
+            <div>
+              <button
+                onClick={onResumeOpen}
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-border/60 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-colors"
+                data-testid="btn-view-resume"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="square" strokeLinejoin="miter" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                View Résumé
+              </button>
+            </div>
           </motion.div>
           <motion.div 
             className="lg:col-span-5 flex justify-end items-end"
@@ -347,6 +360,11 @@ function Certifications({ onOpen }: { onOpen: (c: CertificationItem) => void }) 
 function Footer() {
   return (
     <footer className="py-12 border-t border-border/50 text-center" data-testid="main-footer">
+      <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-4 text-sm text-muted-foreground font-light">
+        <a href="tel:+923049705122" className="hover:text-foreground transition-colors">+92 304 9705122</a>
+        <a href="mailto:Aneeq.allahi@intelliaadvisors.com" className="hover:text-foreground transition-colors">Aneeq.allahi@intelliaadvisors.com</a>
+        <a href="https://www.linkedin.com/in/aneeq-allahi" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
+      </div>
       <p className="text-sm text-muted-foreground font-light">
         © {new Date().getFullYear()} Aneeq Allahi. Designed with intention.
       </p>
@@ -357,6 +375,7 @@ function Footer() {
 export default function Home() {
   const [activeProject, setActiveProject] = useState<ProjectItem | null>(null);
   const [activeCert, setActiveCert] = useState<CertificationItem | null>(null);
+  const [resumeOpen, setResumeOpen] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.remove('dark');
@@ -366,7 +385,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground font-sans">
       <Nav />
       <main>
-        <Hero />
+        <Hero onResumeOpen={() => setResumeOpen(true)} />
         <About />
         <ConsultingWork onOpen={setActiveProject} />
         <OtherProjects onOpen={setActiveProject} />
@@ -376,6 +395,7 @@ export default function Home() {
       <Footer />
       <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
       <CertModal cert={activeCert} onClose={() => setActiveCert(null)} />
+      <ResumeModal open={resumeOpen} onClose={() => setResumeOpen(false)} />
     </div>
   );
 }
