@@ -88,7 +88,6 @@ function Nav({ onResumeOpen }: { onResumeOpen: () => void }) {
 function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
   const { scrollY } = useScroll();
   const textOp = useTransform(scrollY, [0, 380], [1, 0]);
-  const imgY   = useTransform(scrollY, [0, 600], [0, 35]);
 
   return (
     <section
@@ -96,57 +95,80 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
       className="relative min-h-[100dvh] overflow-hidden bg-background"
       data-testid="section-hero"
     >
-      {/* ── centered portrait ── */}
+      {/* ── portrait — bottom-anchored at 140dvh so face sits near nav bottom ── */}
+      {/* PNG is 1200×1600 with ~46% transparent space above head; section overflow-hidden clips the top */}
+      <motion.img
+        src="/aneeq-portrait.png"
+        alt="Aneeq Allahi"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none select-none"
+        style={{ height: "140dvh", width: "auto" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.15 }}
+        data-testid="img-hero-headshot"
+      />
+
+      {/* ── soft bottom fade so text sits cleanly over the background ── */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-[320px] pointer-events-none z-[1]"
+        style={{ background: "linear-gradient(to top, hsl(var(--background)) 55%, transparent 100%)" }}
+      />
+
+      {/* ── top-left: Senior Analyst @ Intellia badge ── */}
       <motion.div
-        className="absolute inset-x-0 top-0 flex justify-center pointer-events-none select-none"
-        style={{ y: imgY }}
-        initial={{ opacity: 0, y: 24 }}
+        className="absolute top-[90px] left-8 md:left-14 xl:left-20 z-10"
+        initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, delay: 0.1, ease }}
+        transition={{ duration: 0.8, delay: 0.35 }}
+        style={{ opacity: textOp }}
+        data-testid="text-hero-subtitle"
       >
-        <img
-          src="/aneeq-portrait.png"
-          alt="Aneeq Allahi"
-          className="w-auto object-contain object-top"
-          style={{ height: "91vh", marginTop: "52px" }}
-          data-testid="img-hero-headshot"
-        />
+        <div className="inline-flex items-center gap-3 rounded-full border border-border/50 bg-background/80 backdrop-blur-md px-4 py-2 shadow-sm">
+          <span className="w-2 h-2 rounded-full bg-primary animate-pulse shrink-0" />
+          <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-foreground">
+            Senior Analyst
+          </span>
+          <span className="text-muted-foreground/40 font-light">@</span>
+          <img
+            src="/intellia-logo.png"
+            alt="Intellia AI"
+            className="h-[2rem] w-auto"
+            data-testid="img-intellia-logo-hero"
+          />
+        </div>
       </motion.div>
 
-      {/* ── bottom content — two-column ── */}
+      {/* ── bottom two-column: name+tagline left · bio+cta right ── */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 z-10 px-8 md:px-12 xl:px-20 pb-14 md:pb-18"
+        className="absolute bottom-0 left-0 right-0 z-10 px-8 md:px-14 xl:px-20 pb-14 md:pb-20"
         initial={{ opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.35, ease }}
+        transition={{ duration: 1, delay: 0.3, ease }}
         style={{ opacity: textOp }}
       >
-        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-end">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-24 items-end">
 
-          {/* left — status chip + bold headline */}
+          {/* left — big name + short tagline */}
           <div>
-            <div className="flex items-center gap-2 mb-5" data-testid="text-hero-subtitle">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shrink-0" />
-              <span className="text-[12px] font-medium text-muted-foreground">
-                Senior Analyst @ Intellia AI · Available for consulting
-              </span>
-            </div>
             <h1
-              className="font-bold leading-[1.06] tracking-tight text-foreground"
-              style={{ fontSize: "clamp(1.75rem, 3vw, 2.65rem)" }}
+              className="font-black leading-[0.9] tracking-tight text-foreground"
+              style={{ fontSize: "clamp(3rem, 5.5vw, 5rem)" }}
               data-testid="text-hero-title"
             >
-              Aneeq is driving impact through strategy, product&nbsp;&amp; AI
+              Aneeq<br />Allahi
             </h1>
-          </div>
-
-          {/* right — bio + CTA */}
-          <div className="flex flex-col items-start gap-7">
             <p
-              className="text-[14px] text-muted-foreground leading-[1.85] max-w-[360px]"
+              className="mt-5 text-[14px] text-muted-foreground leading-[1.8] max-w-[300px]"
               data-testid="text-hero-tagline"
             >
-              A strategy and product professional with a focus on AI&nbsp;&amp; automation and go-to-market execution. He partners with teams to craft data-driven, user-centred solutions — bringing ideas from concept to scale.
+              Orchestrating strategy, driving product, and unlocking scale through AI&nbsp;&amp; automation.
+            </p>
+          </div>
+
+          {/* right — bio paragraph + CTAs */}
+          <div className="flex flex-col items-start gap-6">
+            <p className="text-[13.5px] text-muted-foreground leading-[1.85] max-w-[340px]">
+              A strategy and product professional focused on AI automation and go-to-market execution. He partners with teams to craft data-driven, user-centred solutions — bringing ideas from concept to scale.
             </p>
             <div className="flex items-center gap-4 flex-wrap">
               <button
