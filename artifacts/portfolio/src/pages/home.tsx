@@ -70,181 +70,140 @@ function Nav() {
 
 /* ── hero ─────────────────────────────────────────────────── */
 
-const STATS = [
-  { value: "3.88", label: "CGPA — High Distinction" },
-  { value: "2+", label: "Years Consulting" },
-  { value: "$1B+", label: "JV Facilitated" },
-  { value: "10+", label: "Projects Delivered" },
-];
-
 function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
   const { scrollY } = useScroll();
-  const textY   = useTransform(scrollY, [0, 500], [0, 80]);
-  const textOp  = useTransform(scrollY, [0, 280], [1, 0]);
-  const imageY  = useTransform(scrollY, [0, 500], [0, 40]);
+  const textY  = useTransform(scrollY, [0, 500], [0, 60]);
+  const textOp = useTransform(scrollY, [0, 320], [1, 0]);
+  const imgY   = useTransform(scrollY, [0, 600], [0, 30]);
 
   return (
     <section
       id="hero"
-      className="relative min-h-[100dvh] flex flex-col justify-center pt-20 overflow-hidden bg-background"
+      className="relative min-h-[100dvh] overflow-hidden bg-background"
       data-testid="section-hero"
     >
-      {/* subtle grid background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, hsl(var(--border)/.35) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)/.35) 1px, transparent 1px)",
-          backgroundSize: "72px 72px",
-          maskImage: "radial-gradient(ellipse 80% 70% at 50% 0%, black 30%, transparent 100%)",
-          WebkitMaskImage: "radial-gradient(ellipse 80% 70% at 50% 0%, black 30%, transparent 100%)",
-        }}
-      />
+      {/* ── full-height split layout ── */}
+      <div className="h-full min-h-[100dvh] lg:grid lg:grid-cols-[1fr_44vw]">
 
-      {/* accent glow */}
-      <div className="absolute -top-32 right-0 w-[600px] h-[600px] rounded-full bg-primary/6 blur-[120px] pointer-events-none" />
+        {/* ── LEFT: text ── */}
+        <div className="relative flex flex-col justify-center px-8 md:px-16 xl:px-24 pt-28 pb-16 lg:pt-0 lg:pb-0">
 
-      <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
-        <div className="grid lg:grid-cols-12 gap-0 lg:gap-16 items-center min-h-[80vh]">
+          {/* subtle dot pattern */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-30"
+            style={{
+              backgroundImage: "radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+              maskImage: "linear-gradient(to right, transparent, black 30%, black 70%, transparent)",
+              WebkitMaskImage: "linear-gradient(to right, transparent, black 30%, black 70%, transparent)",
+            }}
+          />
 
-          {/* ── text column ── */}
           <motion.div
-            className="lg:col-span-6 xl:col-span-7 flex flex-col justify-center py-16 lg:py-0 space-y-10"
-            initial={{ opacity: 0, y: 40 }}
+            className="relative z-10 space-y-9 max-w-lg"
+            initial={{ opacity: 0, y: 36 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.15, ease }}
             style={{ y: textY, opacity: textOp }}
           >
-            {/* current role badge */}
+            {/* role badge */}
             <div className="flex items-center gap-3">
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary" data-testid="text-hero-subtitle">
+              <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary" data-testid="text-hero-subtitle">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                 Senior Analyst
               </span>
-              <span className="text-border text-sm">·</span>
-              <img src="/intellia-logo.png" alt="Intellia" className="h-20 w-auto opacity-90" data-testid="img-intellia-logo-hero" />
+              <span className="text-border">·</span>
+              <img src="/intellia-logo.png" alt="Intellia" className="h-[4.5rem] w-auto opacity-90" data-testid="img-intellia-logo-hero" />
             </div>
 
             {/* name */}
-            <div>
-              <h1
-                className="font-serif font-semibold leading-[1.04] text-foreground"
-                style={{ fontSize: "clamp(3.2rem, 7vw, 6rem)" }}
-                data-testid="text-hero-title"
-              >
-                Aneeq<br />Allahi
-              </h1>
-            </div>
+            <h1
+              className="font-serif font-semibold leading-[1.04] text-foreground tracking-tight"
+              style={{ fontSize: "clamp(3rem, 6.5vw, 5.5rem)" }}
+              data-testid="text-hero-title"
+            >
+              Aneeq<br />Allahi
+            </h1>
 
             {/* tagline */}
             <p
-              className="text-base md:text-lg text-muted-foreground font-light leading-relaxed max-w-md"
+              className="text-[15px] md:text-base text-muted-foreground font-light leading-[1.85]"
               data-testid="text-hero-tagline"
             >
-              Orchestrating strategy, driving product, and unlocking scale through AI & automation.
+              Orchestrating strategy, driving product,<br className="hidden md:block" /> and unlocking scale through AI & automation.
             </p>
 
-            {/* stats row */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-5 pt-2 border-t border-border/40">
-              {STATS.map((s) => (
-                <div key={s.value}>
-                  <p className="font-serif font-semibold text-2xl text-foreground leading-none">{s.value}</p>
-                  <p className="text-[11px] text-muted-foreground font-light mt-1 leading-snug">{s.label}</p>
-                </div>
-              ))}
-            </div>
-
             {/* cta */}
-            <div>
+            <div className="pt-2 flex items-center gap-5">
               <button
                 onClick={onResumeOpen}
-                className="group inline-flex items-center gap-2.5 px-6 py-3 bg-foreground text-background text-sm font-medium hover:bg-primary hover:text-white transition-colors duration-300"
+                className="group inline-flex items-center gap-2.5 px-7 py-3.5 bg-foreground text-background text-sm font-medium
+                           hover:bg-primary hover:text-white transition-colors duration-300"
                 data-testid="btn-view-resume"
               >
-                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 View Résumé
               </button>
+              <a
+                href="#consulting"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors font-light"
+              >
+                See my work ↓
+              </a>
             </div>
           </motion.div>
 
-          {/* ── image column ── */}
+          {/* bottom scroll indicator */}
           <motion.div
-            className="hidden lg:flex lg:col-span-6 xl:col-span-5 justify-end items-center relative"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.2, delay: 0.35, ease }}
-            style={{ y: imageY }}
+            className="absolute bottom-8 left-8 md:left-16 xl:left-24 flex items-center gap-3 opacity-35"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.35 }}
+            transition={{ delay: 2 }}
           >
-            {/* decorative outer frame */}
-            <div className="relative w-[340px] xl:w-[390px]">
-
-              {/* top-right corner accent */}
-              <div className="absolute -top-4 -right-4 w-20 h-20 border-t-2 border-r-2 border-primary/60 pointer-events-none z-20" />
-              {/* bottom-left corner accent */}
-              <div className="absolute -bottom-4 -left-4 w-20 h-20 border-b-2 border-l-2 border-primary/60 pointer-events-none z-20" />
-
-              {/* image container */}
-              <div
-                className="relative overflow-hidden"
-                style={{ aspectRatio: "3/4" }}
-              >
-                {/* warm tone background so transparent edges blend cleanly */}
-                <div className="absolute inset-0 bg-[#f2ede8]" />
-
-                {/* portrait image */}
-                <img
-                  src="/aneeq-headshot.png"
-                  alt="Aneeq Allahi"
-                  className="absolute inset-0 w-full h-full object-cover object-top"
-                  style={{
-                    filter: "contrast(1.08) saturate(0.88) brightness(1.02)",
-                    imageRendering: "auto",
-                  }}
-                  data-testid="img-hero-headshot"
-                />
-
-                {/* subtle bottom vignette */}
-                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#f2ede8]/70 to-transparent pointer-events-none" />
-              </div>
-
-              {/* floating name card */}
-              <motion.div
-                className="absolute -bottom-5 -left-6 bg-background border border-border/60 px-5 py-3 shadow-xl z-30"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.1, ease }}
-              >
-                <p className="font-serif font-semibold text-sm text-foreground">Aneeq Allahi</p>
-                <p className="text-[11px] text-muted-foreground font-light mt-0.5">Strategy · Product · AI</p>
-              </motion.div>
-
-              {/* floating badge top-left */}
-              <motion.div
-                className="absolute -top-5 -left-6 bg-primary text-white px-4 py-2 text-[11px] font-semibold uppercase tracking-wider z-30 shadow-lg"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.3, ease }}
-              >
-                LUMS '25 · High Distinction
-              </motion.div>
-            </div>
+            <div className="w-px h-8 bg-foreground" />
+            <span className="text-[10px] uppercase tracking-[0.2em] text-foreground font-medium">Scroll</span>
           </motion.div>
-
         </div>
-      </div>
 
-      {/* scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.4 }}
-        transition={{ delay: 2 }}
-      >
-        <div className="w-px h-12 bg-foreground/50 animate-[pulse_2s_ease-in-out_infinite]" />
-        <span className="text-[10px] uppercase tracking-widest text-foreground font-medium">Scroll</span>
-      </motion.div>
+        {/* ── RIGHT: full-height image panel ── */}
+        <motion.div
+          className="hidden lg:block relative"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.4, delay: 0.3, ease }}
+          style={{ y: imgY }}
+        >
+          {/* warm panel background */}
+          <div className="absolute inset-0 bg-[#e8e0d5]" />
+
+          {/* vertical divider */}
+          <div className="absolute left-0 top-[10%] bottom-[10%] w-px bg-border/40" />
+
+          {/* image fills the panel */}
+          <img
+            src="/aneeq-headshot.png"
+            alt="Aneeq Allahi"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+            style={{
+              filter: "contrast(1.06) saturate(0.85) brightness(1.03)",
+              mixBlendMode: "multiply",
+            }}
+            data-testid="img-hero-headshot"
+          />
+
+          {/* bottom gradient fade into next section */}
+          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#e8e0d5] to-transparent pointer-events-none" />
+
+          {/* subtle top-right label */}
+          <div className="absolute top-8 right-8 text-right pointer-events-none select-none">
+            <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/30 font-semibold">Aneeq Allahi</p>
+            <p className="text-[10px] text-foreground/20 font-light mt-0.5">Strategy · Product · AI</p>
+          </div>
+        </motion.div>
+
+      </div>
     </section>
   );
 }
@@ -416,36 +375,48 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
   role: string; company: string; dates: string; description: string; logoSrc?: string; isCurrent?: boolean;
 }) {
   return (
-    <div className="group grid md:grid-cols-[1fr_2px_1fr] gap-0 items-start">
-      {/* left: meta */}
-      <div className="md:text-right md:pr-10 pb-6 md:pb-0">
-        <h3 className="text-lg font-serif font-medium text-foreground group-hover:text-primary transition-colors">{role}</h3>
-        {logoSrc ? (
-          <div className="flex items-center gap-2 md:justify-end mt-1.5">
-            <img src={logoSrc} alt={company} className="h-6 w-auto opacity-90" data-testid={`img-logo-${company.toLowerCase().replace(/\s+/g, "-")}`} />
-            <p className="text-muted-foreground text-sm font-medium">{company}</p>
-          </div>
-        ) : (
-          <p className="text-muted-foreground text-sm font-medium mt-1">{company}</p>
-        )}
-        <span className={`inline-block text-xs font-semibold mt-2 px-2.5 py-0.5 ${isCurrent ? "bg-primary/10 text-primary" : "text-muted-foreground"}`}>
-          {dates}
-        </span>
-      </div>
+    <div className="group relative pl-8 md:pl-0">
+      {/* mobile dot */}
+      <div className="md:hidden absolute left-0 top-[6px] w-2.5 h-2.5 rounded-full border-2 border-border bg-background group-hover:border-primary transition-colors" />
 
-      {/* centre line */}
-      <div className="hidden md:flex flex-col items-center pt-2">
-        <div className={`w-2.5 h-2.5 rounded-full border-2 ${isCurrent ? "border-primary bg-primary" : "border-border bg-background"} transition-colors group-hover:border-primary`} />
-        <div className="w-px flex-1 bg-border/60 mt-1" />
-      </div>
+      <div className="grid md:grid-cols-2 gap-6 md:gap-16 items-start">
+        {/* left: meta */}
+        <div className="md:text-right md:pr-14">
+          <h3 className="text-[1.1rem] font-serif font-medium text-foreground group-hover:text-primary transition-colors duration-300 leading-snug">
+            {role}
+          </h3>
+          {logoSrc ? (
+            <div className="flex items-center gap-2 md:justify-end mt-2">
+              <img src={logoSrc} alt={company} className="h-6 w-auto opacity-80" data-testid={`img-logo-${company.toLowerCase().replace(/\s+/g, "-")}`} />
+              <p className="text-muted-foreground text-sm font-medium">{company}</p>
+            </div>
+          ) : (
+            <p className="text-muted-foreground text-sm font-medium mt-2">{company}</p>
+          )}
+          <span className={`inline-block text-[11px] font-semibold mt-3 tracking-wide ${isCurrent ? "text-primary" : "text-muted-foreground/70"}`}>
+            {dates}
+            {isCurrent && <span className="ml-2 inline-flex items-center gap-1"><span className="w-1 h-1 rounded-full bg-primary animate-pulse inline-block" />Current</span>}
+          </span>
+        </div>
 
-      {/* right: description */}
-      <div className="md:pl-10 pb-6 md:pb-0">
-        <p className="text-muted-foreground text-sm font-light leading-[1.85]">{description}</p>
+        {/* center dot — positioned over the line via absolute */}
+        <div className="hidden md:block absolute left-[50%] -ml-[5px] top-[6px] w-2.5 h-2.5 rounded-full border-2 border-border bg-background group-hover:border-primary group-hover:bg-primary/20 transition-all duration-300 z-10" />
+
+        {/* right: description */}
+        <div className="md:pl-14">
+          <p className="text-muted-foreground text-sm font-light leading-[1.9]">{description}</p>
+        </div>
       </div>
     </div>
   );
 }
+
+const JOBS = [
+  { role: "Senior Analyst", company: "Intellia AI", logoSrc: "/intellia-logo.png", dates: "July 2025 — Present", isCurrent: true, description: "Lead multi-sector consulting engagements with measurable outcomes: facilitated a $1B JV negotiation in KSA through a 2,000+ data-point commercial viability analysis; co-developed a 3-year value creation plan for an oncology clinic to offset a $50M net loss; and built a forecasting model that reduced patient acquisition costs by 10%. Fast-tracked from Analyst to Senior Analyst." },
+  { role: "Associate Product Manager", company: "SnackOut", logoSrc: "/snackout-logo.png", dates: "February 2025 — April 2025", isCurrent: false, description: "Built a conversational AI customer support agent that reduced operational costs by ~70%; implemented automated SEO blog generation via a locally hosted n8n server; and developed an AI-powered restaurant directory through automated web-scraping and form-filling agents." },
+  { role: "Product Management Intern", company: "EZOffice", logoSrc: "/ezo-logo.png", dates: "June 2024 — August 2024", isCurrent: false, description: "Redesigned error messaging and inline guides to reduce helpdesk tickets; updated tutorial video content to align with the latest module functionalities, boosting engagement; and streamlined module workflows to improve operational efficiency and asset management capabilities." },
+  { role: "Creative Lead", company: "Digital Khokha", logoSrc: "/digital-khokha-logo.png", dates: "July 2021 — October 2022", isCurrent: false, description: "Owned end-to-end creative content strategy: social media direction, copywriting, article and blog production, pitch deck proposals, marketing plans, website content, and campaign conceptualisation across digital and conventional channels." },
+];
 
 function Experience() {
   const { ref, inView } = useViewOnce();
@@ -455,17 +426,17 @@ function Experience() {
         <SectionHeading title="Career Trajectory" subtitle="Experience" />
         <motion.div
           ref={ref}
-          className="space-y-0"
+          className="relative space-y-20
+            before:absolute before:inset-0
+            before:ml-[3px] md:before:ml-[50%]
+            before:-translate-x-px md:before:translate-x-0
+            before:h-full before:w-px
+            before:bg-gradient-to-b before:from-primary/40 before:via-border/60 before:to-transparent"
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={staggerGrid}
         >
-          {[
-            { role: "Senior Analyst", company: "Intellia AI", logoSrc: "/intellia-logo.png", dates: "July 2025 — Present", isCurrent: true, description: "Lead multi-sector consulting engagements with measurable outcomes: facilitated a $1B JV negotiation in KSA through a 2,000+ data-point commercial viability analysis; co-developed a 3-year value creation plan for an oncology clinic to offset a $50M net loss; and built a forecasting model that reduced patient acquisition costs by 10%. Fast-tracked from Analyst to Senior Analyst." },
-            { role: "Associate Product Manager", company: "SnackOut", logoSrc: "/snackout-logo.png", dates: "February 2025 — April 2025", description: "Built a conversational AI customer support agent that reduced operational costs by ~70%; implemented automated SEO blog generation via a locally hosted n8n server; and developed an AI-powered restaurant directory through automated web-scraping and form-filling agents." },
-            { role: "Product Management Intern", company: "EZOffice", logoSrc: "/ezo-logo.png", dates: "June 2024 — August 2024", description: "Redesigned error messaging and inline guides to reduce helpdesk tickets; updated tutorial video content to align with the latest module functionalities, boosting engagement; and streamlined module workflows to improve operational efficiency and asset management capabilities." },
-            { role: "Creative Lead", company: "Digital Khokha", logoSrc: "/digital-khokha-logo.png", dates: "July 2021 — October 2022", description: "Owned end-to-end creative content strategy: social media direction, copywriting, article and blog production, pitch deck proposals, marketing plans, website content, and campaign conceptualisation across digital and conventional channels." },
-          ].map((item) => (
+          {JOBS.map((item) => (
             <motion.div key={item.role + item.company} variants={fadeUp}>
               <TimelineItem {...item} />
             </motion.div>
