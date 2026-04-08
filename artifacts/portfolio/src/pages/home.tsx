@@ -80,141 +80,139 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
     <section
       id="hero"
       className="relative min-h-[100dvh] overflow-hidden"
+      style={{ background: "#0c1220" }}
       data-testid="section-hero"
     >
-      {/* ── full-viewport split ── */}
-      <div className="flex flex-col lg:flex-row min-h-[100dvh]">
+      {/* fine grid texture across whole hero */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.045]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
 
-        {/* ── LEFT: dark panel with text ── */}
-        <div
-          className="relative flex flex-col justify-center px-8 md:px-14 xl:px-20 pt-28 pb-16 lg:pt-0 lg:pb-0 lg:w-[52%] shrink-0"
-          style={{ background: "#0c1220" }}
-        >
-          {/* fine grid texture */}
-          <div
-            className="absolute inset-0 pointer-events-none opacity-[0.06]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
-              backgroundSize: "48px 48px",
-            }}
-          />
+      {/* left accent bar */}
+      <div className="absolute left-0 top-[18%] bottom-[18%] w-[3px] bg-primary/60" />
 
-          {/* left accent bar */}
-          <div className="absolute left-0 top-[15%] bottom-[15%] w-[3px] bg-primary/70" />
+      {/* radial glow behind portrait */}
+      <div
+        className="absolute pointer-events-none hidden lg:block"
+        style={{
+          right: "5%",
+          bottom: 0,
+          width: "52%",
+          height: "100%",
+          background: "radial-gradient(ellipse 60% 70% at 55% 85%, hsl(var(--primary) / 0.12) 0%, transparent 70%)",
+        }}
+      />
 
-          <motion.div
-            className="relative z-10 space-y-8 max-w-[520px]"
-            initial={{ opacity: 0, y: 36 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.15, ease }}
-            style={{ y: textY, opacity: textOp }}
-          >
-            {/* role badge */}
-            <div className="flex items-center gap-3 flex-wrap">
-              <span
-                className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em]"
-                style={{ color: "hsl(var(--primary))" }}
-                data-testid="text-hero-subtitle"
-              >
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "hsl(var(--primary))" }} />
-                Senior Analyst
-              </span>
-              <span className="text-white/20">·</span>
-              <img
-                src="/intellia-logo.png"
-                alt="Intellia"
-                className="h-[3.8rem] w-auto"
-                style={{ filter: "brightness(0) invert(1)", opacity: 0.75 }}
-                data-testid="img-intellia-logo-hero"
-              />
-            </div>
+      {/* portrait — bottom-anchored, right side, large */}
+      <motion.img
+        src="/aneeq-portrait.png"
+        alt="Aneeq Allahi"
+        className="absolute bottom-0 right-0 hidden lg:block pointer-events-none select-none"
+        style={{
+          height: "94%",
+          width: "auto",
+          objectFit: "contain",
+          objectPosition: "bottom",
+          filter: "drop-shadow(-8px 0 40px hsl(var(--primary) / 0.15))",
+        }}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, delay: 0.4, ease }}
+        data-testid="img-hero-headshot"
+      />
 
-            {/* name */}
-            <h1
-              className="font-serif font-semibold leading-[1.02] tracking-tight text-white"
-              style={{ fontSize: "clamp(3rem, 5.5vw, 5.2rem)" }}
-              data-testid="text-hero-title"
-            >
-              Aneeq<br />Allahi
-            </h1>
-
-            {/* thin accent line under name */}
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-[2px] bg-primary" />
-              <div className="w-4 h-[2px] bg-primary/40" />
-            </div>
-
-            {/* tagline */}
-            <p
-              className="text-[15px] text-white/55 font-light leading-[1.85]"
-              data-testid="text-hero-tagline"
-            >
-              Orchestrating strategy, driving product,<br className="hidden md:block" /> and unlocking scale through AI &amp; automation.
-            </p>
-
-            {/* cta */}
-            <div className="pt-2 flex items-center gap-5 flex-wrap">
-              <button
-                onClick={onResumeOpen}
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 text-sm font-medium border border-white/20 text-white hover:bg-white hover:text-[#0c1220] transition-colors duration-300"
-                data-testid="btn-view-resume"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                View Résumé
-              </button>
-              <a
-                href="#consulting"
-                className="text-sm text-white/40 hover:text-white/70 transition-colors font-light"
-              >
-                See my work ↓
-              </a>
-            </div>
-          </motion.div>
-
-          {/* bottom-left scroll indicator */}
-          <motion.div
-            className="absolute bottom-8 left-8 md:left-14 xl:left-20 flex items-center gap-3"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.3 }}
-            transition={{ delay: 2 }}
-          >
-            <div className="w-px h-8 bg-white" />
-            <span className="text-[10px] uppercase tracking-[0.2em] text-white font-medium">Scroll</span>
-          </motion.div>
-        </div>
-
-        {/* ── RIGHT: full-height mountain photo ── */}
+      {/* text layer */}
+      <div className="relative z-10 min-h-[100dvh] flex flex-col justify-center px-8 md:px-14 xl:px-20 pt-28 pb-16 lg:pt-0 lg:pb-0">
         <motion.div
-          className="relative lg:flex-1 min-h-[55vw] lg:min-h-0"
-          initial={{ opacity: 0, scale: 1.04 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.6, delay: 0.2, ease }}
-          style={{ y: imgY }}
+          className="space-y-8 max-w-[520px]"
+          initial={{ opacity: 0, y: 36 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.15, ease }}
+          style={{ y: textY, opacity: textOp }}
         >
-          <img
-            src="/aneeq-mountain.jpg"
-            alt="Aneeq Allahi"
-            className="absolute inset-0 w-full h-full object-cover object-center"
-            style={{ filter: "contrast(1.06) saturate(1.05) brightness(0.97)" }}
-            data-testid="img-hero-headshot"
-          />
+          {/* role badge */}
+          <div className="flex items-center gap-3 flex-wrap">
+            <span
+              className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em]"
+              style={{ color: "hsl(var(--primary))" }}
+              data-testid="text-hero-subtitle"
+            >
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "hsl(var(--primary))" }} />
+              Senior Analyst
+            </span>
+            <span className="text-white/20">·</span>
+            <img
+              src="/intellia-logo.png"
+              alt="Intellia"
+              className="h-[3.8rem] w-auto"
+              style={{ filter: "brightness(0) invert(1)", opacity: 0.7 }}
+              data-testid="img-intellia-logo-hero"
+            />
+          </div>
 
-          {/* very subtle dark vignette on the left edge to blend with dark panel */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: "linear-gradient(to right, #0c1220 0%, transparent 18%)",
-            }}
-          />
+          {/* name */}
+          <h1
+            className="font-serif font-semibold leading-[1.02] tracking-tight text-white"
+            style={{ fontSize: "clamp(3rem, 5.5vw, 5.2rem)" }}
+            data-testid="text-hero-title"
+          >
+            Aneeq<br />Allahi
+          </h1>
 
-          {/* bottom fade into next section (bg-background is light) */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+          {/* accent dashes */}
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-[2px] bg-primary" />
+            <div className="w-4 h-[2px] bg-primary/40" />
+          </div>
+
+          {/* tagline */}
+          <p
+            className="text-[15px] text-white/50 font-light leading-[1.9]"
+            data-testid="text-hero-tagline"
+          >
+            Orchestrating strategy, driving product,<br className="hidden md:block" /> and unlocking scale through AI &amp; automation.
+          </p>
+
+          {/* cta */}
+          <div className="pt-2 flex items-center gap-5 flex-wrap">
+            <button
+              onClick={onResumeOpen}
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 text-sm font-medium border border-white/20 text-white hover:bg-white hover:text-[#0c1220] transition-colors duration-300"
+              data-testid="btn-view-resume"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              View Résumé
+            </button>
+            <a
+              href="#consulting"
+              className="text-sm text-white/40 hover:text-white/70 transition-colors font-light"
+            >
+              See my work ↓
+            </a>
+          </div>
         </motion.div>
 
+        {/* scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-8 md:left-14 xl:left-20 flex items-center gap-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.28 }}
+          transition={{ delay: 2 }}
+        >
+          <div className="w-px h-8 bg-white" />
+          <span className="text-[10px] uppercase tracking-[0.2em] text-white font-medium">Scroll</span>
+        </motion.div>
       </div>
+
+      {/* bottom fade into next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent pointer-events-none" />
     </section>
   );
 }
