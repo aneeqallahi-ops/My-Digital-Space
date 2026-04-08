@@ -175,32 +175,25 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
           transition={{ duration: 1.4, delay: 0.3, ease }}
           style={{ y: imgY }}
         >
-          {/* warm panel background */}
-          <div className="absolute inset-0 bg-[#e8e0d5]" />
+          {/* panel background — light warm white to complement campus tones */}
+          <div className="absolute inset-0 bg-[#f2f0eb]" />
 
           {/* vertical divider */}
           <div className="absolute left-0 top-[10%] bottom-[10%] w-px bg-border/40" />
 
           {/* image fills the panel */}
           <img
-            src="/aneeq-headshot.png"
+            src="/aneeq-headshot-campus.jpg"
             alt="Aneeq Allahi"
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover object-top"
             style={{
-              filter: "contrast(1.06) saturate(0.85) brightness(1.03)",
-              mixBlendMode: "multiply",
+              filter: "contrast(1.04) saturate(0.92) brightness(1.02)",
             }}
             data-testid="img-hero-headshot"
           />
 
           {/* bottom gradient fade into next section */}
-          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#e8e0d5] to-transparent pointer-events-none" />
-
-          {/* subtle top-right label */}
-          <div className="absolute top-8 right-8 text-right pointer-events-none select-none">
-            <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/30 font-semibold">Aneeq Allahi</p>
-            <p className="text-[10px] text-foreground/20 font-light mt-0.5">Strategy · Product · AI</p>
-          </div>
+          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#f2f0eb] to-transparent pointer-events-none" />
         </motion.div>
 
       </div>
