@@ -79,66 +79,85 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
   return (
     <section
       id="hero"
-      className="relative min-h-[100dvh] overflow-hidden bg-background"
+      className="relative min-h-[100dvh] overflow-hidden"
       data-testid="section-hero"
     >
-      {/* ── full-height split layout ── */}
-      <div className="h-full min-h-[100dvh] lg:grid lg:grid-cols-[1fr_44vw]">
+      {/* ── full-viewport split ── */}
+      <div className="flex flex-col lg:flex-row min-h-[100dvh]">
 
-        {/* ── LEFT: text ── */}
-        <div className="relative flex flex-col justify-center px-8 md:px-16 xl:px-24 pt-28 pb-16 lg:pt-0 lg:pb-0">
-
-          {/* subtle dot pattern */}
+        {/* ── LEFT: dark panel with text ── */}
+        <div
+          className="relative flex flex-col justify-center px-8 md:px-14 xl:px-20 pt-28 pb-16 lg:pt-0 lg:pb-0 lg:w-[52%] shrink-0"
+          style={{ background: "#0c1220" }}
+        >
+          {/* fine grid texture */}
           <div
-            className="absolute inset-0 pointer-events-none opacity-30"
+            className="absolute inset-0 pointer-events-none opacity-[0.06]"
             style={{
-              backgroundImage: "radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px)",
-              backgroundSize: "32px 32px",
-              maskImage: "linear-gradient(to right, transparent, black 30%, black 70%, transparent)",
-              WebkitMaskImage: "linear-gradient(to right, transparent, black 30%, black 70%, transparent)",
+              backgroundImage:
+                "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
+              backgroundSize: "48px 48px",
             }}
           />
 
+          {/* left accent bar */}
+          <div className="absolute left-0 top-[15%] bottom-[15%] w-[3px] bg-primary/70" />
+
           <motion.div
-            className="relative z-10 space-y-9 max-w-lg"
+            className="relative z-10 space-y-8 max-w-[520px]"
             initial={{ opacity: 0, y: 36 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.15, ease }}
             style={{ y: textY, opacity: textOp }}
           >
             {/* role badge */}
-            <div className="flex items-center gap-3">
-              <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary" data-testid="text-hero-subtitle">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            <div className="flex items-center gap-3 flex-wrap">
+              <span
+                className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em]"
+                style={{ color: "hsl(var(--primary))" }}
+                data-testid="text-hero-subtitle"
+              >
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "hsl(var(--primary))" }} />
                 Senior Analyst
               </span>
-              <span className="text-border">·</span>
-              <img src="/intellia-logo.png" alt="Intellia" className="h-[4.5rem] w-auto opacity-90" data-testid="img-intellia-logo-hero" />
+              <span className="text-white/20">·</span>
+              <img
+                src="/intellia-logo.png"
+                alt="Intellia"
+                className="h-[3.8rem] w-auto"
+                style={{ filter: "brightness(0) invert(1)", opacity: 0.75 }}
+                data-testid="img-intellia-logo-hero"
+              />
             </div>
 
             {/* name */}
             <h1
-              className="font-serif font-semibold leading-[1.04] text-foreground tracking-tight"
-              style={{ fontSize: "clamp(3rem, 6.5vw, 5.5rem)" }}
+              className="font-serif font-semibold leading-[1.02] tracking-tight text-white"
+              style={{ fontSize: "clamp(3rem, 5.5vw, 5.2rem)" }}
               data-testid="text-hero-title"
             >
               Aneeq<br />Allahi
             </h1>
 
+            {/* thin accent line under name */}
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-[2px] bg-primary" />
+              <div className="w-4 h-[2px] bg-primary/40" />
+            </div>
+
             {/* tagline */}
             <p
-              className="text-[15px] md:text-base text-muted-foreground font-light leading-[1.85]"
+              className="text-[15px] text-white/55 font-light leading-[1.85]"
               data-testid="text-hero-tagline"
             >
-              Orchestrating strategy, driving product,<br className="hidden md:block" /> and unlocking scale through AI & automation.
+              Orchestrating strategy, driving product,<br className="hidden md:block" /> and unlocking scale through AI &amp; automation.
             </p>
 
             {/* cta */}
-            <div className="pt-2 flex items-center gap-5">
+            <div className="pt-2 flex items-center gap-5 flex-wrap">
               <button
                 onClick={onResumeOpen}
-                className="group inline-flex items-center gap-2.5 px-7 py-3.5 bg-foreground text-background text-sm font-medium
-                           hover:bg-primary hover:text-white transition-colors duration-300"
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 text-sm font-medium border border-white/20 text-white hover:bg-white hover:text-[#0c1220] transition-colors duration-300"
                 data-testid="btn-view-resume"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
@@ -148,52 +167,51 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
               </button>
               <a
                 href="#consulting"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors font-light"
+                className="text-sm text-white/40 hover:text-white/70 transition-colors font-light"
               >
                 See my work ↓
               </a>
             </div>
           </motion.div>
 
-          {/* bottom scroll indicator */}
+          {/* bottom-left scroll indicator */}
           <motion.div
-            className="absolute bottom-8 left-8 md:left-16 xl:left-24 flex items-center gap-3 opacity-35"
+            className="absolute bottom-8 left-8 md:left-14 xl:left-20 flex items-center gap-3"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.35 }}
+            animate={{ opacity: 0.3 }}
             transition={{ delay: 2 }}
           >
-            <div className="w-px h-8 bg-foreground" />
-            <span className="text-[10px] uppercase tracking-[0.2em] text-foreground font-medium">Scroll</span>
+            <div className="w-px h-8 bg-white" />
+            <span className="text-[10px] uppercase tracking-[0.2em] text-white font-medium">Scroll</span>
           </motion.div>
         </div>
 
-        {/* ── RIGHT: full-height image panel ── */}
+        {/* ── RIGHT: full-height mountain photo ── */}
         <motion.div
-          className="hidden lg:block relative"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, delay: 0.3, ease }}
+          className="relative lg:flex-1 min-h-[55vw] lg:min-h-0"
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.6, delay: 0.2, ease }}
           style={{ y: imgY }}
         >
-          {/* panel background — light warm white to complement campus tones */}
-          <div className="absolute inset-0 bg-[#f2f0eb]" />
-
-          {/* vertical divider */}
-          <div className="absolute left-0 top-[10%] bottom-[10%] w-px bg-border/40" />
-
-          {/* image fills the panel */}
           <img
-            src="/aneeq-headshot-campus.jpg"
+            src="/aneeq-mountain.jpg"
             alt="Aneeq Allahi"
-            className="absolute inset-0 w-full h-full object-cover object-top"
-            style={{
-              filter: "contrast(1.04) saturate(0.92) brightness(1.02)",
-            }}
+            className="absolute inset-0 w-full h-full object-cover object-center"
+            style={{ filter: "contrast(1.06) saturate(1.05) brightness(0.97)" }}
             data-testid="img-hero-headshot"
           />
 
-          {/* bottom gradient fade into next section */}
-          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#f2f0eb] to-transparent pointer-events-none" />
+          {/* very subtle dark vignette on the left edge to blend with dark panel */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "linear-gradient(to right, #0c1220 0%, transparent 18%)",
+            }}
+          />
+
+          {/* bottom fade into next section (bg-background is light) */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
         </motion.div>
 
       </div>
