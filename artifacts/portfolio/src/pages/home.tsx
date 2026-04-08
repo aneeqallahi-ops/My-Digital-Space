@@ -53,12 +53,24 @@ function Nav() {
       data-testid="main-navigation"
     >
       <div className="max-w-6xl mx-auto px-6 h-[72px] flex items-center justify-between">
-        <a href="#hero" className="font-serif font-bold text-xl tracking-tight text-foreground" data-testid="nav-logo">
+        <a
+          href="#hero"
+          className={`font-serif font-bold text-xl tracking-tight transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white"}`}
+          data-testid="nav-logo"
+        >
           AA.
         </a>
         <div className="hidden md:flex items-center gap-8">
           {[["#about","About"],["#consulting","Consulting"],["#projects","Projects"],["#ai","AI & Automation"],["#experience","Experience"]].map(([href,label]) => (
-            <a key={href} href={href} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200">
+            <a
+              key={href}
+              href={href}
+              className={`text-sm font-medium transition-colors duration-200 ${
+                scrolled
+                  ? "text-muted-foreground hover:text-foreground"
+                  : "text-white/75 hover:text-white"
+              }`}
+            >
               {label}
             </a>
           ))}
@@ -114,13 +126,13 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
         alt="Aneeq Allahi"
         className="absolute bottom-0 hidden lg:block pointer-events-none select-none"
         style={{
-          right: "4%",
-          height: "102%",
+          right: "-2%",
+          height: "118%",
           width: "auto",
-          maxWidth: "48%",
+          maxWidth: "58%",
           objectFit: "contain",
           objectPosition: "bottom",
-          filter: "drop-shadow(-12px 0 60px hsl(var(--primary) / 0.18))",
+          filter: "drop-shadow(-16px 0 80px hsl(var(--primary) / 0.22))",
         }}
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -138,20 +150,17 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
           style={{ y: textY, opacity: textOp }}
         >
           {/* role badge — Senior Analyst @ Intellia */}
-          <div className="flex items-center gap-3 flex-wrap" data-testid="text-hero-subtitle">
-            <span
-              className="inline-flex items-center gap-2.5 text-[13px] font-semibold uppercase tracking-[0.18em]"
-              style={{ color: "hsl(var(--primary))" }}
-            >
-              <span className="w-2 h-2 rounded-full animate-pulse shrink-0" style={{ background: "hsl(var(--primary))" }} />
+          <div className="flex items-center gap-4 flex-wrap" data-testid="text-hero-subtitle">
+            <span className="inline-flex items-center gap-2.5 text-[15px] font-semibold uppercase tracking-[0.16em] text-white">
+              <span className="w-2.5 h-2.5 rounded-full animate-pulse shrink-0 bg-primary" />
               Senior Analyst
             </span>
-            <span className="text-white/30 text-base font-light">@</span>
+            <span className="text-white/40 text-lg font-light">@</span>
             <img
               src="/intellia-logo.png"
               alt="Intellia AI"
-              className="h-[5rem] w-auto"
-              style={{ filter: "brightness(0) invert(1)", opacity: 0.8 }}
+              className="h-[6rem] w-auto"
+              style={{ filter: "brightness(0) invert(1)", opacity: 0.9 }}
               data-testid="img-intellia-logo-hero"
             />
           </div>
