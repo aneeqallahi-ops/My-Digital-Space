@@ -375,37 +375,57 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
   role: string; company: string; dates: string; description: string; logoSrc?: string; isCurrent?: boolean;
 }) {
   return (
-    <div className="group relative pl-8 md:pl-0 py-4 md:py-8">
-      {/* mobile dot */}
-      <div className="md:hidden absolute left-0 top-[6px] w-2.5 h-2.5 rounded-full border-2 border-border bg-background group-hover:border-primary transition-colors" />
+    <div className="group">
 
-      <div className="grid md:grid-cols-2 gap-8 md:gap-20 items-start">
-        {/* left: meta */}
-        <div className="md:text-right md:pr-16">
-          <h3 className="text-[1.1rem] font-serif font-medium text-foreground group-hover:text-primary transition-colors duration-300 leading-snug">
+      {/* ── DESKTOP: 3-col grid [meta | dot | description] ── */}
+      <div className="hidden md:grid grid-cols-[1fr_48px_1fr] items-start">
+
+        {/* LEFT: meta — right-aligned */}
+        <div className="text-right pr-10">
+          <h3 className="text-[1.05rem] font-serif font-medium text-foreground group-hover:text-primary transition-colors duration-300 leading-snug">
             {role}
           </h3>
           {logoSrc ? (
-            <div className="flex items-center gap-2 md:justify-end mt-2">
-              <img src={logoSrc} alt={company} className="h-6 w-auto opacity-80" data-testid={`img-logo-${company.toLowerCase().replace(/\s+/g, "-")}`} />
+            <div className="flex items-center gap-2 justify-end mt-2">
+              <img src={logoSrc} alt={company} className="h-5 w-auto opacity-75" data-testid={`img-logo-${company.toLowerCase().replace(/\s+/g, "-")}`} />
               <p className="text-muted-foreground text-sm font-medium">{company}</p>
             </div>
           ) : (
             <p className="text-muted-foreground text-sm font-medium mt-2">{company}</p>
           )}
-          <span className={`inline-block text-[11px] font-semibold mt-3 tracking-wide ${isCurrent ? "text-primary" : "text-muted-foreground/70"}`}>
+          <span className={`inline-block text-[11px] font-semibold mt-2.5 tracking-wide ${isCurrent ? "text-primary" : "text-muted-foreground/60"}`}>
             {dates}
           </span>
         </div>
 
-        {/* center dot — positioned over the line via absolute */}
-        <div className="hidden md:block absolute left-[50%] -ml-[5px] top-[6px] w-2.5 h-2.5 rounded-full border-2 border-border bg-background group-hover:border-primary group-hover:bg-primary/20 transition-all duration-300 z-10" />
+        {/* CENTER: dot — structurally in its own column, anchored to text baseline */}
+        <div className="flex flex-col items-center pt-[6px]">
+          <div className="w-2.5 h-2.5 rounded-full border-2 border-border bg-background group-hover:border-primary group-hover:bg-primary/20 transition-all duration-300 z-10 shrink-0" />
+        </div>
 
-        {/* right: description */}
-        <div className="md:pl-16">
+        {/* RIGHT: description */}
+        <div className="pl-10">
           <p className="text-muted-foreground text-sm font-light leading-[1.9]">{description}</p>
         </div>
+
       </div>
+
+      {/* ── MOBILE: stacked with left border ── */}
+      <div className="md:hidden pl-6 border-l-2 border-border/50 relative">
+        <div className="absolute -left-[5px] top-[5px] w-2.5 h-2.5 rounded-full border-2 border-border bg-background" />
+        <h3 className="text-[1rem] font-serif font-medium text-foreground leading-snug">{role}</h3>
+        {logoSrc ? (
+          <div className="flex items-center gap-2 mt-1.5">
+            <img src={logoSrc} alt={company} className="h-5 w-auto opacity-75" />
+            <p className="text-muted-foreground text-sm font-medium">{company}</p>
+          </div>
+        ) : (
+          <p className="text-muted-foreground text-sm font-medium mt-1">{company}</p>
+        )}
+        <span className={`inline-block text-[11px] font-semibold mt-2 tracking-wide ${isCurrent ? "text-primary" : "text-muted-foreground/60"}`}>{dates}</span>
+        <p className="text-muted-foreground text-sm font-light leading-[1.9] mt-4">{description}</p>
+      </div>
+
     </div>
   );
 }
@@ -425,12 +445,12 @@ function Experience() {
         <SectionHeading title="Career Trajectory" subtitle="Experience" />
         <motion.div
           ref={ref}
-          className="relative space-y-24
-            before:absolute before:inset-0
-            before:ml-[3px] md:before:ml-[50%]
-            before:-translate-x-px md:before:translate-x-0
+          className="relative space-y-16
+            before:hidden md:before:block
+            before:absolute before:top-0 before:left-[50%] before:-translate-x-px
             before:h-full before:w-px
-            before:bg-gradient-to-b before:from-primary/40 before:via-border/60 before:to-transparent"
+            before:bg-gradient-to-b before:from-primary/30 before:via-border/50 before:to-transparent
+            before:pointer-events-none"
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={staggerGrid}
