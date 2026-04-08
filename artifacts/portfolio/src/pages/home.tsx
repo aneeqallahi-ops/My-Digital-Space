@@ -108,21 +108,23 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
         }}
       />
 
-      {/* portrait — bottom-anchored, right side, large */}
+      {/* portrait — bottom-anchored, centred in right half, full height */}
       <motion.img
         src="/aneeq-portrait.png"
         alt="Aneeq Allahi"
-        className="absolute bottom-0 right-0 hidden lg:block pointer-events-none select-none"
+        className="absolute bottom-0 hidden lg:block pointer-events-none select-none"
         style={{
-          height: "94%",
+          right: "4%",
+          height: "102%",
           width: "auto",
+          maxWidth: "48%",
           objectFit: "contain",
           objectPosition: "bottom",
-          filter: "drop-shadow(-8px 0 40px hsl(var(--primary) / 0.15))",
+          filter: "drop-shadow(-12px 0 60px hsl(var(--primary) / 0.18))",
         }}
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, delay: 0.4, ease }}
+        transition={{ duration: 1.3, delay: 0.35, ease }}
         data-testid="img-hero-headshot"
       />
 
@@ -135,22 +137,21 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
           transition={{ duration: 1, delay: 0.15, ease }}
           style={{ y: textY, opacity: textOp }}
         >
-          {/* role badge */}
-          <div className="flex items-center gap-3 flex-wrap">
+          {/* role badge — Senior Analyst @ Intellia */}
+          <div className="flex items-center gap-3 flex-wrap" data-testid="text-hero-subtitle">
             <span
-              className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em]"
+              className="inline-flex items-center gap-2.5 text-[13px] font-semibold uppercase tracking-[0.18em]"
               style={{ color: "hsl(var(--primary))" }}
-              data-testid="text-hero-subtitle"
             >
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "hsl(var(--primary))" }} />
+              <span className="w-2 h-2 rounded-full animate-pulse shrink-0" style={{ background: "hsl(var(--primary))" }} />
               Senior Analyst
             </span>
-            <span className="text-white/20">·</span>
+            <span className="text-white/30 text-base font-light">@</span>
             <img
               src="/intellia-logo.png"
-              alt="Intellia"
-              className="h-[3.8rem] w-auto"
-              style={{ filter: "brightness(0) invert(1)", opacity: 0.7 }}
+              alt="Intellia AI"
+              className="h-[5rem] w-auto"
+              style={{ filter: "brightness(0) invert(1)", opacity: 0.8 }}
               data-testid="img-intellia-logo-hero"
             />
           </div>
@@ -172,7 +173,7 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
 
           {/* tagline */}
           <p
-            className="text-[15px] text-white/50 font-light leading-[1.9]"
+            className="text-[15px] md:text-[16px] text-white/70 font-light leading-[1.9]"
             data-testid="text-hero-tagline"
           >
             Orchestrating strategy, driving product,<br className="hidden md:block" /> and unlocking scale through AI &amp; automation.
@@ -211,8 +212,28 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
         </motion.div>
       </div>
 
-      {/* bottom fade into next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+      {/* dynamic SVG wave — dark hero into light about section */}
+      <div className="absolute bottom-0 left-0 right-0 pointer-events-none z-20" style={{ lineHeight: 0 }}>
+        <svg
+          viewBox="0 0 1440 90"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          className="w-full"
+          style={{ display: "block", height: "90px" }}
+        >
+          {/* subtle dark shimmer behind the wave */}
+          <path
+            d="M0,60 C360,90 1080,20 1440,55 L1440,90 L0,90 Z"
+            fill="hsl(var(--primary))"
+            fillOpacity="0.06"
+          />
+          {/* main background-colour wave */}
+          <path
+            d="M0,70 C400,30 1000,75 1440,45 L1440,90 L0,90 Z"
+            fill="hsl(var(--background))"
+          />
+        </svg>
+      </div>
     </section>
   );
 }
