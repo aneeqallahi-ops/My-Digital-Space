@@ -1,0 +1,18 @@
+Update the portfolio cards across three sections as follows. Each card has a visible card view and an expanded modal view.CONSULTING CARDSCard 1
+
+Card tag: STRATEGY
+Card title: Joint Venture Due Diligence and B2B Pipeline Intelligence for a Global Technology Giant in Saudi Arabia
+Card description: Supported strategic due diligence for a global technology conglomerate's joint venture entry into Saudi Arabia — spanning competitive landscaping, business model deconstruction, financial analysis, and a proprietary B2B tender intelligence workstream built on 2,000+ scraped government procurement entries.
+Modal:
+
+Tag: STRATEGY
+Title: Joint Venture Due Diligence and B2B Pipeline Intelligence for a Global Technology Giant in Saudi Arabia
+Body: This engagement supported due diligence for a global technology giant evaluating a joint venture with a major Saudi conglomerate, structured across two analytical tracks. The first track covered competitive landscaping — deconstructing incumbent and emerging technology players in the Saudi market across business model architecture, product portfolio depth, route-to-market strategies, and financial benchmarks — alongside an analysis of the prospective JV partner's conglomerate structure, revenue composition, and strategic rationale, with a focus on synergy levers and risk vectors. The second track built a proprietary B2B pipeline intelligence model through large-scale government tender scraping. 2,000+ entries were extracted from public procurement databases and structured to map the tendering landscape across: process composition and lifecycle, aggregate and segmented tender value pools, competitive capture rates by incumbent players, and forward-looking tender projections tied to Vision 2030 spending mandates. The combined output gave the client a data-driven view of the addressable B2B opportunity, competitive procurement intensity, and a prioritisation framework for pipeline targeting post-JV formation.
+Key Outcomes:
+
+Constructed a competitive intelligence matrix across Saudi market technology players, benchmarking business model architecture, financial performance, and route-to-market strategies.
+Scraped, cleaned, and structured 2,000+ government procurement entries to build a proprietary tender model covering value pools, competitive capture rates, and 3-year forward projections.
+Delivered a dual-track due diligence output synthesising market-entry risk, JV partner synergy assessment, and a prioritised B2B pipeline targeting framework.
+
+
+Tools & Skills: Commercial Due Diligence · Competitive Intelligence · Business Model Analysis · Financial Benchmarking · Web Scraping · Government Tender Analysis · B2B Pipeline Mapping · Market Entry Strategy · Joint Venture Advisory · Vision 2030 Landscape
