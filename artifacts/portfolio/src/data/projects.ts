@@ -61,7 +61,7 @@ export const consultingProjects: ProjectItem[] = [
   },
   {
     id: "consulting-4",
-    category: "Research",
+    category: "Case Study",
     title: "Consumer Sentiment Analysis — Frozen Food Sector",
     description: "Deployed a mixed-methods primary research framework across the KLI region to deconstruct consumer purchasing behaviour, psychographic drivers, and trust barriers within Pakistan's frozen food category — surfacing actionable intelligence across the 4P marketing matrix for a leading national FMCG player.",
     extendedDescription: "Engaged as part of a student consultancy team retained by a leading frozen food manufacturer in Pakistan under a confidentiality agreement. The engagement addressed a core market tension: high brand awareness coexisting with a persistent consumer trust deficit. The workstream ran across three sequential phases — quantitative survey distribution, semi-structured qualitative interviews, and data interpretation — to triangulate attitudinal and behavioural signals at scale across Karachi, Lahore, and Islamabad, yielding 260+ survey responses and 37 in-depth interviews.",

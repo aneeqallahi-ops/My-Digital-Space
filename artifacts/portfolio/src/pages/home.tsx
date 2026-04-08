@@ -365,6 +365,7 @@ function Footer() {
   return (
     <footer className="py-12 border-t border-border/50 text-center" data-testid="main-footer">
       <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-4 text-sm text-muted-foreground font-light">
+        <span className="text-xs uppercase tracking-widest text-primary font-semibold w-full mb-1">My Contact Details</span>
         <a href="tel:+923049705122" className="hover:text-foreground transition-colors">+92 304 9705122</a>
         <a href="mailto:Aneeq.allahi@intelliaadvisors.com" className="hover:text-foreground transition-colors">Aneeq.allahi@intelliaadvisors.com</a>
         <a href="https://www.linkedin.com/in/aneeq-allahi" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
