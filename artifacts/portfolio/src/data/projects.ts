@@ -16,6 +16,7 @@ export type CertificationItem = {
   issuer: string;
   year: string;
   skills: string[];
+  logoSrc?: string;
 };
 
 export const consultingProjects: ProjectItem[] = [
@@ -181,6 +182,22 @@ export const academicProjects: ProjectItem[] = [
     externalUrl: "https://drive.google.com/drive/folders/1Re5i-Tsp4oEn2F0tRBaGyly7c_iyGNWJ?usp=sharing",
     externalUrlLabel: "Click here to access the report",
   },
+  {
+    id: "academic-4",
+    category: "Research",
+    title: "Gendered Financial Barriers — Women Entrepreneurs in Pakistan's MSME Landscape",
+    description: "A LUMS Senior Year Project examining the financial exclusion of women-led micro-enterprises in Pakistan — analysing barriers across formal banking, microfinance, fintech, and informal lending, supported by primary interviews and a quantitative financial modelling workstream.",
+    extendedDescription: "This case study, produced as a Senior Year Project at LUMS, explores the systemic financial exclusion faced by women-led MSMEs in Pakistan. Built around the narrative of Amina — a home-based tailor in Lahore aspiring to formalise and scale her business — the case maps the structural and gendered barriers that prevent women micro-entrepreneurs from accessing formal credit. Despite MSMEs constituting 90% of Pakistani businesses and generating 40% of GDP, SME lending stood at just 7% of total bank credit as of 2023, with women-owned enterprises disproportionately excluded. The research mapped the full financing landscape across four channels: formal banking (characterised by collateral requirements and documentation barriers), microfinance institutions (accessible but high-cost at 25–35% interest), digital fintech platforms (emerging but limited in reach), and informal moneylenders (high-cost and exploitative). Primary semi-structured interviews were conducted with microfinance and financial inclusion practitioners to ground the qualitative analysis in practitioner insight. A quantitative financial model then compared three financing scenarios — MFI loan, digital fintech product, and government SAAF loan — across repayment burden, Debt Service Coverage Ratio (DSCR), net cash flow, and Internal Rate of Return (IRR), with sensitivity testing across revenue fluctuations and interest rate scenarios. The study concludes with policy and product recommendations centred on fintech-enabled credit scoring, government-backed blended finance instruments, and gender-disaggregated lending mandates for financial institutions.",
+    outcomes: [
+      "Mapped the end-to-end financing landscape for women micro-entrepreneurs in Pakistan across formal, semi-formal, digital, and informal channels — benchmarked on cost, accessibility, tenure, and scalability.",
+      "Conducted primary research via semi-structured interviews with microfinance and financial inclusion practitioners to ground qualitative analysis in practitioner insight.",
+      "Built a quantitative financial model comparing MFI, digital fintech, and government SAAF loan scenarios across repayment burden, DSCR, net cash flow, and IRR — with sensitivity testing across revenue and interest rate fluctuations.",
+      "Identified systemic policy and institutional gaps in Pakistan's gender-inclusive finance landscape and proposed fintech-enabled product and policy interventions.",
+    ],
+    tools: ["Case Study Research", "Financial Modelling", "Sensitivity Analysis", "Gender Economics", "MSME Finance", "Microfinance Analysis", "Fintech Landscape Mapping", "Primary Interviews", "Policy Analysis", "DSCR & IRR Modelling", "Lahore University of Management Sciences"],
+    externalUrl: "https://drive.google.com/drive/folders/1kt18vamyRCZsJxVp-lSSbO5JrqYa0stz?usp=drive_link",
+    externalUrlLabel: "View Full Project",
+  },
 ];
 
 export const certifications: CertificationItem[] = [
@@ -190,6 +207,7 @@ export const certifications: CertificationItem[] = [
     issuer: "Microsoft",
     year: "August 2024",
     skills: ["Power BI", "Data Modelling", "DAX", "Data Visualisation", "Business Intelligence"],
+    logoSrc: "/microsoft-logo.svg",
   },
   {
     id: "cert-2",
@@ -197,6 +215,7 @@ export const certifications: CertificationItem[] = [
     issuer: "Hugging Face",
     year: "July 2025",
     skills: ["LLM Agents", "Tool Use", "ReAct Framework", "Agentic Workflows", "AI Engineering"],
+    logoSrc: "/huggingface-logo.svg",
   },
   {
     id: "cert-3",
@@ -204,6 +223,7 @@ export const certifications: CertificationItem[] = [
     issuer: "DataCamp",
     year: "August 2024",
     skills: ["Tableau", "Data Visualisation", "Dashboard Design", "Business Analytics"],
+    logoSrc: "/datacamp-logo.svg",
   },
   {
     id: "cert-4",
@@ -211,5 +231,6 @@ export const certifications: CertificationItem[] = [
     issuer: "DataCamp",
     year: "August 2024",
     skills: ["Data Analysis", "Python", "SQL", "Statistical Thinking", "Data Wrangling"],
+    logoSrc: "/datacamp-logo.svg",
   },
 ];
