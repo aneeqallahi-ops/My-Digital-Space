@@ -168,7 +168,7 @@ export const academicProjects: ProjectItem[] = [
   },
   {
     id: "academic-3",
-    category: "Case Study",
+    category: "Research Project - Business Analytics",
     title: "Gendered Wages in Focus: A Business Analytics Approach to Gender-Based Wage Disparities",
     description: "A data-driven investigation into the UK gender pay gap, analyzing 48,000+ employer records across industries, regions, and company sizes using regression modeling, K-means clustering, and LLM-assisted feature engineering in RStudio — revealing that Banking & Financial Services leads with a 23% pay disparity.",
     extendedDescription: "This project applies a full business analytics pipeline to UK government-mandated gender pay gap data spanning 2017–2022, covering 48,721 employer records across England, Scotland, Wales, and Northern Ireland. The workflow began with multi-stage data cleaning in RStudio, followed by feature engineering — including sector classification, industry category, and geolocation — extracted from company names, SIC codes, and postcodes using Ollama, a locally hosted LLM. A multiple linear regression model identified Banking & Financial Services, Tech & IT, and Consultancy as the strongest predictors of male-favoring pay gaps, while K-means clustering (k=2, selected via elbow method) revealed that even female-majority workplaces still pay men more — though by 1.6% less than male-dominated firms. Findings support targeted policy recommendations around high-gap industries, regional incentive structures, and bonus equity reform.",
