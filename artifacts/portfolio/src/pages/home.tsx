@@ -375,13 +375,13 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
   role: string; company: string; dates: string; description: string; logoSrc?: string; isCurrent?: boolean;
 }) {
   return (
-    <div className="group relative pl-8 md:pl-0">
+    <div className="group relative pl-8 md:pl-0 py-4 md:py-8">
       {/* mobile dot */}
       <div className="md:hidden absolute left-0 top-[6px] w-2.5 h-2.5 rounded-full border-2 border-border bg-background group-hover:border-primary transition-colors" />
 
-      <div className="grid md:grid-cols-2 gap-6 md:gap-16 items-start">
+      <div className="grid md:grid-cols-2 gap-8 md:gap-20 items-start">
         {/* left: meta */}
-        <div className="md:text-right md:pr-14">
+        <div className="md:text-right md:pr-16">
           <h3 className="text-[1.1rem] font-serif font-medium text-foreground group-hover:text-primary transition-colors duration-300 leading-snug">
             {role}
           </h3>
@@ -395,7 +395,6 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
           )}
           <span className={`inline-block text-[11px] font-semibold mt-3 tracking-wide ${isCurrent ? "text-primary" : "text-muted-foreground/70"}`}>
             {dates}
-            {isCurrent && <span className="ml-2 inline-flex items-center gap-1"><span className="w-1 h-1 rounded-full bg-primary animate-pulse inline-block" />Current</span>}
           </span>
         </div>
 
@@ -403,7 +402,7 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
         <div className="hidden md:block absolute left-[50%] -ml-[5px] top-[6px] w-2.5 h-2.5 rounded-full border-2 border-border bg-background group-hover:border-primary group-hover:bg-primary/20 transition-all duration-300 z-10" />
 
         {/* right: description */}
-        <div className="md:pl-14">
+        <div className="md:pl-16">
           <p className="text-muted-foreground text-sm font-light leading-[1.9]">{description}</p>
         </div>
       </div>
@@ -426,7 +425,7 @@ function Experience() {
         <SectionHeading title="Career Trajectory" subtitle="Experience" />
         <motion.div
           ref={ref}
-          className="relative space-y-20
+          className="relative space-y-24
             before:absolute before:inset-0
             before:ml-[3px] md:before:ml-[50%]
             before:-translate-x-px md:before:translate-x-0
