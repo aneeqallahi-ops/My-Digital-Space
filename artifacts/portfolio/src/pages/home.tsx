@@ -34,7 +34,7 @@ function useViewOnce(margin = "-80px") {
 
 /* ── nav ──────────────────────────────────────────────────── */
 
-function Nav() {
+function Nav({ onResumeOpen }: { onResumeOpen: () => void }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -45,7 +45,7 @@ function Nav() {
   return (
     <motion.nav
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/90 backdrop-blur-xl border-b border-border/40 shadow-sm" : "bg-transparent"
+        scrolled ? "bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-sm" : "bg-transparent"
       }`}
       initial={{ y: -80 }}
       animate={{ y: 0 }}
@@ -55,26 +55,29 @@ function Nav() {
       <div className="max-w-6xl mx-auto px-6 h-[72px] flex items-center justify-between">
         <a
           href="#hero"
-          className={`font-serif font-bold text-xl tracking-tight transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white"}`}
+          className="font-semibold text-base tracking-tight text-foreground"
           data-testid="nav-logo"
         >
-          AA.
+          Aneeq Allahi
         </a>
         <div className="hidden md:flex items-center gap-8">
-          {[["#about","About"],["#consulting","Consulting"],["#projects","Projects"],["#ai","AI & Automation"],["#experience","Experience"]].map(([href,label]) => (
+          {[["#about","About"],["#consulting","Work"],["#experience","Experience"],["#ai","AI"]].map(([href,label]) => (
             <a
               key={href}
               href={href}
-              className={`text-sm font-medium transition-colors duration-200 ${
-                scrolled
-                  ? "text-muted-foreground hover:text-foreground"
-                  : "text-white/75 hover:text-white"
-              }`}
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
             >
               {label}
             </a>
           ))}
         </div>
+        <button
+          onClick={onResumeOpen}
+          className="hidden md:inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background hover:opacity-85 transition-opacity"
+          data-testid="nav-resume-btn"
+        >
+          View Résumé
+        </button>
       </div>
     </motion.nav>
   );
@@ -84,170 +87,85 @@ function Nav() {
 
 function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
   const { scrollY } = useScroll();
-  const textOp = useTransform(scrollY, [0, 400], [1, 0]);
-  const imgScale = useTransform(scrollY, [0, 600], [1, 1.06]);
+  const textOp = useTransform(scrollY, [0, 380], [1, 0]);
+  const imgY   = useTransform(scrollY, [0, 600], [0, 35]);
 
   return (
     <section
       id="hero"
-      className="relative min-h-[100dvh] overflow-hidden"
-      style={{ background: "#000000" }}
+      className="relative min-h-[100dvh] overflow-hidden bg-background"
       data-testid="section-hero"
     >
-      {/* ── full-bleed photo ── */}
+      {/* ── centered portrait ── */}
       <motion.div
-        className="absolute inset-0 will-change-transform"
-        style={{ scale: imgScale }}
+        className="absolute inset-x-0 top-0 flex justify-center pointer-events-none select-none"
+        style={{ y: imgY }}
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, delay: 0.1, ease }}
       >
         <img
-          src="/aneeq-headshot-campus.jpg"
+          src="/aneeq-portrait.png"
           alt="Aneeq Allahi"
-          className="w-full h-full object-cover"
-          style={{ objectPosition: "center 15%" }}
+          className="w-auto object-contain object-top"
+          style={{ height: "91vh", marginTop: "52px" }}
           data-testid="img-hero-headshot"
         />
       </motion.div>
 
-      {/* ── gradient overlays ── */}
-      {/* heavy bottom-up black fade so text is always readable */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(to top, #000000 38%, rgba(0,0,0,0.72) 58%, rgba(0,0,0,0.25) 80%, transparent 100%)",
-        }}
-      />
-      {/* left vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none hidden md:block"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(0,0,0,0.55) 0%, transparent 55%)",
-        }}
-      />
-      {/* blue accent glow bottom-left */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 55% 40% at 10% 95%, rgba(4,158,255,0.18) 0%, transparent 65%)",
-        }}
-      />
-
-      {/* ── top-left small label ── */}
+      {/* ── bottom content — two-column ── */}
       <motion.div
-        className="absolute top-[88px] left-8 md:left-14 xl:left-20 z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.4 }}
-        style={{ opacity: textOp }}
-      >
-        <p className="text-[11px] uppercase tracking-[0.22em] text-white/50 font-medium leading-relaxed">
-          Hi, I'm a consultant<br />& product manager
-        </p>
-      </motion.div>
-
-      {/* ── top-right availability tag ── */}
-      <motion.div
-        className="absolute top-[88px] right-8 md:right-14 xl:right-20 z-10 text-right hidden md:block"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
-        style={{ opacity: textOp }}
-      >
-        <p className="text-[11px] uppercase tracking-[0.22em] text-white/50 font-medium leading-relaxed">
-          Based in Connecticut*<br />Available worldwide
-        </p>
-      </motion.div>
-
-      {/* ── bottom content block ── */}
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 z-10 px-8 md:px-14 xl:px-20 pb-20 md:pb-24"
-        initial={{ opacity: 0, y: 48 }}
+        className="absolute bottom-0 left-0 right-0 z-10 px-8 md:px-12 xl:px-20 pb-14 md:pb-18"
+        initial={{ opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.1, delay: 0.1, ease }}
+        transition={{ duration: 1, delay: 0.35, ease }}
         style={{ opacity: textOp }}
       >
-        {/* massive display name */}
-        <h1
-          className="font-black leading-[0.88] tracking-tighter text-white uppercase select-none"
-          style={{ fontSize: "clamp(3.8rem, 11.5vw, 10.5rem)" }}
-          data-testid="text-hero-title"
-        >
-          Aneeq<br />Allahi
-        </h1>
+        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-end">
 
-        {/* role row */}
-        <div className="mt-7 md:mt-9 flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
-          {/* role + company */}
-          <div className="flex items-center gap-4 flex-wrap" data-testid="text-hero-subtitle">
-            <span className="inline-flex items-center gap-2.5 text-[13px] font-semibold uppercase tracking-[0.18em] text-white/80">
-              <span className="w-2 h-2 rounded-full bg-[#049EFF] animate-pulse shrink-0" />
-              Senior Analyst
-            </span>
-            <span className="text-white/30 font-light">@</span>
-            <img
-              src="/intellia-logo.png"
-              alt="Intellia AI"
-              className="h-[4.2rem] w-auto opacity-80"
-              style={{ filter: "brightness(0) invert(1)" }}
-              data-testid="img-intellia-logo-hero"
-            />
+          {/* left — status chip + bold headline */}
+          <div>
+            <div className="flex items-center gap-2 mb-5" data-testid="text-hero-subtitle">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shrink-0" />
+              <span className="text-[12px] font-medium text-muted-foreground">
+                Senior Analyst @ Intellia AI · Available for consulting
+              </span>
+            </div>
+            <h1
+              className="font-bold leading-[1.06] tracking-tight text-foreground"
+              style={{ fontSize: "clamp(1.75rem, 3vw, 2.65rem)" }}
+              data-testid="text-hero-title"
+            >
+              Aneeq is driving impact through strategy, product&nbsp;&amp; AI
+            </h1>
           </div>
 
-          {/* divider (desktop) */}
-          <div className="hidden md:block w-px h-8 bg-white/15 shrink-0" />
-
-          {/* tagline */}
-          <p
-            className="text-[14px] md:text-[15px] text-white/55 font-light leading-[1.85] max-w-xs"
-            data-testid="text-hero-tagline"
-          >
-            Orchestrating strategy, driving product, and unlocking scale through AI &amp; automation.
-          </p>
-        </div>
-
-        {/* cta row */}
-        <div className="mt-8 flex items-center gap-4 flex-wrap">
-          <button
-            onClick={onResumeOpen}
-            className="inline-flex items-center gap-2.5 px-6 py-3 text-sm font-semibold rounded-full bg-white text-black hover:bg-white/90 transition-colors duration-200"
-            data-testid="btn-view-resume"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            View Résumé
-          </button>
-          <a
-            href="#consulting"
-            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-full bg-white/10 text-white hover:bg-white/18 border border-white/15 transition-colors duration-200 backdrop-blur-sm"
-          >
-            See my work ↓
-          </a>
+          {/* right — bio + CTA */}
+          <div className="flex flex-col items-start gap-7">
+            <p
+              className="text-[14px] text-muted-foreground leading-[1.85] max-w-[360px]"
+              data-testid="text-hero-tagline"
+            >
+              A strategy and product professional with a focus on AI&nbsp;&amp; automation and go-to-market execution. He partners with teams to craft data-driven, user-centred solutions — bringing ideas from concept to scale.
+            </p>
+            <div className="flex items-center gap-4 flex-wrap">
+              <button
+                onClick={onResumeOpen}
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background hover:opacity-85 transition-opacity"
+                data-testid="btn-view-resume"
+              >
+                View Résumé
+              </button>
+              <a
+                href="#consulting"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
+              >
+                See my work →
+              </a>
+            </div>
+          </div>
         </div>
       </motion.div>
-
-      {/* ── SVG wave transition ── */}
-      <div className="absolute bottom-0 left-0 right-0 pointer-events-none z-20" style={{ lineHeight: 0 }}>
-        <svg
-          viewBox="0 0 1440 90"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-          className="w-full"
-          style={{ display: "block", height: "90px" }}
-        >
-          <path
-            d="M0,60 C360,90 1080,20 1440,55 L1440,90 L0,90 Z"
-            fill="hsl(var(--primary))"
-            fillOpacity="0.05"
-          />
-          <path
-            d="M0,70 C400,30 1000,75 1440,45 L1440,90 L0,90 Z"
-            fill="hsl(var(--background))"
-          />
-        </svg>
-      </div>
     </section>
   );
 }
@@ -635,7 +553,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <Nav />
+      <Nav onResumeOpen={() => setResumeOpen(true)} />
       <main>
         <Hero onResumeOpen={() => setResumeOpen(true)} />
         <About />
