@@ -342,10 +342,14 @@ function Certifications({ onOpen }: { onOpen: (c: CertificationItem) => void }) 
               className="p-6 border border-border/50 bg-background flex flex-col items-center text-center group hover:border-primary/50 transition-colors cursor-pointer w-full"
               data-testid={`card-certification-${i + 1}`}
             >
-              <div className="w-12 h-12 bg-card/50 flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
-                <svg className="w-6 h-6 text-muted-foreground group-hover:text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
+              <div className="w-12 h-12 bg-card/50 flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors overflow-hidden">
+                {cert.logoSrc ? (
+                  <img src={cert.logoSrc} alt={cert.issuer} className="w-7 h-7 object-contain" />
+                ) : (
+                  <svg className="w-6 h-6 text-muted-foreground group-hover:text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                )}
               </div>
               <h4 className="text-sm font-medium text-foreground mb-1">{cert.title}</h4>
               <p className="text-xs text-muted-foreground">{cert.issuer} · {cert.year}</p>
