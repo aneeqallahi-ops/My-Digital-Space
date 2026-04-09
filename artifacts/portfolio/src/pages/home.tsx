@@ -34,7 +34,7 @@ function useViewOnce(margin = "-80px") {
 
 /* ── nav ──────────────────────────────────────────────────── */
 
-function Nav({ onResumeOpen }: { onResumeOpen: () => void }) {
+function Nav({ onResumeOpen: _onResumeOpen }: { onResumeOpen: () => void }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -71,13 +71,6 @@ function Nav({ onResumeOpen }: { onResumeOpen: () => void }) {
             </a>
           ))}
         </div>
-        <button
-          onClick={onResumeOpen}
-          className="hidden md:inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background hover:opacity-85 transition-opacity"
-          data-testid="nav-resume-btn"
-        >
-          View Résumé
-        </button>
       </div>
     </motion.nav>
   );
@@ -95,11 +88,10 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
       className="relative min-h-[100dvh] overflow-hidden bg-background"
       data-testid="section-hero"
     >
-      {/* ── portrait — 480px wide × 140dvh tall container, bottom-anchored ── */}
-      {/* Section overflow-hidden clips top; objectFit cover + top anchors face near y=176 */}
+      {/* Portrait: 480px wide, 165dvh tall, bottom-anchored. clipPath crops bottom 280px (mid-chest only). */}
       <motion.div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none select-none overflow-hidden"
-        style={{ width: "480px", height: "165dvh" }}
+        style={{ width: "480px", height: "165dvh", clipPath: "inset(0 0 280px 0)" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.15 }}
@@ -122,34 +114,27 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
         className="absolute inset-y-0 right-0 w-[44%] pointer-events-none z-[1]"
         style={{ background: "linear-gradient(to left, hsl(var(--background)) 0%, hsl(var(--background)/0.85) 40%, transparent 100%)" }}
       />
-      {/* ── short foot-fade at bottom ── */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-[80px] pointer-events-none z-[1]"
-        style={{ background: "linear-gradient(to top, hsl(var(--background)) 0%, transparent 100%)" }}
-      />
 
-      {/* ── top-left: Senior Analyst @ Intellia badge ── */}
+      {/* ── top-left: Senior Analyst @ Intellia — no card, direct display ── */}
       <motion.div
-        className="absolute top-[90px] left-8 md:left-14 xl:left-20 z-10"
+        className="absolute top-[90px] left-8 md:left-14 xl:left-20 z-10 inline-flex items-center gap-3"
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.35 }}
         style={{ opacity: textOp }}
         data-testid="text-hero-subtitle"
       >
-        <div className="inline-flex items-center gap-3 rounded-full border border-border/50 bg-background/80 backdrop-blur-md px-4 py-2 shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse shrink-0" />
-          <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-foreground">
-            Senior Analyst
-          </span>
-          <span className="text-muted-foreground/40 font-light">@</span>
-          <img
-            src="/intellia-logo.png"
-            alt="Intellia AI"
-            className="h-[10rem] w-auto"
-            data-testid="img-intellia-logo-hero"
-          />
-        </div>
+        <span className="w-2 h-2 rounded-full bg-primary animate-pulse shrink-0" />
+        <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-foreground">
+          Senior Analyst
+        </span>
+        <span className="text-muted-foreground/40 font-light">@</span>
+        <img
+          src="/intellia-logo.png"
+          alt="Intellia AI"
+          className="h-[10rem] w-auto"
+          data-testid="img-intellia-logo-hero"
+        />
       </motion.div>
 
       {/* ── bottom-left: big name + tagline — glass panel matching nav badge ── */}
