@@ -551,7 +551,7 @@ function NaseehaHero() {
       <div className="relative z-10 max-w-4xl mx-auto px-8 md:px-14 xl:px-20 pt-40 pb-16">
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
           <span className="inline-block text-xs font-semibold uppercase tracking-[0.25em] text-primary mb-5">
-            AI · Automation
+            AUTOMATION
           </span>
           <h1 className="font-serif text-4xl md:text-5xl xl:text-6xl font-semibold text-white leading-[1.05] tracking-tight mb-6">
             Lecture Intelligence<br className="hidden md:block" /> Pipeline
