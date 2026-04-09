@@ -34,7 +34,7 @@ function useViewOnce(margin = "-80px") {
 
 /* ── nav ──────────────────────────────────────────────────── */
 
-function Nav({ onResumeOpen: _onResumeOpen }: { onResumeOpen: () => void }) {
+function Nav() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -45,7 +45,7 @@ function Nav({ onResumeOpen: _onResumeOpen }: { onResumeOpen: () => void }) {
   return (
     <motion.nav
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-sm" : "bg-transparent"
+        scrolled ? "bg-background/90 backdrop-blur-xl border-b border-border/40 shadow-sm" : "bg-transparent"
       }`}
       initial={{ y: -80 }}
       animate={{ y: 0 }}
@@ -55,17 +55,21 @@ function Nav({ onResumeOpen: _onResumeOpen }: { onResumeOpen: () => void }) {
       <div className="max-w-6xl mx-auto px-6 h-[72px] flex items-center justify-between">
         <a
           href="#hero"
-          className="font-semibold text-base tracking-tight text-foreground"
+          className={`font-serif font-bold text-xl tracking-tight transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white"}`}
           data-testid="nav-logo"
         >
           AA.
         </a>
         <div className="hidden md:flex items-center gap-8">
-          {[["#about","About"],["#consulting","Work"],["#experience","Experience"],["#ai","AI"]].map(([href,label]) => (
+          {[["#about","About"],["#consulting","Consulting"],["#projects","Projects"],["#ai","AI & Automation"],["#experience","Experience"]].map(([href,label]) => (
             <a
               key={href}
               href={href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+              className={`text-sm font-medium transition-colors duration-200 ${
+                scrolled
+                  ? "text-muted-foreground hover:text-foreground"
+                  : "text-white/75 hover:text-white"
+              }`}
             >
               {label}
             </a>
@@ -80,112 +84,165 @@ function Nav({ onResumeOpen: _onResumeOpen }: { onResumeOpen: () => void }) {
 
 function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
   const { scrollY } = useScroll();
-  const textOp = useTransform(scrollY, [0, 380], [1, 0]);
+  const textY  = useTransform(scrollY, [0, 500], [0, 60]);
+  const textOp = useTransform(scrollY, [0, 320], [1, 0]);
+  const imgY   = useTransform(scrollY, [0, 600], [0, 30]);
 
   return (
     <section
       id="hero"
-      className="relative min-h-[100dvh] overflow-hidden bg-background"
+      className="relative min-h-[100dvh] overflow-hidden"
+      style={{ background: "#0c1220" }}
       data-testid="section-hero"
     >
-      {/* Portrait: 480px wide, 185dvh. Face lands at y≈0 (section top), body fills to viewport bottom. */}
-      <motion.div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none select-none overflow-hidden"
-        style={{ width: "480px", height: "160dvh" }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.15 }}
+      {/* fine grid texture across whole hero */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.045]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
+
+      {/* left accent bar */}
+      <div className="absolute left-0 top-[18%] bottom-[18%] w-[3px] bg-primary/60" />
+
+      {/* radial glow behind portrait */}
+      <div
+        className="absolute pointer-events-none hidden lg:block"
+        style={{
+          right: "5%",
+          bottom: 0,
+          width: "52%",
+          height: "100%",
+          background: "radial-gradient(ellipse 60% 70% at 55% 85%, hsl(var(--primary) / 0.12) 0%, transparent 70%)",
+        }}
+      />
+
+      {/* portrait — bottom-anchored, centred in right half, full height */}
+      <motion.img
+        src="/aneeq-portrait.png"
+        alt="Aneeq Allahi"
+        className="absolute bottom-0 hidden lg:block pointer-events-none select-none"
+        style={{
+          right: "-2%",
+          height: "118%",
+          width: "auto",
+          maxWidth: "58%",
+          objectFit: "contain",
+          objectPosition: "bottom",
+          filter: "drop-shadow(-16px 0 80px hsl(var(--primary) / 0.22))",
+        }}
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.3, delay: 0.35, ease }}
         data-testid="img-hero-headshot"
-      >
-        <img
-          src="/aneeq-portrait.png"
-          alt="Aneeq Allahi"
-          className="w-full h-full"
-          style={{ objectFit: "cover", objectPosition: "center top" }}
-        />
-      </motion.div>
-
-      {/* ── side-fades: portrait blends into background at left + right edges ── */}
-      <div
-        className="absolute inset-y-0 left-0 w-[44%] pointer-events-none z-[1]"
-        style={{ background: "linear-gradient(to right, hsl(var(--background)) 0%, hsl(var(--background)/0.85) 40%, transparent 100%)" }}
-      />
-      <div
-        className="absolute inset-y-0 right-0 w-[44%] pointer-events-none z-[1]"
-        style={{ background: "linear-gradient(to left, hsl(var(--background)) 0%, hsl(var(--background)/0.85) 40%, transparent 100%)" }}
       />
 
-      {/* ── top-left: Senior Analyst @ Intellia — no card, direct display ── */}
-      <motion.div
-        className="absolute top-[90px] left-8 md:left-14 xl:left-20 z-10 inline-flex items-center gap-3"
-        initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.35 }}
-        style={{ opacity: textOp }}
-        data-testid="text-hero-subtitle"
-      >
-        <span className="w-2 h-2 rounded-full bg-primary animate-pulse shrink-0" />
-        <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-foreground">
-          Senior Analyst
-        </span>
-        <span className="text-muted-foreground/40 font-light">@</span>
-        <img
-          src="/intellia-logo.png"
-          alt="Intellia AI"
-          className="h-[10rem] w-auto"
-          data-testid="img-intellia-logo-hero"
-        />
-      </motion.div>
+      {/* text layer */}
+      <div className="relative z-10 min-h-[100dvh] flex flex-col justify-center px-8 md:px-14 xl:px-20 pt-28 pb-16 lg:pt-0 lg:pb-0">
+        <motion.div
+          className="space-y-8 max-w-[520px]"
+          initial={{ opacity: 0, y: 36 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.15, ease }}
+          style={{ y: textY, opacity: textOp }}
+        >
+          {/* role badge — Senior Analyst @ Intellia */}
+          <div className="flex items-center gap-4 flex-wrap" data-testid="text-hero-subtitle">
+            <span className="inline-flex items-center gap-2.5 text-[15px] font-semibold uppercase tracking-[0.16em] text-white">
+              <span className="w-2.5 h-2.5 rounded-full animate-pulse shrink-0 bg-primary" />
+              Senior Analyst
+            </span>
+            <span className="text-white/40 text-lg font-light">@</span>
+            <img
+              src="/intellia-logo.png"
+              alt="Intellia AI"
+              className="h-[6rem] w-auto"
+              style={{ filter: "brightness(0) invert(1)", opacity: 0.9 }}
+              data-testid="img-intellia-logo-hero"
+            />
+          </div>
 
-      {/* ── bottom-left: big name + tagline — glass panel matching nav badge ── */}
-      <motion.div
-        className="absolute bottom-0 left-8 md:left-14 xl:left-20 z-10 pb-10 md:pb-14"
-        initial={{ opacity: 0, y: 28 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.3, ease }}
-        style={{ opacity: textOp }}
-      >
-        <div className="rounded-2xl border border-border/50 bg-background/80 backdrop-blur-md px-6 py-5 shadow-sm max-w-[300px]">
+          {/* name */}
           <h1
-            className="font-black leading-[0.9] tracking-tight text-foreground"
-            style={{ fontSize: "clamp(3rem, 5.5vw, 5rem)" }}
+            className="font-serif font-semibold leading-[1.02] tracking-tight text-white"
+            style={{ fontSize: "clamp(3rem, 5.5vw, 5.2rem)" }}
             data-testid="text-hero-title"
           >
             Aneeq<br />Allahi
           </h1>
+
+          {/* accent dashes */}
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-[2px] bg-primary" />
+            <div className="w-4 h-[2px] bg-primary/40" />
+          </div>
+
+          {/* tagline */}
           <p
-            className="mt-4 text-[14px] text-muted-foreground leading-[1.8]"
+            className="text-[15px] md:text-[16px] text-white/70 font-light leading-[1.9]"
             data-testid="text-hero-tagline"
           >
-            Orchestrating strategy, driving product, and unlocking scale through AI&nbsp;&amp; automation.
+            Orchestrating strategy, driving product,<br className="hidden md:block" /> and unlocking scale through AI &amp; automation.
           </p>
-        </div>
-      </motion.div>
 
-      {/* ── bottom-right: bio + CTAs — glass panel matching nav badge ── */}
-      <motion.div
-        className="absolute bottom-0 right-8 md:right-14 xl:right-20 z-10 pb-10 md:pb-14"
-        initial={{ opacity: 0, y: 28 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.4, ease }}
-        style={{ opacity: textOp }}
-      >
-        <div className="flex items-center gap-4 flex-wrap">
-          <button
-            onClick={onResumeOpen}
-            className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background hover:opacity-85 transition-opacity"
-            data-testid="btn-view-resume"
-          >
-            View Résumé
-          </button>
-          <a
-            href="#consulting"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
-          >
-            See my work →
-          </a>
-        </div>
-      </motion.div>
+          {/* cta */}
+          <div className="pt-2 flex items-center gap-5 flex-wrap">
+            <button
+              onClick={onResumeOpen}
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 text-sm font-medium border border-white/20 text-white hover:bg-white hover:text-[#0c1220] transition-colors duration-300"
+              data-testid="btn-view-resume"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              View Résumé
+            </button>
+            <a
+              href="#consulting"
+              className="text-sm text-white/40 hover:text-white/70 transition-colors font-light"
+            >
+              See my work ↓
+            </a>
+          </div>
+        </motion.div>
+
+        {/* scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-8 md:left-14 xl:left-20 flex items-center gap-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.28 }}
+          transition={{ delay: 2 }}
+        >
+          <div className="w-px h-8 bg-white" />
+          <span className="text-[10px] uppercase tracking-[0.2em] text-white font-medium">Scroll</span>
+        </motion.div>
+      </div>
+
+      {/* dynamic SVG wave — dark hero into light about section */}
+      <div className="absolute bottom-0 left-0 right-0 pointer-events-none z-20" style={{ lineHeight: 0 }}>
+        <svg
+          viewBox="0 0 1440 90"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          className="w-full"
+          style={{ display: "block", height: "90px" }}
+        >
+          {/* subtle dark shimmer behind the wave */}
+          <path
+            d="M0,60 C360,90 1080,20 1440,55 L1440,90 L0,90 Z"
+            fill="hsl(var(--primary))"
+            fillOpacity="0.06"
+          />
+          {/* main background-colour wave */}
+          <path
+            d="M0,70 C400,30 1000,75 1440,45 L1440,90 L0,90 Z"
+            fill="hsl(var(--background))"
+          />
+        </svg>
+      </div>
     </section>
   );
 }
@@ -573,7 +630,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <Nav onResumeOpen={() => setResumeOpen(true)} />
+      <Nav />
       <main>
         <Hero onResumeOpen={() => setResumeOpen(true)} />
         <About />
