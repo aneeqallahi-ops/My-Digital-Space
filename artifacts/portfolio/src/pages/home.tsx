@@ -58,7 +58,7 @@ function Nav({ onResumeOpen: _onResumeOpen }: { onResumeOpen: () => void }) {
           className="font-semibold text-base tracking-tight text-foreground"
           data-testid="nav-logo"
         >
-          Aneeq Allahi
+          AA.
         </a>
         <div className="hidden md:flex items-center gap-8">
           {[["#about","About"],["#consulting","Work"],["#experience","Experience"],["#ai","AI"]].map(([href,label]) => (
@@ -91,7 +91,7 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
       {/* Portrait: 480px wide, 185dvh. Face lands at y≈0 (section top), body fills to viewport bottom. */}
       <motion.div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none select-none overflow-hidden"
-        style={{ width: "480px", height: "185dvh" }}
+        style={{ width: "480px", height: "160dvh" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.15 }}
