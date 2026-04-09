@@ -88,10 +88,10 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
       className="relative min-h-[100dvh] overflow-hidden bg-background"
       data-testid="section-hero"
     >
-      {/* Portrait: 480px wide, 165dvh tall, bottom-anchored. clipPath crops bottom 280px (mid-chest only). */}
+      {/* Portrait: 480px wide, 185dvh. Face lands at y≈0 (section top), body fills to viewport bottom. */}
       <motion.div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none select-none overflow-hidden"
-        style={{ width: "480px", height: "165dvh", clipPath: "inset(0 0 280px 0)" }}
+        style={{ width: "480px", height: "185dvh" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.15 }}
