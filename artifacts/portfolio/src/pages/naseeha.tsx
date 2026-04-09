@@ -421,8 +421,8 @@ function PipelineDiagram() {
             <SplitConnector active={activeStep === 4} />
           </div>
 
-          {/* branch nodes */}
-          <div className="w-full grid gap-4" style={{ maxWidth: 380, gridTemplateColumns: "1fr 1fr" }}>
+          {/* branch nodes — single column on mobile, two on md+ */}
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4" style={{ maxWidth: 380 }}>
             {[leftBranch, rightBranch].map((node) => (
               <NodeBox
                 key={node.id}

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "wouter";
 import type { ProjectItem, CertificationItem } from "@/data/projects";
 
 const overlayVariants = {
@@ -129,7 +130,7 @@ export function ProjectModal({ project, onClose }: { project: ProjectItem | null
                 {project.externalUrl && (
                   <div className="border-t border-border/50 pt-8 mt-8">
                     {project.externalUrl.startsWith("/") ? (
-                      <a
+                      <Link
                         href={project.externalUrl}
                         className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:opacity-70 transition-opacity"
                         data-testid={`modal-external-link-${project.id}`}
@@ -138,7 +139,7 @@ export function ProjectModal({ project, onClose }: { project: ProjectItem | null
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                           <path strokeLinecap="square" strokeLinejoin="miter" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
-                      </a>
+                      </Link>
                     ) : (
                       <a
                         href={project.externalUrl}
