@@ -309,6 +309,7 @@ function PipelineDiagram() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const endPauseRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const stepRef = useRef(0);
+  const diagramRef = useRef<HTMLDivElement>(null);
 
   const stopTimer = useCallback(() => {
     if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
@@ -342,6 +343,19 @@ function PipelineDiagram() {
     }
     return stopTimer;
   }, [isPlaying, startTimer, stopTimer]);
+
+  // Click outside the diagram area while paused → resume
+  useEffect(() => {
+    if (isPlaying) return;
+    function onDocClick(e: MouseEvent) {
+      if (diagramRef.current && !diagramRef.current.contains(e.target as Node)) {
+        setSelectedId(null);
+        setIsPlaying(true);
+      }
+    }
+    document.addEventListener("mousedown", onDocClick);
+    return () => document.removeEventListener("mousedown", onDocClick);
+  }, [isPlaying]);
 
   function handleNodeClick(id: string, step: number) {
     if (selectedId === id) {
@@ -409,7 +423,7 @@ function PipelineDiagram() {
         </div>
 
         {/* diagram */}
-        <div className="flex flex-col items-center">
+        <div ref={diagramRef} className="flex flex-col items-center">
           {/* nodes before branch */}
           {beforeBranch.map((node, i) => (
             <div key={node.id} className="w-full flex flex-col items-center" style={{ maxWidth: 380 }}>
