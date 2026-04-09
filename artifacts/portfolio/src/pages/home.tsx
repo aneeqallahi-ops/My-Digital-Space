@@ -170,25 +170,20 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
         transition={{ duration: 1, delay: 0.4, ease }}
         style={{ opacity: textOp }}
       >
-        <div className="rounded-2xl border border-border/50 bg-background/80 backdrop-blur-md px-6 py-5 shadow-sm max-w-[320px] flex flex-col items-start gap-5">
-          <p className="text-[13.5px] text-muted-foreground leading-[1.85]">
-            A strategy and product professional focused on AI automation and go-to-market execution. He partners with teams to craft data-driven, user-centred solutions — bringing ideas from concept to scale.
-          </p>
-          <div className="flex items-center gap-4 flex-wrap">
-            <button
-              onClick={onResumeOpen}
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background hover:opacity-85 transition-opacity"
-              data-testid="btn-view-resume"
-            >
-              View Résumé
-            </button>
-            <a
-              href="#consulting"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
-            >
-              See my work →
-            </a>
-          </div>
+        <div className="flex items-center gap-4 flex-wrap">
+          <button
+            onClick={onResumeOpen}
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background hover:opacity-85 transition-opacity"
+            data-testid="btn-view-resume"
+          >
+            View Résumé
+          </button>
+          <a
+            href="#consulting"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
+          >
+            See my work →
+          </a>
         </div>
       </motion.div>
     </section>
