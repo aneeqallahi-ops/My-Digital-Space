@@ -99,7 +99,7 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
       {/* Section overflow-hidden clips top; objectFit cover + top anchors face near y=176 */}
       <motion.div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none select-none overflow-hidden"
-        style={{ width: "480px", height: "140dvh" }}
+        style={{ width: "480px", height: "165dvh" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.15 }}
@@ -146,60 +146,64 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
           <img
             src="/intellia-logo.png"
             alt="Intellia AI"
-            className="h-[2rem] w-auto"
+            className="h-[10rem] w-auto"
             data-testid="img-intellia-logo-hero"
           />
         </div>
       </motion.div>
 
-      {/* ── bottom-left: big name + tagline ── */}
+      {/* ── bottom-left: big name + tagline — glass panel matching nav badge ── */}
       <motion.div
-        className="absolute bottom-0 left-8 md:left-14 xl:left-20 z-10 pb-14 md:pb-20 max-w-[300px]"
+        className="absolute bottom-0 left-8 md:left-14 xl:left-20 z-10 pb-10 md:pb-14"
         initial={{ opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.3, ease }}
         style={{ opacity: textOp }}
       >
-        <h1
-          className="font-black leading-[0.9] tracking-tight text-foreground"
-          style={{ fontSize: "clamp(3rem, 5.5vw, 5rem)" }}
-          data-testid="text-hero-title"
-        >
-          Aneeq<br />Allahi
-        </h1>
-        <p
-          className="mt-5 text-[14px] text-muted-foreground leading-[1.8]"
-          data-testid="text-hero-tagline"
-        >
-          Orchestrating strategy, driving product, and unlocking scale through AI&nbsp;&amp; automation.
-        </p>
+        <div className="rounded-2xl border border-border/50 bg-background/80 backdrop-blur-md px-6 py-5 shadow-sm max-w-[300px]">
+          <h1
+            className="font-black leading-[0.9] tracking-tight text-foreground"
+            style={{ fontSize: "clamp(3rem, 5.5vw, 5rem)" }}
+            data-testid="text-hero-title"
+          >
+            Aneeq<br />Allahi
+          </h1>
+          <p
+            className="mt-4 text-[14px] text-muted-foreground leading-[1.8]"
+            data-testid="text-hero-tagline"
+          >
+            Orchestrating strategy, driving product, and unlocking scale through AI&nbsp;&amp; automation.
+          </p>
+        </div>
       </motion.div>
 
-      {/* ── bottom-right: bio + CTAs ── */}
+      {/* ── bottom-right: bio + CTAs — glass panel matching nav badge ── */}
       <motion.div
-        className="absolute bottom-0 right-8 md:right-14 xl:right-20 z-10 pb-14 md:pb-20 max-w-[320px] flex flex-col items-start gap-5"
+        className="absolute bottom-0 right-8 md:right-14 xl:right-20 z-10 pb-10 md:pb-14"
         initial={{ opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.4, ease }}
         style={{ opacity: textOp }}
       >
-        <p className="text-[13.5px] text-muted-foreground leading-[1.85]">
-          A strategy and product professional focused on AI automation and go-to-market execution. He partners with teams to craft data-driven, user-centred solutions — bringing ideas from concept to scale.
-        </p>
-        <div className="flex items-center gap-4 flex-wrap">
-          <button
-            onClick={onResumeOpen}
-            className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background hover:opacity-85 transition-opacity"
-            data-testid="btn-view-resume"
-          >
-            View Résumé
-          </button>
-          <a
-            href="#consulting"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
-          >
-            See my work →
-          </a>
+        <div className="rounded-2xl border border-border/50 bg-background/80 backdrop-blur-md px-6 py-5 shadow-sm max-w-[320px] flex flex-col items-start gap-5">
+          <p className="text-[13.5px] text-muted-foreground leading-[1.85]">
+            A strategy and product professional focused on AI automation and go-to-market execution. He partners with teams to craft data-driven, user-centred solutions — bringing ideas from concept to scale.
+          </p>
+          <div className="flex items-center gap-4 flex-wrap">
+            <button
+              onClick={onResumeOpen}
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background hover:opacity-85 transition-opacity"
+              data-testid="btn-view-resume"
+            >
+              View Résumé
+            </button>
+            <a
+              href="#consulting"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
+            >
+              See my work →
+            </a>
+          </div>
         </div>
       </motion.div>
     </section>
