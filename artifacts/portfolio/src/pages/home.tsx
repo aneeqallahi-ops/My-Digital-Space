@@ -52,7 +52,13 @@ function Nav() {
       transition={{ duration: 0.9, ease }}
       data-testid="main-navigation"
     >
-      <div className="max-w-6xl mx-auto px-6 h-[72px] flex items-center justify-between">
+      <div
+        className={`max-w-6xl mx-auto px-6 h-[72px] flex items-center justify-between transition-all duration-300 ${
+          scrolled
+            ? "bg-background/80 backdrop-blur-xl border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.18)] rounded-full px-5"
+            : "bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 shadow-[0_10px_30px_rgba(0,0,0,0.12)]"
+        }`}
+      >
         <a
           href="#hero"
           className={`font-serif font-bold text-xl tracking-tight transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white"}`}
@@ -126,13 +132,13 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
         alt="Aneeq Allahi"
         className="absolute bottom-0 hidden lg:block pointer-events-none select-none"
         style={{
-          right: "-2%",
-          height: "118%",
+          right: "-4%",
+          height: "132%",
           width: "auto",
-          maxWidth: "58%",
+          maxWidth: "72%",
           objectFit: "contain",
           objectPosition: "bottom",
-          filter: "drop-shadow(-16px 0 80px hsl(var(--primary) / 0.22))",
+          filter: "drop-shadow(-18px 0 90px hsl(var(--primary) / 0.24))",
         }}
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
