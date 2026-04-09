@@ -69,98 +69,92 @@ const NODES: PipelineNode[] = [
     side: "right",
   },
   {
-    id: "merged", step: 5, type: "conditional",
-    label: "Merged Branch", sublabel: "Both paths converge here",
-    description: "Both conditional paths converge at a merge node before entering the summarisation stage, ensuring a consistent downstream flow regardless of the branch taken.",
-    detail: "n8n Merge Node · Unified pipeline output",
-  },
-  {
-    id: "llm", step: 6, type: "processing",
+    id: "llm", step: 5, type: "processing",
     label: "LLM Summarisation", sublabel: "System prompt + message prompt",
     description: "Claude Haiku generates a structured summary covering key points, Quranic and Hadith references, and thematic takeaways. The system prompt defines organisational tone and output structure; the message prompt carries session-specific inputs.",
     detail: "Claude Haiku · Role-segregated for credit efficiency",
   },
   {
-    id: "google-doc", step: 7, type: "processing",
+    id: "google-doc", step: 6, type: "processing",
     label: "Branded Google Doc Template", sublabel: "HTTP node → paste + append",
     description: "The summary is inserted into a pre-designed Google Doc template via a structured HTTP node call, preserving Naseeha's logos, typography, section headers, and formatting throughout.",
     detail: "HTTP Node · Google Docs API · Template injection",
   },
   {
-    id: "human-review", step: 8, type: "human-review",
+    id: "human-review", step: 7, type: "human-review",
     label: "Human-in-the-Loop Review", sublabel: "Editable Google Doc · approval logic",
     description: "The draft is routed to designated reviewers via a shared editable Google Doc link. The pipeline holds at this stage until the configured approval condition is satisfied.",
     detail: "Google Doc share link · Configurable hold",
   },
   {
-    id: "approval", step: 9, type: "human-review",
+    id: "approval", step: 8, type: "human-review",
     label: "Approval Logic Options", sublabel: "Any 1 of 4 · min 2 · expert feedback loop",
     description: "Three approval modes: any one of four reviewers approves via a one-click email link; a minimum of two must approve; or a reviewer submits feedback that is looped back into the LLM for auto-edits before final re-review.",
     detail: "3 configurable modes · LLM feedback loop supported",
   },
   {
-    id: "pdf", step: 10, type: "processing",
+    id: "pdf", step: 9, type: "processing",
     label: "PDF Generation", sublabel: "Branded template → convert to PDF",
     description: "The approved Google Doc is converted to a formatted PDF, retaining all organisational branding — ready for WhatsApp distribution to registered attendees.",
     detail: "Google Docs → PDF · Full branding preserved",
   },
   {
-    id: "sheets", step: 11, type: "processing",
+    id: "sheets", step: 10, type: "processing",
     label: "Google Sheets Query", sublabel: "Filter registrants: last 7 days only",
     description: "Registration data from the session's Google Form is queried and filtered to only include participants who signed up within the past 7 days, preventing repeat delivery and maintaining clean data hygiene.",
     detail: "Google Sheets API · 7-day filter · Deduplication",
   },
   {
-    id: "loop", step: 12, type: "processing",
+    id: "loop", step: 11, type: "processing",
     label: "Loop Over Registrants", sublabel: "Wait between sends · anti-spam buffer",
     description: "The pipeline iterates over each registrant entry with a configurable delay inserted between each WhatsApp send — preventing API spam detection and ensuring reliable, throttled delivery.",
     detail: "n8n Loop Node · Configurable delay · Anti-spam guard",
   },
   {
-    id: "whatsapp", step: 13, type: "output",
+    id: "whatsapp", step: 12, type: "output",
     label: "WhatsApp Dispatch (WHAPI)", sublabel: "Personalised name + session title per send",
     description: "Each registrant receives a personalised WhatsApp message — addressed by name, referencing the specific lecture session they attended — with the branded PDF attached via WHAPI's HTTP integration.",
     detail: "WHAPI · HTTP Node · Personalised per recipient",
   },
   {
-    id: "tracking", step: 14, type: "output",
+    id: "tracking", step: 13, type: "output",
     label: "Attendance & Funnel Tracking", sublabel: "Repeat participants · stream transitions",
     description: "Registration data feeds a longitudinal attendance dataset, building a week-by-week picture of repeat participants and tracking which attendees transition into other Naseeha programme offerings over time.",
     detail: "Google Sheets dataset · Funnel analytics · Long-term tracking",
   },
 ];
 
-const TOTAL_STEPS = 15;
+const TOTAL_STEPS = 14;
 const STEP_MS = 750;
 const END_PAUSE_MS = 1400;
 
-/* ── animated connector ──────────────────────────────────────── */
+/* ── animated connector (SVG stroke-dashoffset) ──────────────── */
 
-function Connector({ active, color, dashed = false, height = 48 }: { active: boolean; color: string; dashed?: boolean; height?: number }) {
+function Connector({ active, color, height = 48 }: { active: boolean; color: string; height?: number }) {
   return (
-    <div
-      className="relative overflow-hidden mx-auto"
-      style={{ width: 2, height, background: `rgba(255,255,255,0.06)` }}
-    >
-      <motion.div
-        className="absolute inset-x-0"
-        animate={{ top: active ? ["-100%", "200%"] : "0%" }}
-        transition={active ? { duration: STEP_MS / 1000, ease: "linear", repeat: Infinity } : {}}
-        style={{
-          height: "60%",
-          background: `linear-gradient(to bottom, transparent, ${color}, transparent)`,
-          opacity: active ? 1 : 0.25,
-        }}
+    <svg width="12" height={height} className="block mx-auto overflow-visible" aria-hidden="true">
+      {/* static track */}
+      <line x1="6" y1="0" x2="6" y2={height} stroke={`${color}22`} strokeWidth="2" />
+      {/* animated data-flow: CSS stroke-dasharray + stroke-dashoffset */}
+      <motion.line
+        x1="6" y1="0" x2="6" y2={height}
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeDasharray="8 8"
+        animate={active
+          ? { strokeDashoffset: [0, -16], opacity: 0.9 }
+          : { opacity: 0 }
+        }
+        transition={active
+          ? {
+              strokeDashoffset: { duration: 0.4, ease: "linear", repeat: Infinity, repeatType: "loop" },
+              opacity: { duration: 0.15 },
+            }
+          : { duration: 0.15 }
+        }
       />
-      {dashed && (
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `repeating-linear-gradient(to bottom, ${color}55 0px, ${color}55 4px, transparent 4px, transparent 10px)`,
-          }}
-        />
-      )}
-    </div>
+    </svg>
   );
 }
 
@@ -168,42 +162,50 @@ function Connector({ active, color, dashed = false, height = 48 }: { active: boo
 
 function SplitConnector({ active }: { active: boolean }) {
   const c = COLORS["conditional"];
-  const col = active ? c.border : `${c.border}44`;
+  const dashProps = { strokeDasharray: "5 3", strokeWidth: 1.5, fill: "none" as const };
   return (
     <svg viewBox="0 0 400 52" preserveAspectRatio="none" width="100%" height="52" className="block">
-      <path d={`M 200 0 L 200 22 L 110 52`} stroke={col} fill="none" strokeWidth={active ? 2 : 1.5} strokeDasharray="5,3" />
-      <path d={`M 200 0 L 200 22 L 290 52`} stroke={col} fill="none" strokeWidth={active ? 2 : 1.5} strokeDasharray="5,3" />
-      {active && (
-        <>
-          <circle r="4" fill={c.border}>
-            <animateMotion dur="0.7s" repeatCount="indefinite" path="M 200 0 L 200 22 L 110 52" />
-          </circle>
-          <circle r="4" fill={c.border}>
-            <animateMotion dur="0.7s" repeatCount="indefinite" path="M 200 0 L 200 22 L 290 52" />
-          </circle>
-        </>
-      )}
+      {/* track */}
+      <path d="M 200 0 L 200 22 L 110 52" stroke={`${c.border}33`} {...dashProps} />
+      <path d="M 200 0 L 200 22 L 290 52" stroke={`${c.border}33`} {...dashProps} />
+      {/* animated flow via stroke-dashoffset */}
+      <motion.path
+        d="M 200 0 L 200 22 L 110 52"
+        stroke={c.border} {...dashProps}
+        animate={active ? { strokeDashoffset: [0, -8], opacity: 1 } : { opacity: 0.3 }}
+        transition={active ? { strokeDashoffset: { duration: 0.35, ease: "linear", repeat: Infinity }, opacity: { duration: 0.15 } } : { duration: 0.15 }}
+      />
+      <motion.path
+        d="M 200 0 L 200 22 L 290 52"
+        stroke={c.border} {...dashProps}
+        animate={active ? { strokeDashoffset: [0, -8], opacity: 1 } : { opacity: 0.3 }}
+        transition={active ? { strokeDashoffset: { duration: 0.35, ease: "linear", repeat: Infinity }, opacity: { duration: 0.15 } } : { duration: 0.15 }}
+      />
     </svg>
   );
 }
 
 function MergeConnector({ active }: { active: boolean }) {
   const c = COLORS["conditional"];
-  const col = active ? c.border : `${c.border}44`;
+  const dashProps = { strokeDasharray: "5 3", strokeWidth: 1.5, fill: "none" as const };
   return (
     <svg viewBox="0 0 400 52" preserveAspectRatio="none" width="100%" height="52" className="block">
-      <path d={`M 110 0 L 200 30 L 200 52`} stroke={col} fill="none" strokeWidth={active ? 2 : 1.5} strokeDasharray="5,3" />
-      <path d={`M 290 0 L 200 30 L 200 52`} stroke={col} fill="none" strokeWidth={active ? 2 : 1.5} strokeDasharray="5,3" />
-      {active && (
-        <>
-          <circle r="4" fill={c.border}>
-            <animateMotion dur="0.7s" repeatCount="indefinite" path="M 110 0 L 200 30 L 200 52" />
-          </circle>
-          <circle r="4" fill={c.border}>
-            <animateMotion dur="0.7s" repeatCount="indefinite" path="M 290 0 L 200 30 L 200 52" />
-          </circle>
-        </>
-      )}
+      {/* track */}
+      <path d="M 110 0 L 200 30 L 200 52" stroke={`${c.border}33`} {...dashProps} />
+      <path d="M 290 0 L 200 30 L 200 52" stroke={`${c.border}33`} {...dashProps} />
+      {/* animated flow via stroke-dashoffset */}
+      <motion.path
+        d="M 110 0 L 200 30 L 200 52"
+        stroke={c.border} {...dashProps}
+        animate={active ? { strokeDashoffset: [0, -8], opacity: 1 } : { opacity: 0.3 }}
+        transition={active ? { strokeDashoffset: { duration: 0.35, ease: "linear", repeat: Infinity }, opacity: { duration: 0.15 } } : { duration: 0.15 }}
+      />
+      <motion.path
+        d="M 290 0 L 200 30 L 200 52"
+        stroke={c.border} {...dashProps}
+        animate={active ? { strokeDashoffset: [0, -8], opacity: 1 } : { opacity: 0.3 }}
+        transition={active ? { strokeDashoffset: { duration: 0.35, ease: "linear", repeat: Infinity }, opacity: { duration: 0.15 } } : { duration: 0.15 }}
+      />
     </svg>
   );
 }
@@ -360,7 +362,7 @@ function PipelineDiagram() {
   function isNodeSelected(node: PipelineNode) { return selectedId === node.id; }
 
   // Render the sequence: drive(0), wait(1), assemblyai(2), context-check(3),
-  // [branch split], no-notes(4) | with-notes(4), [merge], merged(5), llm(6)...
+  // [branch split], no-notes(4) | with-notes(4), [merge connector], llm(5)...
   const beforeBranch = mainNodes.filter(n => n.step <= 3);
   const afterBranch = mainNodes.filter(n => n.step >= 5);
 
@@ -452,7 +454,7 @@ function PipelineDiagram() {
                 isSelected={isNodeSelected(node)}
                 onClick={() => handleNodeClick(node.id, node.step)}
               />
-              {node.step < 14 && (
+              {node.step < 13 && (
                 <Connector
                   active={activeStep === node.step + 1}
                   color={COLORS[afterBranch.find(n => n.step === node.step + 1)?.type ?? node.type].border}
