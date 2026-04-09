@@ -121,6 +121,8 @@ export const aiProjects: ProjectItem[] = [
       "Automated branded PDF generation and personalised WhatsApp distribution to weekly registrants via a custom WHAPI HTTP integration.",
     ],
     tools: ["n8n Automation", "AssemblyAI", "LLM Integration", "Google Drive Trigger", "Google Docs", "Google Sheets", "WhatsApp API (WHAPI)", "PDF Generation", "Multilingual Transcription", "Workflow Orchestration", "Non-Profit Tech"],
+    externalUrl: "/naseeha",
+    externalUrlLabel: "Explore Full Project",
   },
   {
     id: "ai-2",

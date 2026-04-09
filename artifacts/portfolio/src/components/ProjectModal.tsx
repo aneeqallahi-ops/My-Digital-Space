@@ -128,18 +128,31 @@ export function ProjectModal({ project, onClose }: { project: ProjectItem | null
 
                 {project.externalUrl && (
                   <div className="border-t border-border/50 pt-8 mt-8">
-                    <a
-                      href={project.externalUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:opacity-70 transition-opacity"
-                      data-testid={`modal-external-link-${project.id}`}
-                    >
-                      {project.externalUrlLabel ?? "View Project"}
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="square" strokeLinejoin="miter" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </a>
+                    {project.externalUrl.startsWith("/") ? (
+                      <a
+                        href={project.externalUrl}
+                        className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:opacity-70 transition-opacity"
+                        data-testid={`modal-external-link-${project.id}`}
+                      >
+                        {project.externalUrlLabel ?? "View Project"}
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                          <path strokeLinecap="square" strokeLinejoin="miter" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </a>
+                    ) : (
+                      <a
+                        href={project.externalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:opacity-70 transition-opacity"
+                        data-testid={`modal-external-link-${project.id}`}
+                      >
+                        {project.externalUrlLabel ?? "View Project"}
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                          <path strokeLinecap="square" strokeLinejoin="miter" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </a>
+                    )}
                   </div>
                 )}
               </div>
