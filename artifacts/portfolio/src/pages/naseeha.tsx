@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "wouter";
 
 /* ── types ──────────────────────────────────────────────────── */
 
@@ -298,10 +299,12 @@ function PipelineDiagram() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const endPauseRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const stepRef = useRef(0);
 
   const stopTimer = useCallback(() => {
     if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
+    if (endPauseRef.current) { clearTimeout(endPauseRef.current); endPauseRef.current = null; }
   }, []);
 
   const startTimer = useCallback(() => {
@@ -310,7 +313,8 @@ function PipelineDiagram() {
       const next = (stepRef.current + 1) % TOTAL_STEPS;
       if (next === 0) {
         stopTimer();
-        setTimeout(() => {
+        endPauseRef.current = setTimeout(() => {
+          endPauseRef.current = null;
           stepRef.current = 0;
           setActiveStep(0);
           startTimer();
@@ -500,11 +504,12 @@ function NaseehaNav() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 h-[68px] flex items-center justify-between">
-        <a href="/" className={`font-serif font-bold text-xl tracking-tight transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white"}`}>
+        <Link href="/" className={`font-serif font-bold text-xl tracking-tight transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white"}`}>
           AA.
-        </a>
-        <a
-          href="/#ai"
+        </Link>
+        <Link
+          href="/"
+          onClick={() => { setTimeout(() => { document.getElementById("ai")?.scrollIntoView({ behavior: "smooth" }); }, 80); }}
           className={`text-sm font-medium transition-colors duration-200 flex items-center gap-2 ${
             scrolled ? "text-muted-foreground hover:text-foreground" : "text-white/70 hover:text-white"
           }`}
@@ -513,7 +518,7 @@ function NaseehaNav() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
           Back to Portfolio
-        </a>
+        </Link>
       </div>
     </nav>
   );
@@ -756,15 +761,16 @@ function ToolsSection() {
 function BackToPortfolio() {
   return (
     <section className="py-16 px-6 bg-background border-t border-border/30 text-center">
-      <a
-        href="/#ai"
+      <Link
+        href="/"
+        onClick={() => { setTimeout(() => { document.getElementById("ai")?.scrollIntoView({ behavior: "smooth" }); }, 80); }}
         className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:opacity-70 transition-opacity"
       >
         <svg className="w-4 h-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
         </svg>
         Back to Portfolio — AI &amp; Automation
-      </a>
+      </Link>
     </section>
   );
 }
