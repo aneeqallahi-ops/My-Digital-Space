@@ -818,31 +818,32 @@ const TOOL_LOGOS: { name: string; src: string }[] = [
   { name: "Google Docs", src: "https://cdn.simpleicons.org/googledocs/4285F4" },
   { name: "Google Sheets", src: "https://cdn.simpleicons.org/googlesheets/34A853" },
   { name: "WhatsApp", src: "https://cdn.simpleicons.org/whatsapp/25D366" },
+  { name: "WHAPI", src: "/whapi-logo.png" },
 ];
 
 function ToolsSection() {
   return (
     <section className="py-20 px-6 bg-background border-t border-border/30">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="mb-12">
           <p className="text-xs uppercase tracking-widest font-semibold text-primary mb-3">Tools & Stack</p>
           <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">What It's Built With</h2>
         </div>
 
-        {/* logo grid — always coloured, larger, no labels */}
-        <div className="grid grid-cols-4 sm:grid-cols-7 gap-4">
+        {/* logo grid — always coloured, with name labels */}
+        <div className="grid grid-cols-4 sm:grid-cols-8 gap-4">
           {TOOL_LOGOS.map(tool => (
             <div
               key={tool.name}
-              className="flex items-center justify-center p-5 border border-border/40 bg-muted/20 hover:bg-muted/50 hover:border-border/80 transition-all duration-200"
-              title={tool.name}
+              className="flex flex-col items-center gap-3 p-4 border border-border/40 bg-muted/20 hover:bg-muted/50 hover:border-border/80 transition-all duration-200"
             >
               <img
                 src={tool.src}
                 alt={tool.name}
-                className="w-12 h-12 object-contain"
+                className="w-10 h-10 object-contain"
                 loading="lazy"
               />
+              <span className="text-[10px] font-medium text-muted-foreground text-center leading-tight">{tool.name}</span>
             </div>
           ))}
         </div>
