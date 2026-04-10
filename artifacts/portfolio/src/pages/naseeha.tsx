@@ -660,59 +660,115 @@ const ARCH = [
   {
     title: "Conditional and Merged Branching",
     body: "Not every session comes with pre-lecture context notes from the lecturer. The pipeline handles this gracefully through a conditional IF branch: when context notes are present, they are merged with the transcript before being passed to the LLM, enriching the summary with the lecturer's own framing and references. When absent, the pipeline routes to a separate branch that proceeds with the transcript alone. Both branches converge at a merge node before entering summarisation — ensuring a consistent downstream structure regardless of the path taken.",
+    color: "#6366f1",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+        <path d="M3 3h6v6H3zM15 3h6v6h-6zM9 12h6M12 6v6M9 18h6v3H9zM12 15v3" />
+      </svg>
+    ),
   },
   {
     title: "Human-in-the-Loop with Configurable Approval Logic",
     body: "The review stage is built to be flexible rather than fixed. Three approval modes can be configured: any one of four designated reviewers can approve via a one-click email link; a minimum of two reviewers must approve before the pipeline proceeds; or a reviewer (such as a religious scholar) can submit written feedback, which is automatically looped back into the LLM for targeted edits and regeneration before routing back for final sign-off.",
+    color: "#f43f5e",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+        <circle cx="9" cy="7" r="4" />
+        <path d="M2 21v-2a7 7 0 0 1 10.5-6.07M16 11l2 2 4-4" />
+      </svg>
+    ),
   },
   {
     title: "Branded Templating via HTTP Node",
     body: "Rather than generating a plain-text output, the pipeline populates a pre-designed Google Doc template carrying the organisation's branding — logo, typography, section headers, and formatting. Content is inserted and appended to the correct sections via a structured HTTP node call, ensuring every PDF looks like an official Naseeha publication rather than a raw LLM output.",
+    color: "#22c55e",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M3 9h18M9 21V9" />
+      </svg>
+    ),
   },
   {
     title: "LLM Role Segregation for Credits Efficiency",
     body: "The summarisation workstream uses Claude Haiku — capable enough for nuanced, structured multilingual comprehension while remaining cost-efficient. The system prompt defines organisational context, tone, and output structure; the message prompt passes session-specific inputs. This separation keeps the model focused and the outputs consistent across weeks without over-spending on heavier models for routine tasks.",
+    color: "#f59e0b",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+        <rect x="5" y="5" width="14" height="14" rx="2" />
+        <rect x="9" y="9" width="6" height="6" />
+        <path d="M5 9H3M5 15H3M9 5V3M15 5V3M19 9h2M19 15h2M9 19v2M15 19v2" />
+      </svg>
+    ),
   },
   {
     title: "Guard Rails and Wait Nodes",
     body: "Two deliberate guards sit in the pipeline. A wait node after the Drive trigger gives AssemblyAI sufficient processing time before the transcript fetch is attempted — preventing failed pulls on large audio files. A configurable loop delay is inserted between each WhatsApp send within the registrant iteration, preventing the WHAPI account from being flagged for bulk messaging and ensuring reliable delivery.",
+    color: "#14b8a6",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+        <path d="M12 2l7 4v6c0 4.4-3 8.5-7 10C5 20.5 2 16.4 2 12V6l7-4z" />
+        <circle cx="12" cy="12" r="3" />
+        <path d="M12 9v3l1.5 1.5" />
+      </svg>
+    ),
   },
   {
     title: "WhatsApp Loop and Anti-Spam Architecture",
     body: "The Google Sheets query applies a 7-day date filter to the registration data before the loop begins — ensuring only participants from the current week receive the summary and preventing accidental re-delivery to prior attendees. Each loop iteration dispatches a personalised message with the recipient's name and the specific session title, giving the delivery a personal rather than broadcast feel despite being fully automated.",
+    color: "#a78bfa",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+        <path d="M21 12a9 9 0 1 1-9-9 9 9 0 0 1 9 9z" />
+        <path d="M3.6 9h16.8M3.6 15h16.8" />
+        <path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+      </svg>
+    ),
   },
 ];
 
-const ARCH_COLORS = ["#6366f1","#22c55e","#f59e0b","#14b8a6","#f43f5e","#6366f1"];
-
 function ArchitectureSection() {
   return (
-    <section className="py-20 px-6" style={{ background: "#070d18" }}>
+    <section className="py-24 px-6" style={{ background: "#070d18" }}>
       <div className="max-w-5xl mx-auto">
-        <div className="mb-14">
-          <p className="text-xs uppercase tracking-widest font-semibold text-primary mb-3">Technical Architecture</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-semibold text-white">Under the Hood — What Makes It Work</h2>
+        <div className="mb-16">
+          <p className="text-xs uppercase tracking-widest font-semibold text-primary mb-4">Technical Architecture</p>
+          <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-4">Under the Hood</h2>
+          <p className="text-white/40 font-light text-base md:text-lg max-w-xl">Six design decisions that make the pipeline reliable, scalable, and editorially sound.</p>
         </div>
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid md:grid-cols-2 gap-6">
           {ARCH.map((item, i) => (
             <div
               key={i}
-              className="relative p-7 flex flex-col gap-4"
+              className="group relative p-8 flex flex-col gap-5 hover:scale-[1.01] transition-transform duration-300"
               style={{
                 background: "rgba(255,255,255,0.03)",
                 border: "1px solid rgba(255,255,255,0.07)",
-                borderTop: `2px solid ${ARCH_COLORS[i]}`,
+                borderTop: `3px solid ${item.color}`,
               }}
             >
-              {/* number badge */}
-              <span
-                className="text-xs font-bold font-mono tracking-widest"
-                style={{ color: ARCH_COLORS[i] }}
-              >
-                0{i + 1}
-              </span>
-              <h3 className="text-sm font-semibold text-white leading-snug">{item.title}</h3>
-              <p className="text-sm font-light leading-relaxed" style={{ color: "rgba(255,255,255,0.45)" }}>{item.body}</p>
+              {/* icon + number row */}
+              <div className="flex items-center justify-between">
+                <div
+                  className="w-11 h-11 flex items-center justify-center rounded-lg"
+                  style={{ background: `${item.color}18`, color: item.color }}
+                >
+                  {item.icon}
+                </div>
+                <span
+                  className="text-2xl font-bold font-mono opacity-15 select-none"
+                  style={{ color: item.color }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <h3 className="text-base font-semibold text-white leading-snug">{item.title}</h3>
+              <p className="text-sm font-light leading-relaxed" style={{ color: "rgba(255,255,255,0.48)" }}>{item.body}</p>
+              {/* subtle bottom accent line on hover */}
+              <div
+                className="absolute bottom-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{ background: `linear-gradient(to right, transparent, ${item.color}66, transparent)` }}
+              />
             </div>
           ))}
         </div>
@@ -754,21 +810,14 @@ function OutcomesSection() {
 
 /* ── tools section ───────────────────────────────────────────── */
 
-const TOOL_LOGOS = [
-  { name: "n8n", slug: "n8n", color: "EA4B71" },
-  { name: "AssemblyAI", slug: "assemblyai", color: "00D4AA" },
-  { name: "Anthropic", slug: "anthropic", color: "D4A27F" },
-  { name: "Google Drive", slug: "googledrive", color: "4285F4" },
-  { name: "Google Docs", slug: "googledocs", color: "4285F4" },
-  { name: "Google Sheets", slug: "googlesheets", color: "34A853" },
-  { name: "WhatsApp", slug: "whatsapp", color: "25D366" },
-];
-
-const TOOL_TAGS = [
-  "n8n Automation", "AssemblyAI", "Claude Haiku (LLM)", "Google Drive",
-  "Google Docs", "Google Sheets", "WhatsApp API (WHAPI)", "HTTP Node",
-  "PDF Conversion", "Conditional Branching", "Multilingual Transcription",
-  "Human-in-the-Loop Workflow", "Workflow Orchestration",
+const TOOL_LOGOS: { name: string; src: string }[] = [
+  { name: "n8n", src: "https://cdn.simpleicons.org/n8n/EA4B71" },
+  { name: "AssemblyAI", src: "/assemblyai-logo.png" },
+  { name: "Anthropic", src: "https://cdn.simpleicons.org/anthropic/D4A27F" },
+  { name: "Google Drive", src: "https://cdn.simpleicons.org/googledrive/4285F4" },
+  { name: "Google Docs", src: "https://cdn.simpleicons.org/googledocs/4285F4" },
+  { name: "Google Sheets", src: "https://cdn.simpleicons.org/googlesheets/34A853" },
+  { name: "WhatsApp", src: "https://cdn.simpleicons.org/whatsapp/25D366" },
 ];
 
 function ToolsSection() {
@@ -780,29 +829,21 @@ function ToolsSection() {
           <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">What It's Built With</h2>
         </div>
 
-        {/* logo grid — always coloured, larger */}
-        <div className="grid grid-cols-4 sm:grid-cols-7 gap-4 mb-12">
+        {/* logo grid — always coloured, larger, no labels */}
+        <div className="grid grid-cols-4 sm:grid-cols-7 gap-4">
           {TOOL_LOGOS.map(tool => (
-            <div key={tool.slug} className="flex flex-col items-center gap-3 p-4 border border-border/40 bg-muted/20 hover:bg-muted/50 hover:border-border/80 transition-all duration-200">
+            <div
+              key={tool.name}
+              className="flex items-center justify-center p-5 border border-border/40 bg-muted/20 hover:bg-muted/50 hover:border-border/80 transition-all duration-200"
+              title={tool.name}
+            >
               <img
-                src={`https://cdn.simpleicons.org/${tool.slug}/${tool.color}`}
+                src={tool.src}
                 alt={tool.name}
-                className="w-10 h-10 object-contain"
+                className="w-12 h-12 object-contain"
                 loading="lazy"
               />
-              <span className="text-[10px] text-muted-foreground font-medium text-center leading-tight">
-                {tool.name}
-              </span>
             </div>
-          ))}
-        </div>
-
-        {/* tag grid */}
-        <div className="flex flex-wrap gap-2">
-          {TOOL_TAGS.map(tag => (
-            <span key={tag} className="px-3 py-1.5 text-xs font-medium border border-border/60 text-muted-foreground bg-muted/30">
-              {tag}
-            </span>
           ))}
         </div>
       </div>
@@ -842,8 +883,8 @@ export default function NaseehaPage() {
       <NaseehaNav />
       <NaseehaHero />
       <GoalSection />
-      <ToolsSection />
       <PipelineDiagram />
+      <ToolsSection />
       <ArchitectureSection />
       <OutcomesSection />
       <BackToPortfolio />
