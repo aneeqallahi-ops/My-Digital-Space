@@ -567,11 +567,34 @@ function NaseehaHero() {
           <p className="text-white/60 font-light leading-relaxed text-base md:text-lg max-w-2xl mb-8">
             An end-to-end n8n automation that transcribes multilingual weekly Islamic lectures, generates AI-powered summaries, routes them through a human review workflow, formats branded PDFs, and delivers them personally to registered attendees over WhatsApp — turning each physical gathering into a scalable digital content loop.
           </p>
-          <div className="flex items-center gap-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary/60" />
-            <span className="text-sm text-white/40 font-light">
-              Built for <span className="text-white/70 font-medium">Naseeha</span> — a non-profit dedicated to the academic study of Islam, running a recurring weekly lecture series in Lahore.
+          {/* Naseeha attribution + logo */}
+          <div className="flex items-center gap-4 mb-8">
+            <img
+              src="/naseeha-logo.png"
+              alt="Naseeha Institute"
+              className="w-14 h-14 object-contain rounded-full opacity-90"
+            />
+            <span className="text-sm text-white/40 font-light leading-snug">
+              Built for <span className="text-white/70 font-medium">Naseeha Institute</span>
+              <br className="hidden sm:block" />
+              <span className="text-white/30 text-xs"> — non-profit Islamic education · Lahore</span>
             </span>
+          </div>
+
+          {/* n8n template CTA */}
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="https://n8n.io/workflows/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="square" strokeLinejoin="miter" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+              View n8n Workflow Template
+            </a>
+            <span className="text-xs text-white/25 italic">Template link — placeholder</span>
           </div>
         </motion.div>
       </div>
@@ -660,19 +683,36 @@ const ARCH = [
   },
 ];
 
+const ARCH_COLORS = ["#6366f1","#22c55e","#f59e0b","#14b8a6","#f43f5e","#6366f1"];
+
 function ArchitectureSection() {
   return (
-    <section className="py-20 px-6 bg-background border-t border-border/30">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-12">
+    <section className="py-20 px-6" style={{ background: "#070d18" }}>
+      <div className="max-w-5xl mx-auto">
+        <div className="mb-14">
           <p className="text-xs uppercase tracking-widest font-semibold text-primary mb-3">Technical Architecture</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">Under the Hood — What Makes It Work</h2>
+          <h2 className="font-serif text-3xl md:text-4xl font-semibold text-white">Under the Hood — What Makes It Work</h2>
         </div>
-        <div className="space-y-10">
+        <div className="grid md:grid-cols-2 gap-5">
           {ARCH.map((item, i) => (
-            <div key={i} className="grid md:grid-cols-[200px_1fr] gap-6 md:gap-10">
-              <h3 className="text-sm font-semibold text-foreground leading-snug pt-0.5">{item.title}</h3>
-              <p className="text-sm text-muted-foreground font-light leading-relaxed">{item.body}</p>
+            <div
+              key={i}
+              className="relative p-7 flex flex-col gap-4"
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                borderTop: `2px solid ${ARCH_COLORS[i]}`,
+              }}
+            >
+              {/* number badge */}
+              <span
+                className="text-xs font-bold font-mono tracking-widest"
+                style={{ color: ARCH_COLORS[i] }}
+              >
+                0{i + 1}
+              </span>
+              <h3 className="text-sm font-semibold text-white leading-snug">{item.title}</h3>
+              <p className="text-sm font-light leading-relaxed" style={{ color: "rgba(255,255,255,0.45)" }}>{item.body}</p>
             </div>
           ))}
         </div>
@@ -735,24 +775,22 @@ function ToolsSection() {
   return (
     <section className="py-20 px-6 bg-background border-t border-border/30">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-10">
+        <div className="mb-12">
           <p className="text-xs uppercase tracking-widest font-semibold text-primary mb-3">Tools & Stack</p>
           <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">What It's Built With</h2>
         </div>
 
-        {/* logo strip */}
-        <div className="flex flex-wrap items-center gap-8 mb-12">
+        {/* logo grid — always coloured, larger */}
+        <div className="grid grid-cols-4 sm:grid-cols-7 gap-4 mb-12">
           {TOOL_LOGOS.map(tool => (
-            <div key={tool.slug} className="group flex flex-col items-center gap-2">
-              <div className="w-10 h-10 flex items-center justify-center opacity-30 group-hover:opacity-100 transition-all duration-300 grayscale group-hover:grayscale-0">
-                <img
-                  src={`https://cdn.simpleicons.org/${tool.slug}/${tool.color}`}
-                  alt={tool.name}
-                  className="w-8 h-8 object-contain"
-                  loading="lazy"
-                />
-              </div>
-              <span className="text-[10px] text-muted-foreground/50 group-hover:text-muted-foreground transition-colors font-medium">
+            <div key={tool.slug} className="flex flex-col items-center gap-3 p-4 border border-border/40 bg-muted/20 hover:bg-muted/50 hover:border-border/80 transition-all duration-200">
+              <img
+                src={`https://cdn.simpleicons.org/${tool.slug}/${tool.color}`}
+                alt={tool.name}
+                className="w-10 h-10 object-contain"
+                loading="lazy"
+              />
+              <span className="text-[10px] text-muted-foreground font-medium text-center leading-tight">
                 {tool.name}
               </span>
             </div>
@@ -804,10 +842,10 @@ export default function NaseehaPage() {
       <NaseehaNav />
       <NaseehaHero />
       <GoalSection />
+      <ToolsSection />
       <PipelineDiagram />
       <ArchitectureSection />
       <OutcomesSection />
-      <ToolsSection />
       <BackToPortfolio />
     </div>
   );
