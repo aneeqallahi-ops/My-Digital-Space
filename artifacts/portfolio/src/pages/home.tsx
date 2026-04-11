@@ -36,11 +36,21 @@ function useViewOnce(margin = "-80px") {
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
+
+  const navLinks = [
+    ["#about", "About"],
+    ["#consulting", "Consulting"],
+    ["#projects", "Projects"],
+    ["#ai", "AI & Automation"],
+    ["#experience", "Experience"],
+  ];
 
   return (
     <motion.nav
@@ -54,7 +64,7 @@ function Nav() {
       transition={{ duration: 0.9, ease }}
       data-testid="main-navigation"
     >
-      <div className="max-w-6xl mx-auto px-6 h-[72px] flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-5 h-[68px] flex items-center justify-between">
         <a
           href="#hero"
           className={`font-serif font-bold text-xl tracking-tight transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white"}`}
@@ -62,8 +72,10 @@ function Nav() {
         >
           AA.
         </a>
+
+        {/* desktop links */}
         <div className="hidden md:flex items-center gap-8">
-          {[["#about","About"],["#consulting","Consulting"],["#projects","Projects"],["#ai","AI & Automation"],["#experience","Experience"]].map(([href,label]) => (
+          {navLinks.map(([href, label]) => (
             <a
               key={href}
               href={href}
@@ -71,6 +83,39 @@ function Nav() {
                 scrolled
                   ? "text-muted-foreground hover:text-foreground"
                   : "text-white/75 hover:text-white"
+              }`}
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+
+        {/* mobile hamburger */}
+        <button
+          className="md:hidden flex flex-col justify-center items-center gap-[5px] w-9 h-9 shrink-0"
+          aria-label="Toggle menu"
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <span className={`block w-5 h-[1.5px] transition-all duration-300 ${scrolled ? "bg-foreground" : "bg-white"} ${menuOpen ? "translate-y-[6.5px] rotate-45" : ""}`} />
+          <span className={`block w-5 h-[1.5px] transition-all duration-300 ${scrolled ? "bg-foreground" : "bg-white"} ${menuOpen ? "opacity-0" : ""}`} />
+          <span className={`block w-5 h-[1.5px] transition-all duration-300 ${scrolled ? "bg-foreground" : "bg-white"} ${menuOpen ? "-translate-y-[6.5px] -rotate-45" : ""}`} />
+        </button>
+      </div>
+
+      {/* mobile menu dropdown */}
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-300 ${
+          menuOpen ? "max-h-72 border-b border-white/10" : "max-h-0"
+        } ${scrolled ? "bg-background/95 backdrop-blur-xl" : "bg-[#0c1220]/95 backdrop-blur-xl"}`}
+      >
+        <div className="px-5 py-4 flex flex-col gap-1">
+          {navLinks.map(([href, label]) => (
+            <a
+              key={href}
+              href={href}
+              onClick={() => setMenuOpen(false)}
+              className={`py-2.5 text-sm font-medium border-b border-white/5 last:border-0 transition-colors duration-200 ${
+                scrolled ? "text-muted-foreground hover:text-foreground" : "text-white/75 hover:text-white"
               }`}
             >
               {label}
@@ -97,7 +142,7 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
       style={{ background: "#0c1220" }}
       data-testid="section-hero"
     >
-      {/* fine grid texture across whole hero */}
+      {/* fine grid texture */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.045]"
         style={{
@@ -110,7 +155,7 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
       {/* left accent bar */}
       <div className="absolute left-0 top-[18%] bottom-[18%] w-[3px] bg-primary/60" />
 
-      {/* radial glow behind portrait */}
+      {/* radial glow behind portrait — desktop only */}
       <div
         className="absolute pointer-events-none hidden lg:block"
         style={{
@@ -122,7 +167,7 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
         }}
       />
 
-      {/* portrait — bottom-anchored, centred in right half, full height */}
+      {/* portrait — desktop: full-height anchored right */}
       <motion.img
         src="/aneeq-portrait.png"
         alt="Aneeq Allahi"
@@ -135,6 +180,7 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
           objectFit: "contain",
           objectPosition: "bottom",
           filter: "drop-shadow(-18px 0 90px hsl(var(--primary) / 0.24))",
+          y: imgY,
         }}
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -143,25 +189,49 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
       />
 
       {/* text layer */}
-      <div className="relative z-10 min-h-[100dvh] flex flex-col justify-center px-8 md:px-14 xl:px-20 pt-28 pb-16 lg:pt-0 lg:pb-0">
+      <div className="relative z-10 min-h-[100dvh] flex flex-col justify-center px-5 sm:px-8 md:px-14 xl:px-20 pt-28 pb-16 lg:pt-0 lg:pb-0">
         <motion.div
-          className="space-y-8 max-w-[520px]"
+          className="space-y-6 sm:space-y-8 max-w-[520px]"
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.15, ease }}
           style={{ y: textY, opacity: textOp }}
         >
-          {/* role badge — Senior Analyst @ Intellia */}
-          <div className="flex items-center gap-4 flex-wrap" data-testid="text-hero-subtitle">
-            <span className="inline-flex items-center gap-2.5 text-[15px] font-semibold uppercase tracking-[0.16em] text-white">
-              <span className="w-2.5 h-2.5 rounded-full animate-pulse shrink-0 bg-primary" />
+          {/* mobile portrait — shown only below lg */}
+          <motion.div
+            className="lg:hidden flex justify-start mb-2"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.3, ease }}
+          >
+            <div
+              className="relative overflow-hidden rounded-2xl border border-white/10 shadow-xl"
+              style={{
+                width: "clamp(120px, 32vw, 180px)",
+                aspectRatio: "2/3",
+                background: "linear-gradient(to bottom, hsl(var(--primary)/0.1), transparent)",
+              }}
+            >
+              <img
+                src="/aneeq-portrait.png"
+                alt="Aneeq Allahi"
+                className="absolute bottom-0 left-1/2 h-[140%] w-auto"
+                style={{ transform: "translateX(-50%)", objectFit: "contain", objectPosition: "bottom center" }}
+              />
+            </div>
+          </motion.div>
+
+          {/* role badge */}
+          <div className="flex items-center gap-3 flex-wrap" data-testid="text-hero-subtitle">
+            <span className="inline-flex items-center gap-2 text-[13px] sm:text-[15px] font-semibold uppercase tracking-[0.16em] text-white">
+              <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full animate-pulse shrink-0 bg-primary" />
               Senior Analyst
             </span>
-            <span className="text-white/40 text-lg font-light">@</span>
+            <span className="text-white/40 text-base font-light">@</span>
             <img
               src="/intellia-logo.png"
               alt="Intellia AI"
-              className="h-[6rem] w-auto"
+              className="h-[3.5rem] sm:h-[5rem] w-auto"
               style={{ filter: "brightness(0) invert(1)", opacity: 0.9 }}
               data-testid="img-intellia-logo-hero"
             />
@@ -170,7 +240,7 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
           {/* name */}
           <h1
             className="font-serif font-semibold leading-[1.02] tracking-tight text-white"
-            style={{ fontSize: "clamp(3rem, 5.5vw, 5.2rem)" }}
+            style={{ fontSize: "clamp(2.6rem, 6vw, 5.2rem)" }}
             data-testid="text-hero-title"
           >
             Aneeq<br />Allahi
@@ -178,23 +248,23 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
 
           {/* accent dashes */}
           <div className="flex items-center gap-4">
-            <div className="w-12 h-[2px] bg-primary" />
-            <div className="w-4 h-[2px] bg-primary/40" />
+            <div className="w-10 sm:w-12 h-[2px] bg-primary" />
+            <div className="w-3 sm:w-4 h-[2px] bg-primary/40" />
           </div>
 
           {/* tagline */}
           <p
-            className="text-[15px] md:text-[16px] text-white/70 font-light leading-[1.9]"
+            className="text-[14px] sm:text-[15px] md:text-[16px] text-white/70 font-light leading-[1.9]"
             data-testid="text-hero-tagline"
           >
-            Orchestrating strategy, driving product,<br className="hidden md:block" /> and unlocking scale through AI &amp; automation.
+            Orchestrating strategy, driving product,<br className="hidden sm:block" /> and unlocking scale through AI &amp; automation.
           </p>
 
           {/* cta */}
-          <div className="pt-2 flex items-center gap-5 flex-wrap">
+          <div className="pt-1 flex items-center gap-4 flex-wrap">
             <button
               onClick={onResumeOpen}
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 text-sm font-medium border border-white/20 text-white hover:bg-white hover:text-[#0c1220] transition-colors duration-300"
+              className="inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 text-sm font-medium border border-white/20 text-white hover:bg-white hover:text-[#0c1220] transition-colors duration-300"
               data-testid="btn-view-resume"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
@@ -213,7 +283,7 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
 
         {/* scroll indicator */}
         <motion.div
-          className="absolute bottom-8 left-8 md:left-14 xl:left-20 flex items-center gap-3"
+          className="absolute bottom-8 left-5 sm:left-8 md:left-14 xl:left-20 flex items-center gap-3"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.28 }}
           transition={{ delay: 2 }}
@@ -223,7 +293,7 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
         </motion.div>
       </div>
 
-      {/* dynamic SVG wave — dark hero into light about section */}
+      {/* wave */}
       <div className="absolute bottom-0 left-0 right-0 pointer-events-none z-20" style={{ lineHeight: 0 }}>
         <svg
           viewBox="0 0 1440 90"
@@ -232,13 +302,11 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
           className="w-full"
           style={{ display: "block", height: "90px" }}
         >
-          {/* subtle dark shimmer behind the wave */}
           <path
             d="M0,60 C360,90 1080,20 1440,55 L1440,90 L0,90 Z"
             fill="hsl(var(--primary))"
             fillOpacity="0.06"
           />
-          {/* main background-colour wave */}
           <path
             d="M0,70 C400,30 1000,75 1440,45 L1440,90 L0,90 Z"
             fill="hsl(var(--background))"
@@ -253,14 +321,14 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
 
 function SectionHeading({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
-    <div className="mb-16">
+    <div className="mb-12 sm:mb-16">
       {subtitle && (
         <div className="flex items-center gap-3 mb-4">
           <div className="w-8 h-px bg-primary" />
           <span className="text-primary tracking-[0.2em] uppercase text-[11px] font-semibold">{subtitle}</span>
         </div>
       )}
-      <h2 className="text-3xl md:text-[2.75rem] font-serif font-semibold leading-tight text-foreground">{title}</h2>
+      <h2 className="text-2xl sm:text-3xl md:text-[2.75rem] font-serif font-semibold leading-tight text-foreground">{title}</h2>
     </div>
   );
 }
@@ -276,8 +344,8 @@ const EXPERTISE = [
 function About() {
   const { ref, inView } = useViewOnce();
   return (
-    <section id="about" className="py-28 bg-card/20" data-testid="section-about">
-      <div className="max-w-5xl mx-auto px-6">
+    <section id="about" className="py-20 sm:py-28 bg-card/20" data-testid="section-about">
+      <div className="max-w-5xl mx-auto px-5 sm:px-6">
         <motion.div
           ref={ref}
           initial="hidden"
@@ -285,7 +353,7 @@ function About() {
           variants={fadeUp}
         >
           <SectionHeading title="The Intersections" subtitle="About" />
-          <div className="grid lg:grid-cols-5 gap-16 items-start">
+          <div className="grid lg:grid-cols-5 gap-10 sm:gap-16 items-start">
             <div className="lg:col-span-3 space-y-5 text-muted-foreground font-light leading-[1.85] text-[15px]">
               <p data-testid="text-about-bio">
                 I'm a LUMS Management Sciences graduate (High Distinction, 2025) working at the intersection of strategy consulting, product management, and AI & automation. I'm drawn to problems that are structurally complex and humanly consequential — whether that's restructuring healthcare delivery, building AI-native products, or designing systems that scale.
@@ -322,20 +390,18 @@ function ProjectCard({ title, category, description, id, onClick }: {
   return (
     <motion.button
       variants={fadeUp}
-      className="group relative bg-background border border-border/50 p-7 flex flex-col h-full text-left w-full
+      className="group relative bg-background border border-border/50 p-6 sm:p-7 flex flex-col h-full text-left w-full
                  hover:border-primary/40 hover:shadow-[0_8px_40px_-12px_hsl(var(--primary)/.15)]
                  transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary overflow-hidden"
       data-testid={`card-${id}`}
       onClick={onClick}
       onKeyDown={(e) => { if (e.key === " ") { e.preventDefault(); onClick(); } }}
     >
-      {/* top accent bar */}
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
-
       <span className="text-primary text-[10px] uppercase tracking-[0.18em] mb-4 block font-semibold">{category}</span>
       <h3 className="text-base font-serif font-medium mb-4 group-hover:text-primary transition-colors leading-snug">{title}</h3>
       <p className="text-muted-foreground text-sm font-light leading-relaxed flex-grow text-[13px]">{description}</p>
-      <div className="mt-7 pt-5 border-t border-border/40 flex justify-between items-center">
+      <div className="mt-6 sm:mt-7 pt-5 border-t border-border/40 flex justify-between items-center">
         <span className="text-[11px] text-muted-foreground font-medium group-hover:text-primary transition-colors tracking-wide uppercase">
           View Details
         </span>
@@ -355,12 +421,12 @@ function ProjectCard({ title, category, description, id, onClick }: {
 function ConsultingWork({ onOpen }: { onOpen: (p: ProjectItem) => void }) {
   const { ref, inView } = useViewOnce();
   return (
-    <section id="consulting" className="py-28" data-testid="section-consulting">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="consulting" className="py-20 sm:py-28" data-testid="section-consulting">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6">
         <SectionHeading subtitle="Consulting" title="Consulting Engagements" />
         <motion.div
           ref={ref}
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5"
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={staggerGrid}
@@ -385,7 +451,7 @@ function SubSection({ id, title, subtitle, projects, onOpen, cols = 2 }: {
       <SectionHeading title={title} subtitle={subtitle} />
       <motion.div
         ref={ref}
-        className={`grid grid-cols-1 ${cols === 2 ? "md:grid-cols-2" : "md:grid-cols-2 xl:grid-cols-3"} gap-5`}
+        className={`grid grid-cols-1 sm:grid-cols-2 ${cols === 3 ? "xl:grid-cols-3" : ""} gap-4 sm:gap-5`}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
         variants={staggerGrid}
@@ -400,8 +466,8 @@ function SubSection({ id, title, subtitle, projects, onOpen, cols = 2 }: {
 
 function OtherProjects({ onOpen }: { onOpen: (p: ProjectItem) => void }) {
   return (
-    <section id="projects" className="py-28 bg-card/20" data-testid="section-other-projects">
-      <div className="max-w-6xl mx-auto px-6 space-y-28">
+    <section id="projects" className="py-20 sm:py-28 bg-card/20" data-testid="section-other-projects">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 space-y-20 sm:space-y-28">
         <SubSection title="Passion Projects" subtitle="Explorations" projects={passionProjects} onOpen={onOpen} />
         <SubSection id="ai" title="AI & Automation" subtitle="Applied Tech" projects={aiProjects} onOpen={onOpen} />
         <SubSection title="Academic Research" subtitle="Foundation" projects={academicProjects} onOpen={onOpen} cols={3} />
@@ -439,7 +505,7 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
           </span>
         </div>
 
-        {/* CENTER: dot — structurally in its own column, anchored to text baseline */}
+        {/* CENTER: dot */}
         <div className="flex flex-col items-center pt-[6px]">
           <div className="w-2.5 h-2.5 rounded-full border-2 border-border bg-background group-hover:border-primary group-hover:bg-primary/20 transition-all duration-300 z-10 shrink-0" />
         </div>
@@ -452,7 +518,7 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
       </div>
 
       {/* ── MOBILE: stacked with left border ── */}
-      <div className="md:hidden pl-6 border-l-2 border-border/50 relative">
+      <div className="md:hidden pl-5 border-l-2 border-border/50 relative">
         <div className="absolute -left-[5px] top-[5px] w-2.5 h-2.5 rounded-full border-2 border-border bg-background" />
         <h3 className="text-[1rem] font-serif font-medium text-foreground leading-snug">{role}</h3>
         {logoSrc ? (
@@ -464,7 +530,7 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
           <p className="text-muted-foreground text-sm font-medium mt-1">{company}</p>
         )}
         <span className={`inline-block text-[11px] font-semibold mt-2 tracking-wide ${isCurrent ? "text-primary" : "text-muted-foreground/60"}`}>{dates}</span>
-        <p className="text-muted-foreground text-sm font-light leading-[1.9] mt-4">{description}</p>
+        <p className="text-muted-foreground text-sm font-light leading-[1.9] mt-3">{description}</p>
       </div>
 
     </div>
@@ -481,12 +547,12 @@ const JOBS = [
 function Experience() {
   const { ref, inView } = useViewOnce();
   return (
-    <section id="experience" className="py-28" data-testid="section-experience">
-      <div className="max-w-5xl mx-auto px-6">
+    <section id="experience" className="py-20 sm:py-28" data-testid="section-experience">
+      <div className="max-w-5xl mx-auto px-5 sm:px-6">
         <SectionHeading title="Career Trajectory" subtitle="Experience" />
         <motion.div
           ref={ref}
-          className="relative space-y-16
+          className="relative space-y-12 sm:space-y-16
             before:hidden md:before:block
             before:absolute before:top-0 before:left-[50%] before:-translate-x-px
             before:h-full before:w-px
@@ -512,12 +578,12 @@ function Experience() {
 function Certifications({ onOpen }: { onOpen: (c: CertificationItem) => void }) {
   const { ref, inView } = useViewOnce();
   return (
-    <section id="certifications" className="py-28 bg-card/20" data-testid="section-certifications">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="certifications" className="py-20 sm:py-28 bg-card/20" data-testid="section-certifications">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6">
         <SectionHeading title="Credentials" subtitle="Certifications" />
         <motion.div
           ref={ref}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5"
+          className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5"
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={staggerGrid}
@@ -527,23 +593,23 @@ function Certifications({ onOpen }: { onOpen: (c: CertificationItem) => void }) 
               key={cert.id}
               variants={fadeUp}
               onClick={() => onOpen(cert)}
-              className="group relative bg-background border border-border/50 p-6 flex flex-col items-center text-center
+              className="group relative bg-background border border-border/50 p-4 sm:p-6 flex flex-col items-center text-center
                          hover:border-primary/40 hover:shadow-[0_8px_40px_-12px_hsl(var(--primary)/.15)]
                          transition-all duration-500 cursor-pointer w-full overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               data-testid={`card-certification-${i + 1}`}
             >
               <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
-              <div className="w-11 h-11 bg-card/60 border border-border/40 flex items-center justify-center mb-4 group-hover:bg-primary/8 transition-colors">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 bg-card/60 border border-border/40 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-primary/8 transition-colors">
                 {cert.logoSrc ? (
-                  <img src={cert.logoSrc} alt={cert.issuer} className="w-6 h-6 object-contain" />
+                  <img src={cert.logoSrc} alt={cert.issuer} className="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
                 ) : (
-                  <svg className="w-5 h-5 text-muted-foreground group-hover:text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                   </svg>
                 )}
               </div>
-              <h4 className="text-sm font-medium text-foreground mb-1.5 leading-snug">{cert.title}</h4>
-              <p className="text-[11px] text-muted-foreground">{cert.issuer} · {cert.year}</p>
+              <h4 className="text-xs sm:text-sm font-medium text-foreground mb-1 sm:mb-1.5 leading-snug">{cert.title}</h4>
+              <p className="text-[10px] sm:text-[11px] text-muted-foreground">{cert.issuer} · {cert.year}</p>
             </motion.button>
           ))}
         </motion.div>
@@ -557,7 +623,6 @@ function Certifications({ onOpen }: { onOpen: (c: CertificationItem) => void }) 
 function Footer() {
   return (
     <footer className="relative bg-foreground text-background overflow-hidden" data-testid="main-footer">
-      {/* decorative grid */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.05]"
         style={{
@@ -565,18 +630,18 @@ function Footer() {
           backgroundSize: "60px 60px",
         }}
       />
-      <div className="relative z-10 max-w-5xl mx-auto px-6 py-20">
-        <div className="grid md:grid-cols-2 gap-16 items-end">
+      <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 py-16 sm:py-20">
+        <div className="grid md:grid-cols-2 gap-12 sm:gap-16 items-end">
           {/* left */}
           <div>
             <p className="text-[10px] uppercase tracking-[0.22em] text-background/40 font-semibold mb-3">Let's Connect</p>
-            <h2 className="font-serif font-semibold text-3xl md:text-4xl text-background leading-tight mb-8">
+            <h2 className="font-serif font-semibold text-2xl sm:text-3xl md:text-4xl text-background leading-tight mb-6 sm:mb-8">
               Open to strategy,<br />product, and AI work.
             </h2>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 sm:gap-4">
               <a
                 href="mailto:Aneeq.allahi@intelliaadvisors.com"
-                className="inline-flex items-center gap-2 px-5 py-2.5 border border-background/30 text-background text-sm font-medium hover:bg-background hover:text-foreground transition-colors duration-300"
+                className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 border border-background/30 text-background text-sm font-medium hover:bg-background hover:text-foreground transition-colors duration-300"
               >
                 Send an Email
               </a>
@@ -584,14 +649,14 @@ function Footer() {
                 href="https://www.linkedin.com/in/aneeq-allahi"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-background/10 text-background text-sm font-medium hover:bg-background hover:text-foreground transition-colors duration-300"
+                className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 bg-background/10 text-background text-sm font-medium hover:bg-background hover:text-foreground transition-colors duration-300"
               >
                 LinkedIn
               </a>
             </div>
           </div>
 
-          {/* right: contact details */}
+          {/* right */}
           <div className="space-y-4">
             <p className="text-[10px] uppercase tracking-[0.22em] text-background/40 font-semibold">My Contact Details</p>
             <div className="space-y-2">
@@ -608,7 +673,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-background/15 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div className="mt-12 sm:mt-16 pt-8 border-t border-background/15 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <span className="font-serif font-bold text-xl text-background/60">AA.</span>
           <p className="text-xs text-background/30 font-light">
             © {new Date().getFullYear()} Aneeq Allahi. Designed with intention.

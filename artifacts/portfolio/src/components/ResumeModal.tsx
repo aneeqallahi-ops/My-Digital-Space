@@ -113,9 +113,9 @@ export function ResumeModal({ open, onClose }: { open: boolean; onClose: () => v
                 {/* Education */}
                 <SectionTitle>Education</SectionTitle>
                 <div className="mb-1">
-                  <div className="flex justify-between items-start">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-0.5 sm:gap-0">
                     <p className="text-sm font-medium text-foreground">Lahore University of Management Sciences</p>
-                    <span className="text-xs text-muted-foreground font-light shrink-0 ml-4">Aug 2021 – Jun 2025</span>
+                    <span className="text-xs text-muted-foreground font-light sm:shrink-0 sm:ml-4">Aug 2021 – Jun 2025</span>
                   </div>
                   <p className="text-xs text-muted-foreground font-light mt-0.5">BSc Management Science · CGPA: 3.88 (High Distinction)</p>
                   <p className="text-xs text-muted-foreground font-light mt-1">
@@ -129,9 +129,9 @@ export function ResumeModal({ open, onClose }: { open: boolean; onClose: () => v
                 <SectionTitle>Professional Experience</SectionTitle>
                 <div className="space-y-5">
                   <div>
-                    <div className="flex justify-between items-start">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-0.5 sm:gap-0">
                       <p className="text-sm font-medium text-foreground">Intellia · <span className="font-normal">Senior Strategy Analyst</span></p>
-                      <span className="text-xs text-muted-foreground font-light shrink-0 ml-4">Jul 2025 – Present</span>
+                      <span className="text-xs text-muted-foreground font-light sm:shrink-0 sm:ml-4">Jul 2025 – Present</span>
                     </div>
                     <BulletList items={[
                       "Facilitated a $1B joint venture in KSA with their GTM through scraping and analyzing a 2,000+ datapoints project pipeline",
@@ -140,9 +140,9 @@ export function ResumeModal({ open, onClose }: { open: boolean; onClose: () => v
                     ]} />
                   </div>
                   <div>
-                    <div className="flex justify-between items-start">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-0.5 sm:gap-0">
                       <p className="text-sm font-medium text-foreground">SnackOut · <span className="font-normal">Associate Product Manager</span></p>
-                      <span className="text-xs text-muted-foreground font-light shrink-0 ml-4">Feb 2025 – Apr 2025</span>
+                      <span className="text-xs text-muted-foreground font-light sm:shrink-0 sm:ml-4">Feb 2025 – Apr 2025</span>
                     </div>
                     <BulletList items={[
                       "Built a conversational AI customer support agent that reduced operational costs by ~70%",
@@ -151,9 +151,9 @@ export function ResumeModal({ open, onClose }: { open: boolean; onClose: () => v
                     ]} />
                   </div>
                   <div>
-                    <div className="flex justify-between items-start">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-0.5 sm:gap-0">
                       <p className="text-sm font-medium text-foreground">7vals (EZOffice) · <span className="font-normal">Product Management Intern</span></p>
-                      <span className="text-xs text-muted-foreground font-light shrink-0 ml-4">May 2024 – Aug 2024</span>
+                      <span className="text-xs text-muted-foreground font-light sm:shrink-0 sm:ml-4">May 2024 – Aug 2024</span>
                     </div>
                     <BulletList items={[
                       "Achieved a 30% reduction in helpdesk tickets by redesigning error messaging and inline guides",
@@ -180,9 +180,9 @@ export function ResumeModal({ open, onClose }: { open: boolean; onClose: () => v
                 <SectionTitle>Leadership & Extra-Curriculars</SectionTitle>
                 <div className="space-y-4">
                   <div>
-                    <div className="flex justify-between items-start">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-0.5 sm:gap-0">
                       <p className="text-sm font-medium text-foreground">LUMS Student Council · <span className="font-normal">Senior Batch Representative</span></p>
-                      <span className="text-xs text-muted-foreground font-light shrink-0 ml-4">May 2024 – Aug 2025</span>
+                      <span className="text-xs text-muted-foreground font-light sm:shrink-0 sm:ml-4">May 2024 – Aug 2025</span>
                     </div>
                     <BulletList items={[
                       "Raised Rs 15M in 12 months for university community members through the council's welfare committee",
@@ -191,18 +191,18 @@ export function ResumeModal({ open, onClose }: { open: boolean; onClose: () => v
                     ]} />
                   </div>
                   <div>
-                    <div className="flex justify-between items-start">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-0.5 sm:gap-0">
                       <p className="text-sm font-medium text-foreground">LUMS Consultancy Group · <span className="font-normal">Director Media & Branding</span></p>
-                      <span className="text-xs text-muted-foreground font-light shrink-0 ml-4">May 2023 – May 2024</span>
+                      <span className="text-xs text-muted-foreground font-light sm:shrink-0 sm:ml-4">May 2023 – May 2024</span>
                     </div>
                     <BulletList items={[
                       "Surveyed 295 consumers with a 9-member team, enhancing targeted marketing effectiveness by 15% through sentiment analysis and user-persona mapping",
                     ]} />
                   </div>
                   <div>
-                    <div className="flex justify-between items-start">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-0.5 sm:gap-0">
                       <p className="text-sm font-medium text-foreground">LUMS Entrepreneurial Society · <span className="font-normal">Director Marketing & Corporate Relations</span></p>
-                      <span className="text-xs text-muted-foreground font-light shrink-0 ml-4">May 2023 – May 2024</span>
+                      <span className="text-xs text-muted-foreground font-light sm:shrink-0 sm:ml-4">May 2023 – May 2024</span>
                     </div>
                     <BulletList items={[
                       "Steered an 18-person team, successfully securing Rs 60M sponsorship in collaboration with Samsung, Nestle & Dawlance",

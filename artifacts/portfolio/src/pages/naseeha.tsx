@@ -23,7 +23,7 @@ const COLORS: Record<NodeType, { border: string; bg: string; glow: string; text:
   trigger:      { border: "#22c55e", bg: "rgba(34,197,94,0.08)",   glow: "rgba(34,197,94,0.35)",   text: "#4ade80", badge: "Trigger" },
   processing:   { border: "#6366f1", bg: "rgba(99,102,241,0.08)",  glow: "rgba(99,102,241,0.35)",  text: "#818cf8", badge: "Processing" },
   conditional:  { border: "#f59e0b", bg: "rgba(245,158,11,0.08)",  glow: "rgba(245,158,11,0.35)",  text: "#fbbf24", badge: "Conditional" },
-  "human-review":{ border: "#f43f5e", bg: "rgba(244,63,94,0.08)",  glow: "rgba(244,63,94,0.35)",   text: "#fb7185", badge: "Human-in-the-Loop" },
+  "human-review":{ border: "#f43f5e", bg: "rgba(244,63,94,0.08)",  glow: "rgba(244,63,94,0.35)",   text: "#fb7185", badge: "Human-in-Loop" },
   output:       { border: "#14b8a6", bg: "rgba(20,184,166,0.08)",  glow: "rgba(20,184,166,0.35)",  text: "#2dd4bf", badge: "Output" },
 };
 
@@ -112,7 +112,7 @@ const NODES: PipelineNode[] = [
   },
   {
     id: "whatsapp", step: 12, type: "output",
-    label: "WhatsApp Dispatch (WHAPI)", sublabel: "Personalised name + session title per send",
+    label: "WhatsApp Dispatch (WHAPI)", sublabel: "Personalised name + session title",
     description: "Each registrant receives a personalised WhatsApp message — addressed by name, referencing the specific lecture session they attended — with the branded PDF attached via WHAPI's HTTP integration.",
     detail: "WHAPI · HTTP Node · Personalised per recipient",
   },
@@ -133,9 +133,7 @@ const END_PAUSE_MS = 1400;
 function Connector({ active, color, height = 48 }: { active: boolean; color: string; height?: number }) {
   return (
     <svg width="12" height={height} className="block mx-auto overflow-visible" aria-hidden="true">
-      {/* static track */}
       <line x1="6" y1="0" x2="6" y2={height} stroke={`${color}22`} strokeWidth="2" />
-      {/* animated data-flow: CSS stroke-dasharray + stroke-dashoffset */}
       <motion.line
         x1="6" y1="0" x2="6" y2={height}
         stroke={color}
@@ -165,10 +163,8 @@ function SplitConnector({ active }: { active: boolean }) {
   const dashProps = { strokeDasharray: "5 3", strokeWidth: 1.5, fill: "none" as const };
   return (
     <svg viewBox="0 0 400 52" preserveAspectRatio="none" width="100%" height="52" className="block">
-      {/* track */}
       <path d="M 200 0 L 200 22 L 110 52" stroke={`${c.border}33`} {...dashProps} />
       <path d="M 200 0 L 200 22 L 290 52" stroke={`${c.border}33`} {...dashProps} />
-      {/* animated flow via stroke-dashoffset */}
       <motion.path
         d="M 200 0 L 200 22 L 110 52"
         stroke={c.border} {...dashProps}
@@ -190,10 +186,8 @@ function MergeConnector({ active }: { active: boolean }) {
   const dashProps = { strokeDasharray: "5 3", strokeWidth: 1.5, fill: "none" as const };
   return (
     <svg viewBox="0 0 400 52" preserveAspectRatio="none" width="100%" height="52" className="block">
-      {/* track */}
       <path d="M 110 0 L 200 30 L 200 52" stroke={`${c.border}33`} {...dashProps} />
       <path d="M 290 0 L 200 30 L 200 52" stroke={`${c.border}33`} {...dashProps} />
-      {/* animated flow via stroke-dashoffset */}
       <motion.path
         d="M 110 0 L 200 30 L 200 52"
         stroke={c.border} {...dashProps}
@@ -223,22 +217,20 @@ function NodeBox({
     <motion.div
       layout
       className="w-full cursor-pointer select-none"
-      style={{ maxWidth: node.side ? "100%" : 380 }}
       onClick={onClick}
     >
       <motion.div
         animate={isActive ? { scale: 1.03 } : { scale: 1 }}
         transition={{ duration: 0.25 }}
-        className="border px-4 py-3 transition-all duration-300"
+        className="border px-3 sm:px-4 py-3 transition-all duration-300"
         style={{
           borderColor: isActive || isSelected ? c.border : `${c.border}44`,
           background: isActive || isSelected ? c.bg : "rgba(255,255,255,0.02)",
           boxShadow: isActive ? `0 0 20px ${c.glow}, 0 0 40px ${c.glow}` : isSelected ? `0 0 12px ${c.glow}` : "none",
         }}
       >
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 min-w-0">
-            {/* status dot */}
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <span
               className="shrink-0 w-2 h-2 rounded-full transition-all duration-300"
               style={{
@@ -247,16 +239,16 @@ function NodeBox({
               }}
             />
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-white leading-tight truncate" style={{ color: isActive || isSelected ? c.text : "#e2e8f0" }}>
+              <p className="text-xs sm:text-sm font-semibold leading-tight truncate" style={{ color: isActive || isSelected ? c.text : "#e2e8f0" }}>
                 {node.label}
               </p>
-              <p className="text-xs mt-0.5 truncate" style={{ color: `${c.text}88` }}>
+              <p className="text-[10px] sm:text-xs mt-0.5 truncate" style={{ color: `${c.text}88` }}>
                 {node.sublabel}
               </p>
             </div>
           </div>
           <span
-            className="shrink-0 text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 border"
+            className="shrink-0 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider px-1.5 sm:px-2 py-0.5 border hidden xs:inline-block sm:inline-block"
             style={{ borderColor: `${c.border}55`, color: c.text, background: `${c.bg}` }}
           >
             {c.badge}
@@ -276,12 +268,12 @@ function NodeBox({
             className="overflow-hidden"
           >
             <div
-              className="px-4 py-4 border-x border-b text-sm"
+              className="px-3 sm:px-4 py-4 border-x border-b text-sm"
               style={{ borderColor: `${c.border}44`, background: `${c.bg}` }}
             >
-              <p className="text-white/70 font-light leading-relaxed mb-3">{node.description}</p>
+              <p className="text-white/70 font-light leading-relaxed mb-3 text-xs sm:text-sm">{node.description}</p>
               <span
-                className="inline-block text-[11px] font-medium px-2.5 py-1 border"
+                className="inline-block text-[10px] sm:text-[11px] font-medium px-2.5 py-1 border"
                 style={{ borderColor: `${c.border}55`, color: c.text }}
               >
                 {node.detail}
@@ -338,7 +330,6 @@ function PipelineDiagram() {
     return stopTimer;
   }, [isPlaying, startTimer, stopTimer]);
 
-  // Click outside the diagram area while paused → resume
   useEffect(() => {
     if (isPlaying) return;
     function onDocClick(e: MouseEvent) {
@@ -375,35 +366,33 @@ function PipelineDiagram() {
   function isNodeActive(node: PipelineNode) { return activeStep === node.step; }
   function isNodeSelected(node: PipelineNode) { return selectedId === node.id; }
 
-  // Render the sequence: drive(0), wait(1), assemblyai(2), context-check(3),
-  // [branch split], no-notes(4) | with-notes(4), [merge], merged(5), llm(6), ... tracking(13)
   const beforeBranch = mainNodes.filter(n => n.step <= 3);
   const afterBranch = mainNodes.filter(n => n.step >= 5);
 
   return (
-    <section className="py-20 px-6" style={{ background: "#080f1a" }}>
-      <div className="max-w-3xl mx-auto">
+    <section className="py-16 sm:py-20 px-4 sm:px-6" style={{ background: "#080f1a" }}>
+      <div className="max-w-2xl mx-auto">
         {/* header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10 sm:mb-14">
           <p className="text-xs uppercase tracking-widest font-semibold text-primary mb-3">Pipeline Visualisation</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-semibold text-white mb-4">How the Pipeline Works — End to End</h2>
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-4">How the Pipeline Works</h2>
           <p className="text-white/50 text-sm font-light max-w-lg mx-auto leading-relaxed">
-            Click any node to inspect it. The animation pauses so you can read — resume when ready.
+            Tap any node to inspect it. Animation pauses so you can read.
           </p>
         </div>
 
         {/* legend */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-12">
           {(Object.entries(COLORS) as [NodeType, typeof COLORS[NodeType]][]).map(([type, c]) => (
             <div key={type} className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full" style={{ background: c.border }} />
-              <span className="text-xs text-white/40 font-medium">{c.badge}</span>
+              <span className="w-2 h-2 rounded-full" style={{ background: c.border }} />
+              <span className="text-[10px] sm:text-xs text-white/40 font-medium">{c.badge}</span>
             </div>
           ))}
         </div>
 
         {/* controls */}
-        <div className="flex justify-center mb-10">
+        <div className="flex justify-center mb-8 sm:mb-10">
           <button
             onClick={() => { if (isPlaying) { setIsPlaying(false); } else { handleResume(); } }}
             className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold uppercase tracking-widest border border-white/15 text-white/60 hover:text-white hover:border-white/30 transition-colors"
@@ -420,7 +409,7 @@ function PipelineDiagram() {
         <div ref={diagramRef} className="flex flex-col items-center">
           {/* nodes before branch */}
           {beforeBranch.map((node, i) => (
-            <div key={node.id} className="w-full flex flex-col items-center" style={{ maxWidth: 380 }}>
+            <div key={node.id} className="w-full flex flex-col items-center">
               {i > 0 && (
                 <Connector
                   active={activeStep === node.step}
@@ -437,12 +426,12 @@ function PipelineDiagram() {
           ))}
 
           {/* branch split */}
-          <div className="w-full" style={{ maxWidth: 380 }}>
+          <div className="w-full">
             <SplitConnector active={activeStep === 4} />
           </div>
 
-          {/* branch nodes — single column on mobile, two on md+ */}
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4" style={{ maxWidth: 380 }}>
+          {/* branch nodes — stacked on mobile, side-by-side on sm+ */}
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {[leftBranch, rightBranch].map((node) => (
               <NodeBox
                 key={node.id}
@@ -455,13 +444,13 @@ function PipelineDiagram() {
           </div>
 
           {/* merge connectors */}
-          <div className="w-full" style={{ maxWidth: 380 }}>
+          <div className="w-full">
             <MergeConnector active={activeStep === 5} />
           </div>
 
           {/* nodes after branch */}
           {afterBranch.map((node) => (
-            <div key={node.id} className="w-full flex flex-col items-center" style={{ maxWidth: 380 }}>
+            <div key={node.id} className="w-full flex flex-col items-center">
               <NodeBox
                 node={node}
                 isActive={isNodeActive(node)}
@@ -485,7 +474,7 @@ function PipelineDiagram() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="text-center mt-10"
+              className="text-center mt-8 sm:mt-10"
             >
               <button
                 onClick={handleResume}
@@ -519,7 +508,7 @@ function NaseehaNav() {
           : "bg-white/5 backdrop-blur-md border-b border-white/10"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 h-[68px] flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 h-[68px] flex items-center justify-between">
         <Link href="/" className={`font-serif font-bold text-xl tracking-tight transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white"}`}>
           AA.
         </Link>
@@ -533,7 +522,8 @@ function NaseehaNav() {
           <svg className="w-4 h-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
-          Back to Portfolio
+          <span className="hidden xs:inline sm:inline">Back to Portfolio</span>
+          <span className="xs:hidden sm:hidden">Back</span>
         </Link>
       </div>
     </nav>
@@ -556,28 +546,28 @@ function NaseehaHero() {
       {/* left accent */}
       <div className="absolute left-0 top-[20%] bottom-[20%] w-[3px] bg-primary/50" />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-8 md:px-14 xl:px-20 pt-40 pb-16">
+      <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-8 md:px-14 xl:px-20 pt-32 sm:pt-40 pb-14 sm:pb-16">
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
-          <span className="inline-block text-xs font-semibold uppercase tracking-[0.25em] text-primary mb-5">
+          <span className="inline-block text-xs font-semibold uppercase tracking-[0.25em] text-primary mb-4 sm:mb-5">
             AUTOMATION
           </span>
-          <h1 className="font-serif text-4xl md:text-5xl xl:text-6xl font-semibold text-white leading-[1.05] tracking-tight mb-6">
-            Lecture Intelligence<br className="hidden md:block" /> Pipeline
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-semibold text-white leading-[1.05] tracking-tight mb-5 sm:mb-6">
+            Lecture Intelligence<br className="hidden sm:block" /> Pipeline
           </h1>
-          <p className="text-white/60 font-light leading-relaxed text-base md:text-lg max-w-2xl mb-8">
+          <p className="text-white/60 font-light leading-relaxed text-[15px] sm:text-base md:text-lg max-w-2xl mb-6 sm:mb-8">
             An end-to-end n8n automation that transcribes multilingual weekly Islamic lectures, generates AI-powered summaries, routes them through a human review workflow, formats branded PDFs, and delivers them personally to registered attendees over WhatsApp — turning each physical gathering into a scalable digital content loop.
           </p>
           {/* Naseeha attribution + logo */}
-          <div className="flex items-center gap-4 mb-8">
+          <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
             <img
               src="/naseeha-logo.png"
               alt="Naseeha Institute"
-              className="w-14 h-14 object-contain rounded-full opacity-90"
+              className="w-11 h-11 sm:w-14 sm:h-14 object-contain rounded-full opacity-90"
             />
             <span className="text-sm text-white/40 font-light leading-snug">
               Built for <span className="text-white/70 font-medium">Naseeha Institute</span>
-              <br className="hidden sm:block" />
-              <span className="text-white/30 text-xs"> — non-profit Islamic education · Lahore</span>
+              <br />
+              <span className="text-white/30 text-xs">— non-profit Islamic education · Lahore</span>
             </span>
           </div>
 
@@ -587,7 +577,7 @@ function NaseehaHero() {
               href="https://n8n.io/workflows/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="square" strokeLinejoin="miter" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -631,20 +621,20 @@ const GOALS = [
 
 function GoalSection() {
   return (
-    <section className="py-20 px-6 bg-background">
+    <section className="py-16 sm:py-20 px-5 sm:px-6 bg-background">
       <div className="max-w-5xl mx-auto">
-        <div className="mb-12">
+        <div className="mb-10 sm:mb-12">
           <p className="text-xs uppercase tracking-widest font-semibold text-primary mb-3">The Goal</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground mb-5">What We Were Trying to Solve</h2>
-          <p className="text-muted-foreground font-light leading-relaxed max-w-2xl">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground mb-4 sm:mb-5">What We Were Trying to Solve</h2>
+          <p className="text-muted-foreground font-light leading-relaxed max-w-2xl text-sm sm:text-base">
             Naseeha's weekly lectures were reaching people in the room — but stopping there. No systematic way to extend the session's value, no attendance intelligence, no funnel visibility. The pipeline was designed to address three interconnected goals simultaneously — without any manual overhead.
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-3 gap-5 sm:gap-8">
           {GOALS.map(g => (
-            <div key={g.num} className="border border-border/50 p-7">
-              <span className="block font-serif text-4xl font-semibold text-primary/20 mb-5 leading-none">{g.num}</span>
-              <h3 className="text-base font-semibold text-foreground mb-3 leading-snug">{g.title}</h3>
+            <div key={g.num} className="border border-border/50 p-5 sm:p-7">
+              <span className="block font-serif text-3xl sm:text-4xl font-semibold text-primary/20 mb-4 sm:mb-5 leading-none">{g.num}</span>
+              <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2 sm:mb-3 leading-snug">{g.title}</h3>
               <p className="text-sm text-muted-foreground font-light leading-relaxed">{g.body}</p>
             </div>
           ))}
@@ -662,7 +652,7 @@ const ARCH = [
     body: "Not every session comes with pre-lecture context notes from the lecturer. The pipeline handles this gracefully through a conditional IF branch: when context notes are present, they are merged with the transcript before being passed to the LLM, enriching the summary with the lecturer's own framing and references. When absent, the pipeline routes to a separate branch that proceeds with the transcript alone. Both branches converge at a merge node before entering summarisation — ensuring a consistent downstream structure regardless of the path taken.",
     color: "#6366f1",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
         <path d="M3 3h6v6H3zM15 3h6v6h-6zM9 12h6M12 6v6M9 18h6v3H9zM12 15v3" />
       </svg>
     ),
@@ -672,7 +662,7 @@ const ARCH = [
     body: "The review stage is built to be flexible rather than fixed. Three approval modes can be configured: any one of four designated reviewers can approve via a one-click email link; a minimum of two reviewers must approve before the pipeline proceeds; or a reviewer (such as a religious scholar) can submit written feedback, which is automatically looped back into the LLM for targeted edits and regeneration before routing back for final sign-off.",
     color: "#f43f5e",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
         <circle cx="9" cy="7" r="4" />
         <path d="M2 21v-2a7 7 0 0 1 10.5-6.07M16 11l2 2 4-4" />
       </svg>
@@ -683,7 +673,7 @@ const ARCH = [
     body: "Rather than generating a plain-text output, the pipeline populates a pre-designed Google Doc template carrying the organisation's branding — logo, typography, section headers, and formatting. Content is inserted and appended to the correct sections via a structured HTTP node call, ensuring every PDF looks like an official Naseeha publication rather than a raw LLM output.",
     color: "#22c55e",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
         <rect x="3" y="3" width="18" height="18" rx="2" />
         <path d="M3 9h18M9 21V9" />
       </svg>
@@ -694,7 +684,7 @@ const ARCH = [
     body: "The summarisation workstream uses Claude Haiku — capable enough for nuanced, structured multilingual comprehension while remaining cost-efficient. The system prompt defines organisational context, tone, and output structure; the message prompt passes session-specific inputs. This separation keeps the model focused and the outputs consistent across weeks without over-spending on heavier models for routine tasks.",
     color: "#f59e0b",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
         <rect x="5" y="5" width="14" height="14" rx="2" />
         <rect x="9" y="9" width="6" height="6" />
         <path d="M5 9H3M5 15H3M9 5V3M15 5V3M19 9h2M19 15h2M9 19v2M15 19v2" />
@@ -706,7 +696,7 @@ const ARCH = [
     body: "Two deliberate guards sit in the pipeline. A wait node after the Drive trigger gives AssemblyAI sufficient processing time before the transcript fetch is attempted — preventing failed pulls on large audio files. A configurable loop delay is inserted between each WhatsApp send within the registrant iteration, preventing the WHAPI account from being flagged for bulk messaging and ensuring reliable delivery.",
     color: "#14b8a6",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
         <path d="M12 2l7 4v6c0 4.4-3 8.5-7 10C5 20.5 2 16.4 2 12V6l7-4z" />
         <circle cx="12" cy="12" r="3" />
         <path d="M12 9v3l1.5 1.5" />
@@ -718,7 +708,7 @@ const ARCH = [
     body: "The Google Sheets query applies a 7-day date filter to the registration data before the loop begins — ensuring only participants from the current week receive the summary and preventing accidental re-delivery to prior attendees. Each loop iteration dispatches a personalised message with the recipient's name and the specific session title, giving the delivery a personal rather than broadcast feel despite being fully automated.",
     color: "#a78bfa",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
         <path d="M21 12a9 9 0 1 1-9-9 9 9 0 0 1 9 9z" />
         <path d="M3.6 9h16.8M3.6 15h16.8" />
         <path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
@@ -729,42 +719,40 @@ const ARCH = [
 
 function ArchitectureSection() {
   return (
-    <section className="py-24 px-6" style={{ background: "#070d18" }}>
+    <section className="py-20 sm:py-24 px-5 sm:px-6" style={{ background: "#070d18" }}>
       <div className="max-w-5xl mx-auto">
-        <div className="mb-16">
+        <div className="mb-12 sm:mb-16">
           <p className="text-xs uppercase tracking-widest font-semibold text-primary mb-4">Technical Architecture</p>
-          <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-4">Under the Hood</h2>
-          <p className="text-white/40 font-light text-base md:text-lg max-w-xl">Six design decisions that make the pipeline reliable, scalable, and editorially sound.</p>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-white mb-4">Under the Hood</h2>
+          <p className="text-white/40 font-light text-base max-w-xl">Six design decisions that make the pipeline reliable, scalable, and editorially sound.</p>
         </div>
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
           {ARCH.map((item, i) => (
             <div
               key={i}
-              className="group relative p-8 flex flex-col gap-5 hover:scale-[1.01] transition-transform duration-300"
+              className="group relative p-6 sm:p-8 flex flex-col gap-4 sm:gap-5 hover:scale-[1.01] transition-transform duration-300"
               style={{
                 background: "rgba(255,255,255,0.03)",
                 border: "1px solid rgba(255,255,255,0.07)",
                 borderTop: `3px solid ${item.color}`,
               }}
             >
-              {/* icon + number row */}
               <div className="flex items-center justify-between">
                 <div
-                  className="w-11 h-11 flex items-center justify-center rounded-lg"
+                  className="w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center rounded-lg"
                   style={{ background: `${item.color}18`, color: item.color }}
                 >
                   {item.icon}
                 </div>
                 <span
-                  className="text-2xl font-bold font-mono opacity-15 select-none"
+                  className="text-xl sm:text-2xl font-bold font-mono opacity-15 select-none"
                   style={{ color: item.color }}
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
               </div>
-              <h3 className="text-base font-semibold text-white leading-snug">{item.title}</h3>
-              <p className="text-sm font-light leading-relaxed" style={{ color: "rgba(255,255,255,0.48)" }}>{item.body}</p>
-              {/* subtle bottom accent line on hover */}
+              <h3 className="text-sm sm:text-base font-semibold text-white leading-snug">{item.title}</h3>
+              <p className="text-xs sm:text-sm font-light leading-relaxed" style={{ color: "rgba(255,255,255,0.48)" }}>{item.body}</p>
               <div
                 className="absolute bottom-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ background: `linear-gradient(to right, transparent, ${item.color}66, transparent)` }}
@@ -789,13 +777,13 @@ const OUTCOMES = [
 
 function OutcomesSection() {
   return (
-    <section className="py-20 px-6 bg-muted/30 border-t border-border/30">
+    <section className="py-16 sm:py-20 px-5 sm:px-6 bg-muted/30 border-t border-border/30">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-10">
+        <div className="mb-8 sm:mb-10">
           <p className="text-xs uppercase tracking-widest font-semibold text-primary mb-3">Key Outcomes</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">What This Delivered</h2>
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground">What This Delivered</h2>
         </div>
-        <ul className="space-y-5">
+        <ul className="space-y-4 sm:space-y-5">
           {OUTCOMES.map((o, i) => (
             <li key={i} className="flex items-start gap-4 text-sm text-muted-foreground font-light leading-relaxed">
               <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
@@ -823,27 +811,26 @@ const TOOL_LOGOS: { name: string; src: string }[] = [
 
 function ToolsSection() {
   return (
-    <section className="py-20 px-6 bg-background border-t border-border/30">
+    <section className="py-16 sm:py-20 px-5 sm:px-6 bg-background border-t border-border/30">
       <div className="max-w-5xl mx-auto">
-        <div className="mb-12">
+        <div className="mb-10 sm:mb-12">
           <p className="text-xs uppercase tracking-widest font-semibold text-primary mb-3">Tools & Stack</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">What It's Built With</h2>
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground">What It's Built With</h2>
         </div>
 
-        {/* logo grid — always coloured, with name labels */}
-        <div className="grid grid-cols-4 sm:grid-cols-8 gap-4">
+        <div className="grid grid-cols-4 sm:grid-cols-8 gap-3 sm:gap-4">
           {TOOL_LOGOS.map(tool => (
             <div
               key={tool.name}
-              className="flex flex-col items-center gap-3 p-4 border border-border/40 bg-muted/20 hover:bg-muted/50 hover:border-border/80 transition-all duration-200"
+              className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-4 border border-border/40 bg-muted/20 hover:bg-muted/50 hover:border-border/80 transition-all duration-200"
             >
               <img
                 src={tool.src}
                 alt={tool.name}
-                className="w-10 h-10 object-contain"
+                className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
                 loading="lazy"
               />
-              <span className="text-[10px] font-medium text-muted-foreground text-center leading-tight">{tool.name}</span>
+              <span className="text-[9px] sm:text-[10px] font-medium text-muted-foreground text-center leading-tight">{tool.name}</span>
             </div>
           ))}
         </div>
@@ -856,7 +843,7 @@ function ToolsSection() {
 
 function BackToPortfolio() {
   return (
-    <section className="py-16 px-6 bg-background border-t border-border/30 text-center">
+    <section className="py-14 sm:py-16 px-5 sm:px-6 bg-background border-t border-border/30 text-center">
       <Link
         href="/"
         onClick={() => { setTimeout(() => { document.getElementById("ai")?.scrollIntoView({ behavior: "smooth" }); }, 80); }}
