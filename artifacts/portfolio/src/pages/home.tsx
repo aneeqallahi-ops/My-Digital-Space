@@ -636,7 +636,7 @@ function Footer() {
           <div>
             <p className="text-[10px] uppercase tracking-[0.22em] text-background/40 font-semibold mb-3">Let's Connect</p>
             <h2 className="font-serif font-semibold text-2xl sm:text-3xl md:text-4xl text-background leading-tight mb-6 sm:mb-8">
-              Open to strategy,<br />product, and AI work.
+              Open to strategy,<br />product, and AI discussions.
             </h2>
             <div className="flex flex-wrap gap-3 sm:gap-4">
               <a
