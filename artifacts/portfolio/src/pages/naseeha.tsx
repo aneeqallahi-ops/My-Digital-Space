@@ -571,20 +571,30 @@ function NaseehaHero() {
             </span>
           </div>
 
-          {/* n8n template CTA */}
-          <div className="flex flex-wrap items-center gap-3">
+          {/* template CTAs */}
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3">
             <a
-              href="https://n8n.io/workflows/"
+              href="https://drive.google.com/file/d/1Vpz8jut1JVXIq1ODT1F6fT_saMz3HmvI/view?usp=drive_link"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="square" strokeLinejoin="miter" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
-              View n8n Workflow Template
+              Click here for JSON Template
             </a>
-            <span className="text-xs text-white/25 italic">Template link — placeholder</span>
+            <a
+              href="https://drive.google.com/file/d/1I4KMYUhL3vg8KW3jcGUFrLTXQN4iPRG9/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 text-sm font-semibold border border-white/20 text-white hover:bg-white/5 transition-colors"
+            >
+              <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="square" strokeLinejoin="miter" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+              Click here for detailed setup guide
+            </a>
           </div>
         </motion.div>
       </div>
