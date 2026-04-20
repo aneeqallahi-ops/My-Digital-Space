@@ -30,7 +30,7 @@ router.get("/analytics", async (req, res) => {
         path,
         COUNT(*)::int AS count
       FROM page_views
-      WHERE visited_at >= NOW() - INTERVAL '${sql.raw(String(days))} days'
+      WHERE visited_at >= NOW() - (${days} * INTERVAL '1 day')
       GROUP BY 1, 2
       ORDER BY 1 ASC, 3 DESC
     `);
@@ -54,7 +54,7 @@ router.get("/analytics", async (req, res) => {
 
     const weekRow = await db.execute(sql`
       SELECT COUNT(*)::int AS count FROM page_views
-      WHERE visited_at >= NOW() - INTERVAL '7 days'
+      WHERE visited_at >= NOW() - (7 * INTERVAL '1 day')
     `);
 
     res.json({
