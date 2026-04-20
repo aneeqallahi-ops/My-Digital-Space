@@ -5,14 +5,18 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import NaseehaPage from "@/pages/naseeha";
+import AnalyticsPage from "@/pages/analytics";
+import { usePageTracker } from "@/hooks/usePageTracker";
 
 const queryClient = new QueryClient();
 
-function Router() {
+function TrackedRouter() {
+  usePageTracker();
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/lecture-intelligence" component={NaseehaPage} />
+      <Route path="/analytics" component={AnalyticsPage} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -23,7 +27,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
+          <TrackedRouter />
         </WouterRouter>
         <Toaster />
       </TooltipProvider>

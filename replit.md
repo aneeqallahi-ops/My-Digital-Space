@@ -53,16 +53,17 @@ Every package extends `tsconfig.base.json` which sets `composite: true`. The roo
 
 ### `artifacts/portfolio` (`@workspace/portfolio`)
 
-Personal portfolio website for Aneeq Allahi. React + Vite SPA, frontend-only (no backend). Served at `/`.
+Personal portfolio website for Aneeq Allahi. React + Vite SPA. Served at `/`.
 
 - **Entry**: `src/main.tsx`
-- **App router**: `src/App.tsx` — single "/" route rendering the Home page
+- **App router**: `src/App.tsx` — routes: `/` (Home), `/lecture-intelligence` (Naseeha pipeline), `/analytics` (private dashboard)
 - **Home page**: `src/pages/home.tsx` — full single-page layout with all sections
+- **Naseeha page**: `src/pages/naseeha.tsx` — Lecture Intelligence Pipeline landing page
+- **Analytics page**: `src/pages/analytics.tsx` — private self-hosted analytics dashboard (bar chart + top pages)
+- **Tracker hook**: `src/hooks/usePageTracker.ts` — fires `POST /api/track` on mount and every route change via Wouter's `useLocation`
 - **Styling**: `src/index.css` — dark editorial theme, Playfair Display headings, Inter body
-- **Photo**: `public/aneeq-headshot.png` — referenced as `/aneeq-headshot.png` URL
 - **Sections**: Hero, About, Consulting Work, Passion Projects, AI & Automation, Academic Projects, Experience, Certifications
 - **Animations**: Framer Motion for scroll-triggered entrance animations
-- All content uses placeholder text — user fills in real content incrementally
 
 ### `artifacts/api-server` (`@workspace/api-server`)
 
@@ -70,7 +71,7 @@ Express 5 API server. Routes live in `src/routes/` and use `@workspace/api-zod` 
 
 - Entry: `src/index.ts` — reads `PORT`, starts Express
 - App setup: `src/app.ts` — mounts CORS, JSON/urlencoded parsing, routes at `/api`
-- Routes: `src/routes/index.ts` mounts sub-routers; `src/routes/health.ts` exposes `GET /health` (full path: `/api/health`)
+- Routes: `src/routes/index.ts` mounts sub-routers; `src/routes/health.ts` exposes `GET /api/healthz`; `src/routes/analytics.ts` exposes `POST /api/track` (record a page view) and `GET /api/analytics` (daily + page breakdown stats)
 - Depends on: `@workspace/db`, `@workspace/api-zod`
 - `pnpm --filter @workspace/api-server run dev` — run the dev server
 - `pnpm --filter @workspace/api-server run build` — production esbuild bundle (`dist/index.cjs`)
@@ -82,7 +83,7 @@ Database layer using Drizzle ORM with PostgreSQL. Exports a Drizzle client insta
 
 - `src/index.ts` — creates a `Pool` + Drizzle instance, exports schema
 - `src/schema/index.ts` — barrel re-export of all models
-- `src/schema/<modelname>.ts` — table definitions with `drizzle-zod` insert schemas (no models definitions exist right now)
+- `src/schema/page_views.ts` — `page_views` table: `id`, `path`, `visited_at`
 - `drizzle.config.ts` — Drizzle Kit config (requires `DATABASE_URL`, automatically provided by Replit)
 - Exports: `.` (pool, db, schema), `./schema` (schema only)
 
