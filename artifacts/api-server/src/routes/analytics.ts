@@ -1,6 +1,6 @@
 import { Router, type IRouter } from "express";
 import { db, pageViewsTable } from "@workspace/db";
-import { sql, desc, count } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 
 const router: IRouter = Router();
 
@@ -14,23 +14,25 @@ router.post("/track", async (req, res) => {
     const sanitised = path.startsWith("/") ? path : `/${path}`;
     await db.insert(pageViewsTable).values({ path: sanitised });
     res.status(204).end();
-  } catch (err) {
+  } catch {
     res.status(500).json({ error: "Failed to record view" });
   }
 });
 
-router.get("/analytics", async (_req, res) => {
+router.get("/analytics", async (req, res) => {
   try {
-    const days = 7;
+    const rawDays = Number(req.query["days"] ?? 7);
+    const days = Number.isNaN(rawDays) || rawDays < 1 ? 7 : Math.min(rawDays, 365);
 
-    const dailyRows = await db.execute(sql`
+    const dailyByPageRows = await db.execute(sql`
       SELECT
         to_char(date_trunc('day', visited_at AT TIME ZONE 'UTC'), 'YYYY-MM-DD') AS date,
+        path,
         COUNT(*)::int AS count
       FROM page_views
       WHERE visited_at >= NOW() - INTERVAL '${sql.raw(String(days))} days'
-      GROUP BY 1
-      ORDER BY 1 ASC
+      GROUP BY 1, 2
+      ORDER BY 1 ASC, 3 DESC
     `);
 
     const byPageRows = await db.execute(sql`
@@ -56,13 +58,14 @@ router.get("/analytics", async (_req, res) => {
     `);
 
     res.json({
-      daily: dailyRows.rows,
+      daily: dailyByPageRows.rows,
       byPage: byPageRows.rows,
       total: (totalRow.rows[0] as { count: number })?.count ?? 0,
       today: (todayRow.rows[0] as { count: number })?.count ?? 0,
       thisWeek: (weekRow.rows[0] as { count: number })?.count ?? 0,
+      days,
     });
-  } catch (err) {
+  } catch {
     res.status(500).json({ error: "Failed to fetch analytics" });
   }
 });
