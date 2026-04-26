@@ -355,6 +355,14 @@ export default function JobApplicationAgentPage() {
         style={{ background: "linear-gradient(135deg, hsl(222,47%,6%) 0%, hsl(230,40%,10%) 100%)" }}
       >
         <DottedSurface />
+        {/* radial vignette — darkens behind the text while leaving edge particles alive */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 90% at 32% 48%, rgba(7,11,26,0.78) 0%, rgba(7,11,26,0.45) 45%, transparent 75%)",
+          }}
+        />
         <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
           <motion.p
             className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-semibold mb-4"
@@ -398,9 +406,14 @@ export default function JobApplicationAgentPage() {
             ))}
           </motion.div>
         </div>
-        {/* bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"
-          style={{ background: "linear-gradient(to bottom, transparent, hsl(var(--background)))" }} />
+        {/* bottom fade — eased multi-stop dissolve into page background */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to bottom, hsla(40,20%,97%,0) 0%, hsla(40,20%,97%,0.06) 18%, hsla(40,20%,97%,0.22) 38%, hsla(40,20%,97%,0.55) 60%, hsla(40,20%,97%,0.85) 80%, hsl(40,20%,97%) 100%)",
+          }}
+        />
       </section>
 
       {/* ── content ──────────────────────────────────────────── */}
