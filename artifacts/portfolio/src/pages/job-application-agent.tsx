@@ -387,13 +387,14 @@ export default function JobApplicationAgentPage() {
             transition={{ duration: 0.7, delay: 0.35 }}
           >
             {HERO_TOOLS.map((t) => (
-              <span
+              <Badge
                 key={t}
-                className="text-xs px-3 py-1 rounded-full border border-white/20 text-white/70 font-medium backdrop-blur-sm"
+                variant="outline"
+                className="rounded-full border-white/20 text-white/70 font-medium backdrop-blur-sm hover-elevate"
                 style={{ backgroundColor: "rgba(255,255,255,0.06)" }}
               >
                 {t}
-              </span>
+              </Badge>
             ))}
           </motion.div>
         </div>
