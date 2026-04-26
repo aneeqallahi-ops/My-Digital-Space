@@ -15,15 +15,32 @@ import {
 /* ── helpers ──────────────────────────────────────────────── */
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
+const spring = { type: "spring", stiffness: 360, damping: 28 } as const;
+const springGentle = { type: "spring", stiffness: 220, damping: 22 } as const;
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 36 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.85, ease } },
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.72, ease } },
+};
+
+const fadeLeft: Variants = {
+  hidden: { opacity: 0, x: -28 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.72, ease } },
+};
+
+const fadeRight: Variants = {
+  hidden: { opacity: 0, x: 28 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.72, ease } },
 };
 
 const staggerGrid: Variants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.14 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+};
+
+const staggerSlow: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.13, delayChildren: 0.1 } },
 };
 
 function useViewOnce(margin = "-80px") {
@@ -192,17 +209,14 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
       <div className="relative z-10 min-h-[100dvh] flex flex-col justify-center px-5 sm:px-8 md:px-14 xl:px-20 pt-28 pb-16 lg:pt-0 lg:pb-0">
         <motion.div
           className="space-y-6 sm:space-y-8 max-w-[520px]"
-          initial={{ opacity: 0, y: 36 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.15, ease }}
           style={{ y: textY, opacity: textOp }}
         >
           {/* mobile portrait — shown only below lg */}
           <motion.div
             className="lg:hidden flex justify-start mb-2"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3, ease }}
+            initial={{ opacity: 0, scale: 0.88, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1.0, delay: 0.1, ease }}
           >
             <div
               className="relative overflow-hidden rounded-2xl border border-white/10 shadow-xl"
@@ -222,7 +236,13 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
           </motion.div>
 
           {/* role badge */}
-          <div className="flex items-center gap-3 flex-wrap" data-testid="text-hero-subtitle">
+          <motion.div
+            className="flex items-center gap-3 flex-wrap"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease }}
+            data-testid="text-hero-subtitle"
+          >
             <span className="inline-flex items-center gap-2 text-[13px] sm:text-[15px] font-semibold uppercase tracking-[0.16em] text-white">
               <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full animate-pulse shrink-0 bg-primary" />
               Senior Analyst
@@ -235,60 +255,93 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
               style={{ filter: "brightness(0) invert(1)", opacity: 0.9 }}
               data-testid="img-intellia-logo-hero"
             />
-          </div>
+          </motion.div>
 
           {/* name */}
-          <h1
+          <motion.h1
             className="font-serif font-semibold leading-[1.02] tracking-tight text-white"
             style={{ fontSize: "clamp(2.6rem, 6vw, 5.2rem)" }}
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.95, delay: 0.38, ease }}
             data-testid="text-hero-title"
           >
             Aneeq<br />Allahi
-          </h1>
+          </motion.h1>
 
           {/* accent dashes */}
-          <div className="flex items-center gap-4">
-            <div className="w-10 sm:w-12 h-[2px] bg-primary" />
-            <div className="w-3 sm:w-4 h-[2px] bg-primary/40" />
-          </div>
+          <motion.div
+            className="flex items-center gap-4"
+            initial={{ opacity: 0, x: -18 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.65, delay: 0.6, ease }}
+          >
+            <motion.div
+              className="h-[2px] bg-primary origin-left"
+              initial={{ width: 0 }}
+              animate={{ width: "clamp(40px, 3vw, 48px)" }}
+              transition={{ duration: 0.55, delay: 0.65, ease }}
+            />
+            <motion.div
+              className="h-[2px] bg-primary/40 origin-left"
+              initial={{ width: 0 }}
+              animate={{ width: "clamp(12px, 1vw, 16px)" }}
+              transition={{ duration: 0.4, delay: 0.85, ease }}
+            />
+          </motion.div>
 
           {/* tagline */}
-          <p
+          <motion.p
             className="text-[14px] sm:text-[15px] md:text-[16px] text-white/70 font-light leading-[1.9]"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.72, ease }}
             data-testid="text-hero-tagline"
           >
             Orchestrating strategy, driving product,<br className="hidden sm:block" /> and unlocking scale through AI &amp; automation.
-          </p>
+          </motion.p>
 
           {/* cta */}
-          <div className="pt-1 flex items-center gap-4 flex-wrap">
-            <button
+          <motion.div
+            className="pt-1 flex items-center gap-4 flex-wrap"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.88, ease }}
+          >
+            <motion.button
               onClick={onResumeOpen}
               className="inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 text-sm font-medium border border-white/20 text-white hover:bg-white hover:text-[#0c1220] transition-colors duration-300"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              transition={spring}
               data-testid="btn-view-resume"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               View Résumé
-            </button>
+            </motion.button>
             <a
               href="#consulting"
               className="text-sm text-white/40 hover:text-white/70 transition-colors font-light"
             >
               See my work ↓
             </a>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* scroll indicator */}
         <motion.div
           className="absolute bottom-8 left-5 sm:left-8 md:left-14 xl:left-20 flex items-center gap-3"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.28 }}
-          transition={{ delay: 2 }}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 0.28, y: 0 }}
+          transition={{ delay: 1.8, duration: 0.8, ease }}
         >
-          <div className="w-px h-8 bg-white" />
+          <motion.div
+            className="w-px bg-white"
+            animate={{ height: [24, 36, 24] }}
+            transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut", delay: 2.4 }}
+          />
           <span className="text-[10px] uppercase tracking-[0.2em] text-white font-medium">Scroll</span>
         </motion.div>
       </div>
@@ -320,15 +373,36 @@ function Hero({ onResumeOpen }: { onResumeOpen: () => void }) {
 /* ── section heading ──────────────────────────────────────── */
 
 function SectionHeading({ title, subtitle }: { title: string; subtitle?: string }) {
+  const { ref, inView } = useViewOnce("-60px");
   return (
-    <div className="mb-12 sm:mb-16">
+    <div ref={ref} className="mb-12 sm:mb-16">
       {subtitle && (
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-px bg-primary" />
-          <span className="text-primary tracking-[0.2em] uppercase text-[11px] font-semibold">{subtitle}</span>
+        <div className="flex items-center gap-3 mb-4 overflow-hidden">
+          <motion.div
+            className="h-px bg-primary origin-left flex-shrink-0"
+            initial={{ scaleX: 0, width: 32 }}
+            animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
+            transition={{ duration: 0.5, ease }}
+            style={{ width: 32 }}
+          />
+          <motion.span
+            className="text-primary tracking-[0.2em] uppercase text-[11px] font-semibold"
+            initial={{ opacity: 0, x: -10 }}
+            animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+            transition={{ duration: 0.5, delay: 0.15, ease }}
+          >
+            {subtitle}
+          </motion.span>
         </div>
       )}
-      <h2 className="text-2xl sm:text-3xl md:text-[2.75rem] font-serif font-semibold leading-tight text-foreground">{title}</h2>
+      <motion.h2
+        className="text-2xl sm:text-3xl md:text-[2.75rem] font-serif font-semibold leading-tight text-foreground"
+        initial={{ opacity: 0, y: 22 }}
+        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
+        transition={{ duration: 0.75, delay: subtitle ? 0.22 : 0, ease }}
+      >
+        {title}
+      </motion.h2>
     </div>
   );
 }
@@ -346,25 +420,30 @@ function About() {
   return (
     <section id="about" className="py-20 sm:py-28 bg-card/20" data-testid="section-about">
       <div className="max-w-5xl mx-auto px-5 sm:px-6">
-        <motion.div
-          ref={ref}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          variants={fadeUp}
-        >
+        <div ref={ref}>
           <SectionHeading title="The Intersections" subtitle="About" />
           <div className="grid lg:grid-cols-5 gap-10 sm:gap-16 items-start">
-            <div className="lg:col-span-3 space-y-5 text-muted-foreground font-light leading-[1.85] text-[15px]">
+            <motion.div
+              className="lg:col-span-3 space-y-5 text-muted-foreground font-light leading-[1.85] text-[15px]"
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              variants={fadeLeft}
+            >
               <p data-testid="text-about-bio">
                 I'm a LUMS Management Sciences graduate (High Distinction, 2025) working at the intersection of strategy consulting, product management, and AI & automation. I'm drawn to problems that are structurally complex and humanly consequential — whether that's restructuring healthcare delivery, building AI-native products, or designing systems that scale.
               </p>
               <p data-testid="text-about-role">
                 At Intellia AI, I engage high-stakes consulting projects spanning market entry strategy, financial modelling, and value creation planning — translating analytical rigour into decisions with measurable, real-world impact.
               </p>
-            </div>
-            <div className="lg:col-span-2 space-y-5">
+            </motion.div>
+            <motion.div
+              className="lg:col-span-2 space-y-5"
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              variants={staggerSlow}
+            >
               {EXPERTISE.map((e) => (
-                <div key={e.title} className="group">
+                <motion.div key={e.title} className="group" variants={fadeRight}>
                   <div className="flex items-start gap-3">
                     <div className="mt-1.5 w-1 h-1 rounded-full bg-primary shrink-0 group-hover:scale-150 transition-transform" />
                     <div>
@@ -372,11 +451,11 @@ function About() {
                       <p className="text-xs text-muted-foreground font-light leading-relaxed">{e.body}</p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -390,14 +469,22 @@ function ProjectCard({ title, category, description, id, onClick }: {
   return (
     <motion.button
       variants={fadeUp}
+      whileHover={{ y: -5, boxShadow: "0 16px 48px -12px hsl(var(--primary)/.18)" }}
+      whileTap={{ scale: 0.985 }}
+      transition={springGentle}
       className="group relative bg-background border border-border/50 p-6 sm:p-7 flex flex-col h-full text-left w-full
-                 hover:border-primary/40 hover:shadow-[0_8px_40px_-12px_hsl(var(--primary)/.15)]
-                 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary overflow-hidden"
+                 hover:border-primary/40
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary overflow-hidden"
       data-testid={`card-${id}`}
       onClick={onClick}
       onKeyDown={(e) => { if (e.key === " ") { e.preventDefault(); onClick(); } }}
     >
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
+      <motion.div
+        className="absolute top-0 left-0 right-0 h-[2px] bg-primary origin-left"
+        initial={{ scaleX: 0 }}
+        whileHover={{ scaleX: 1 }}
+        transition={{ duration: 0.35, ease }}
+      />
       <span className="text-primary text-[10px] uppercase tracking-[0.18em] mb-4 block font-semibold">{category}</span>
       <h3 className="text-base font-serif font-medium mb-4 group-hover:text-primary transition-colors leading-snug">{title}</h3>
       <p className="text-muted-foreground text-sm font-light leading-relaxed flex-grow text-[13px]">{description}</p>
@@ -405,12 +492,14 @@ function ProjectCard({ title, category, description, id, onClick }: {
         <span className="text-[11px] text-muted-foreground font-medium group-hover:text-primary transition-colors tracking-wide uppercase">
           View Details
         </span>
-        <svg
-          className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300"
+        <motion.svg
+          className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary"
           fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          whileHover={{ x: 3 }}
+          transition={spring}
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg>
+        </motion.svg>
       </div>
     </motion.button>
   );
@@ -481,14 +570,20 @@ function OtherProjects({ onOpen }: { onOpen: (p: ProjectItem) => void }) {
 function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = false }: {
   role: string; company: string; dates: string; description: string; logoSrc?: string; isCurrent?: boolean;
 }) {
+  const { ref, inView } = useViewOnce("-40px");
   return (
-    <div className="group">
+    <div ref={ref} className="group">
 
       {/* ── DESKTOP: 3-col grid [meta | dot | description] ── */}
       <div className="hidden md:grid grid-cols-[1fr_48px_1fr] items-start">
 
         {/* LEFT: meta — right-aligned */}
-        <div className="text-right pr-10">
+        <motion.div
+          className="text-right pr-10"
+          initial={{ opacity: 0, x: -24 }}
+          animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }}
+          transition={{ duration: 0.65, ease }}
+        >
           <h3 className="text-[1.05rem] font-serif font-medium text-foreground group-hover:text-primary transition-colors duration-300 leading-snug">
             {role}
           </h3>
@@ -503,22 +598,37 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
           <span className={`inline-block text-[11px] font-semibold mt-2.5 tracking-wide ${isCurrent ? "text-primary" : "text-muted-foreground/60"}`}>
             {dates}
           </span>
-        </div>
+        </motion.div>
 
         {/* CENTER: dot */}
-        <div className="flex flex-col items-center pt-[6px]">
+        <motion.div
+          className="flex flex-col items-center pt-[6px]"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+          transition={{ duration: 0.4, delay: 0.2, ...spring }}
+        >
           <div className="w-2.5 h-2.5 rounded-full border-2 border-border bg-background group-hover:border-primary group-hover:bg-primary/20 transition-all duration-300 z-10 shrink-0" />
-        </div>
+        </motion.div>
 
         {/* RIGHT: description */}
-        <div className="pl-10">
+        <motion.div
+          className="pl-10"
+          initial={{ opacity: 0, x: 24 }}
+          animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 24 }}
+          transition={{ duration: 0.65, delay: 0.1, ease }}
+        >
           <p className="text-muted-foreground text-sm font-light leading-[1.9]">{description}</p>
-        </div>
+        </motion.div>
 
       </div>
 
       {/* ── MOBILE: stacked with left border ── */}
-      <div className="md:hidden pl-5 border-l-2 border-border/50 relative">
+      <motion.div
+        className="md:hidden pl-5 border-l-2 border-border/50 relative"
+        initial={{ opacity: 0, x: -16 }}
+        animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -16 }}
+        transition={{ duration: 0.65, ease }}
+      >
         <div className="absolute -left-[5px] top-[5px] w-2.5 h-2.5 rounded-full border-2 border-border bg-background" />
         <h3 className="text-[1rem] font-serif font-medium text-foreground leading-snug">{role}</h3>
         {logoSrc ? (
@@ -531,7 +641,7 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
         )}
         <span className={`inline-block text-[11px] font-semibold mt-2 tracking-wide ${isCurrent ? "text-primary" : "text-muted-foreground/60"}`}>{dates}</span>
         <p className="text-muted-foreground text-sm font-light leading-[1.9] mt-3">{description}</p>
-      </div>
+      </motion.div>
 
     </div>
   );
@@ -545,29 +655,22 @@ const JOBS = [
 ];
 
 function Experience() {
-  const { ref, inView } = useViewOnce();
   return (
     <section id="experience" className="py-20 sm:py-28" data-testid="section-experience">
       <div className="max-w-5xl mx-auto px-5 sm:px-6">
         <SectionHeading title="Career Trajectory" subtitle="Experience" />
-        <motion.div
-          ref={ref}
+        <div
           className="relative space-y-12 sm:space-y-16
             before:hidden md:before:block
             before:absolute before:top-0 before:left-[50%] before:-translate-x-px
             before:h-full before:w-px
             before:bg-gradient-to-b before:from-primary/30 before:via-border/50 before:to-transparent
             before:pointer-events-none"
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          variants={staggerGrid}
         >
           {JOBS.map((item) => (
-            <motion.div key={item.role + item.company} variants={fadeUp}>
-              <TimelineItem {...item} />
-            </motion.div>
+            <TimelineItem key={item.role + item.company} {...item} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -592,10 +695,13 @@ function Certifications({ onOpen }: { onOpen: (c: CertificationItem) => void }) 
             <motion.button
               key={cert.id}
               variants={fadeUp}
+              whileHover={{ y: -4, boxShadow: "0 12px 36px -8px hsl(var(--primary)/.18)" }}
+              whileTap={{ scale: 0.96 }}
+              transition={springGentle}
               onClick={() => onOpen(cert)}
               className="group relative bg-background border border-border/50 p-4 sm:p-6 flex flex-col items-center text-center
-                         hover:border-primary/40 hover:shadow-[0_8px_40px_-12px_hsl(var(--primary)/.15)]
-                         transition-all duration-500 cursor-pointer w-full overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                         hover:border-primary/40
+                         cursor-pointer w-full overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               data-testid={`card-certification-${i + 1}`}
             >
               <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
@@ -622,7 +728,14 @@ function Certifications({ onOpen }: { onOpen: (c: CertificationItem) => void }) 
 
 function Footer() {
   return (
-    <footer className="relative bg-foreground text-background overflow-hidden" data-testid="main-footer">
+    <motion.footer
+      className="relative bg-foreground text-background overflow-hidden"
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.9, ease }}
+      data-testid="main-footer"
+    >
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.05]"
         style={{
@@ -680,7 +793,7 @@ function Footer() {
           </p>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
 
