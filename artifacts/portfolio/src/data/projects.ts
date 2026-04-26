@@ -126,7 +126,7 @@ export const aiProjects: ProjectItem[] = [
   },
   {
     id: "ai-2",
-    category: "Coming Soon",
+    category: "Automation",
     title: "Autonomous Job Application Agent — Resume Tailoring, Research and Automated Submission",
     description: "An agentic AI job application system in development — autonomously surfacing opportunities across the web and LinkedIn, conducting deep company research, tailoring resumes to job descriptions, and submitting applications with human-in-the-loop flagging for edge cases.",
     extendedDescription: "This autonomous agent is in development, designed to compress the end-to-end job application process for professionals in consulting and knowledge-intensive roles. The discovery layer continuously scrapes the web and LinkedIn for postings matching predefined criteria — role type, seniority, sector focus, and work modality. Each identified opportunity triggers a company research workstream, where the agent traverses the company's website, LinkedIn, social media, and publicly available financial or news data to build a structured research brief. This brief informs both the resume tailoring step — where the agent rewrites and repositions relevant experience sections to align with the job description and ATS keyword requirements — and the cover letter generation step. Human-in-the-loop review is triggered for ambiguous relevance cases, applications requiring additional context or portfolio materials, and low-confidence ATS alignment scores. Approved applications are submitted automatically, with status tracked across a central dashboard.",
@@ -136,6 +136,8 @@ export const aiProjects: ProjectItem[] = [
       "ATS-optimised resume tailoring per job description with human-in-the-loop flagging for ambiguous relevance, cover letter requirements, and low-confidence matches.",
     ],
     tools: ["Agentic AI", "Web Scraping", "LinkedIn Automation", "Resume Tailoring", "ATS Optimisation", "Company Research", "Human-in-the-Loop", "Workflow Orchestration", "LLM Integration", "Job Application Automation"],
+    externalUrl: "/projects/job-application-agent",
+    externalUrlLabel: "Explore Full Case Study",
   },
 ];
 

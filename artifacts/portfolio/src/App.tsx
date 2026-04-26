@@ -6,6 +6,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import NaseehaPage from "@/pages/naseeha";
 import AnalyticsPage from "@/pages/analytics";
+import JobApplicationAgentPage from "@/pages/job-application-agent";
 import { usePageTracker } from "@/hooks/usePageTracker";
 
 const queryClient = new QueryClient();
@@ -17,6 +18,7 @@ function TrackedRouter() {
       <Route path="/" component={Home} />
       <Route path="/lecture-intelligence" component={NaseehaPage} />
       <Route path="/analytics" component={AnalyticsPage} />
+      <Route path="/projects/job-application-agent" component={JobApplicationAgentPage} />
       <Route component={NotFound} />
     </Switch>
   );
