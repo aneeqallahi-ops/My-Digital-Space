@@ -406,17 +406,12 @@ export default function JobApplicationAgentPage() {
             ))}
           </motion.div>
         </div>
-        {/* bottom fade — eased multi-stop dissolve into page background */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to bottom, hsla(40,20%,97%,0) 0%, hsla(40,20%,97%,0.06) 18%, hsla(40,20%,97%,0.22) 38%, hsla(40,20%,97%,0.55) 60%, hsla(40,20%,97%,0.85) 80%, hsl(40,20%,97%) 100%)",
-          }}
-        />
       </section>
 
-      {/* ── content ──────────────────────────────────────────── */}
+      {/* ── content — card lifts up into the hero ────────────── */}
+      <div
+        className="relative z-10 -mt-10 rounded-t-3xl bg-background shadow-[0_-12px_48px_rgba(0,0,0,0.18)]"
+      >
       <div className="max-w-4xl mx-auto px-5 sm:px-8 py-16 sm:py-20 space-y-20">
 
         {/* the problem */}
@@ -573,6 +568,7 @@ export default function JobApplicationAgentPage() {
           </p>
         </div>
       </footer>
+      </div>{/* end card-lift wrapper */}
     </div>
   );
 }
