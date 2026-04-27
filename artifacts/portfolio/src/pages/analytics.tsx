@@ -136,7 +136,7 @@ export default function AnalyticsPage() {
 
             <div className="border border-white/10 rounded-sm p-5 sm:p-6 mb-8">
               <p className="text-[10px] uppercase tracking-widest text-white/40 mb-5">
-                Daily visits by page — last 7 days
+                Daily visits by page: last 7 days
               </p>
               {!hasData ? (
                 <p className="text-sm text-white/30 py-8 text-center">No visits recorded yet in the last 7 days.</p>
