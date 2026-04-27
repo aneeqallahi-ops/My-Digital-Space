@@ -40,8 +40,8 @@ const PHASES: Phase[] = [
     panelBg: "#f5f3ff",
     panelBorder: "#c4b5fd",
     tools: ["n8n", "Email / Webhook"],
-    body: "Job platform alerts arrive via email or webhook. n8n parses each alert for title, company, and URL, writes a new Airtable record with status Pending Assessment. Structured fields like work type and modality are captured in Phase 2 by fetching the full listing — not from the alert payload, which is too inconsistent to rely on.",
-    learned: "Alert payloads vary by platform — don't rely on structured fields being present. Fetch the full listing in Phase 2 instead.",
+    body: "Job platform alerts arrive via email or webhook. n8n parses each alert for title, company, and URL, writes a new Airtable record with status Pending Assessment. Structured fields like work type and modality are captured in Phase 2 by fetching the full listing, not from the alert payload, which is too inconsistent to rely on.",
+    learned: "Alert payloads vary by platform, so don't rely on structured fields being present. Fetch the full listing in Phase 2 instead.",
   },
   {
     num: 2,
@@ -50,8 +50,8 @@ const PHASES: Phase[] = [
     panelBg: "#f0fdf9",
     panelBorder: "#a7f3d0",
     tools: ["Claude Haiku", "n8n", "Airtable"],
-    body: "Fetches the listing page and extracts the job description via JSON-LD structured data — no fragile HTML scraping. Claude Haiku scores the role 0–10 against defined criteria (role type, seniority, deal-breakers) and generates a keyword brief for ATS optimisation downstream. Approved postings proceed to Phase 3; rejected ones are logged and archived.",
-    learned: "JSON-LD over HTML scraping — most job platforms embed structured data in listing pages. Parsing that directly means the extractor never breaks on a UI redesign.",
+    body: "Fetches the listing page and extracts the job description via JSON-LD structured data, with no fragile HTML scraping. Claude Haiku scores the role 0–10 against defined criteria (role type, seniority, deal-breakers) and generates a keyword brief for ATS optimisation downstream. Approved postings proceed to Phase 3; rejected ones are logged and archived.",
+    learned: "JSON-LD over HTML scraping: most job platforms embed structured data in listing pages. Parsing that directly means the extractor never breaks on a UI redesign.",
   },
   {
     num: 3,
@@ -61,7 +61,7 @@ const PHASES: Phase[] = [
     panelBorder: "#fed7aa",
     tools: ["Claude Sonnet", "Google Docs API", "Google Drive"],
     body: "Claude rewrites resume sections using the Phase 2 keyword brief, then generates a tailored cover letter in a second call. Both use a native Google Doc template with 7 placeholder replacements via batchUpdate. The completed documents are exported as PDFs, stored in Drive, and linked back to the Airtable record. Phase 4 is triggered automatically on completion.",
-    learned: "Google Docs format trap — batchUpdate silently fails on .docx files even when stored in Drive. The template must be a native Google Docs file (File → Save as Google Docs), not an uploaded .docx.",
+    learned: "Google Docs format trap: batchUpdate silently fails on .docx files even when stored in Drive. The template must be a native Google Docs file (File → Save as Google Docs), not an uploaded .docx.",
   },
   {
     num: 4,
@@ -71,7 +71,7 @@ const PHASES: Phase[] = [
     panelBorder: "#fde68a",
     tools: ["Skyvern", "n8n", "Slack", "Airtable"],
     body: "Skyvern (a browser-use AI agent) receives the job URL, resume, cover letter, and candidate details via API. It navigates to the portal, determines whether it's a platform-native form or an external ATS (Workday, Greenhouse, Lever), and submits. n8n polls the submission outcome, updates the Airtable record status, and fires a Slack notification with the result.",
-    learned: "Slack message construction — build the full notification string inside a Code node and reference it as a single variable. Constructing multi-line strings in n8n's expression editor causes JSON parse failures on special characters.",
+    learned: "Slack message construction: build the full notification string inside a Code node and reference it as a single variable. Constructing multi-line strings in n8n's expression editor causes JSON parse failures on special characters.",
   },
 ];
 
@@ -84,7 +84,7 @@ const COMPLICATIONS = [
   },
   {
     title: "JSON-LD over HTML scraping",
-    body: "Most job platforms embed JSON-LD in listing pages — schema-compliant fields (employmentType, datePosted) that don't break on UI updates. No brittle scraper needed.",
+    body: "Most job platforms embed JSON-LD in listing pages: schema-compliant fields (employmentType, datePosted) that don't break on UI updates. No brittle scraper needed.",
   },
   {
     title: "Slack message construction in n8n",
@@ -92,7 +92,7 @@ const COMPLICATIONS = [
   },
   {
     title: "Cross-node data without merging",
-    body: "The cover letter node needed Phase 2 keyword data. n8n's $('Node').item.json.fieldName syntax gives direct reference — no merge node needed, the workflow stays linear and debuggable.",
+    body: "The cover letter node needed Phase 2 keyword data. n8n's $('Node').item.json.fieldName syntax gives direct reference, so no merge node is needed; the workflow stays linear and debuggable.",
   },
 ];
 
@@ -100,7 +100,7 @@ const COMPLICATIONS = [
 
 const STACK = [
   { role: "Orchestration", tech: "n8n (self-hosted, webhook-triggered between phases)" },
-  { role: "AI / LLM", tech: "Anthropic Claude — Haiku for extraction & scoring, Sonnet for generation" },
+  { role: "AI / LLM", tech: "Anthropic Claude: Haiku for extraction & scoring, Sonnet for generation" },
   { role: "Browser automation", tech: "Skyvern (AI browser-use agent for form navigation and submission)" },
   { role: "Data store", tech: "Airtable (central job tracking, status management)" },
   { role: "Document generation", tech: "Google Docs batchUpdate API + Google Drive (PDF export)" },
@@ -341,7 +341,7 @@ export default function JobApplicationAgentPage() {
   const [activePhase, setActivePhase] = useState(1);
 
   useEffect(() => {
-    document.title = "Autonomous Job Application Agent — Aneeq Allahi";
+    document.title = "Autonomous Job Application Agent | Aneeq Allahi";
     return () => { document.title = "Aneeq Allahi"; };
   }, []);
 
@@ -386,7 +386,7 @@ export default function JobApplicationAgentPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, delay: 0.2, ease }}
           >
-            An end-to-end pipeline that monitors job platforms, assesses relevance, tailors application materials, and submits — fully automated from alert to submitted form.
+            An end-to-end pipeline that monitors job platforms, assesses relevance, tailors application materials, and submits, fully automated from alert to submitted form.
           </motion.p>
           <motion.div
             className="flex flex-wrap gap-2"
@@ -424,7 +424,7 @@ export default function JobApplicationAgentPage() {
           <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground font-semibold mb-3">The problem</p>
           <h2 className="font-serif font-semibold text-2xl sm:text-3xl text-foreground mb-5">Why build this?</h2>
           <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
-            The average professional job application takes 45–90 minutes to do properly — tailoring a resume, writing a cover letter, researching the company, navigating the portal. For someone applying at scale to consulting and knowledge-intensive roles, that's not a process; it's a second job. I built an autonomous agent to compress it end-to-end.
+            The average professional job application takes 45–90 minutes to do properly: tailoring a resume, writing a cover letter, researching the company, navigating the portal. For someone applying at scale to consulting and knowledge-intensive roles, that's not a process; it's a second job. I built an autonomous agent to compress it end-to-end.
           </p>
         </motion.section>
 
@@ -552,7 +552,7 @@ export default function JobApplicationAgentPage() {
               The full four-phase pipeline is built and operational. Phases 1 and 2 run daily, processing job platform alerts automatically. Phase 3 generates tailored resumes and cover letters on approval. Phase 4 handles submission across platform-native forms and external ATS portals.
             </p>
             <p className="text-base text-muted-foreground leading-relaxed">
-              One honest limitation: Skyvern occasionally encounters portals requiring fresh authentication. These are flagged via Slack rather than retried — a deliberate choice to keep the human in the loop for edge cases.
+              One honest limitation: Skyvern occasionally encounters portals requiring fresh authentication. These are flagged via Slack rather than retried, a deliberate choice to keep the human in the loop for edge cases.
             </p>
           </div>
         </motion.section>

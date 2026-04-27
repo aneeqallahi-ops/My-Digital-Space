@@ -411,7 +411,7 @@ function SectionHeading({ title, subtitle }: { title: string; subtitle?: string 
 
 const EXPERTISE = [
   { title: "Strategy & Consulting", body: "High-level business strategy, market entry analysis, JV structuring, and operational scale for enterprise and public-sector clients." },
-  { title: "Product Management", body: "End-to-end product lifecycle ownership — from user research and roadmapping to technical execution and growth optimisation." },
+  { title: "Product Management", body: "End-to-end product lifecycle ownership, from user research and roadmapping to technical execution and growth optimisation." },
   { title: "AI & Automation", body: "Leveraging LLMs, conversational agents, and workflow automations (n8n, web-scraping pipelines) to drive measurable operational value." },
 ];
 
@@ -430,10 +430,10 @@ function About() {
               variants={fadeLeft}
             >
               <p data-testid="text-about-bio">
-                I'm a LUMS Management Sciences graduate (High Distinction, 2025) working at the intersection of strategy consulting, product management, and AI & automation. I'm drawn to problems that are structurally complex and humanly consequential — whether that's restructuring healthcare delivery, building AI-native products, or designing systems that scale.
+                I'm a LUMS Management Sciences graduate (High Distinction, 2025) working at the intersection of strategy consulting, product management, and AI & automation. I'm drawn to problems that are structurally complex and humanly consequential, whether that's restructuring healthcare delivery, building AI-native products, or designing systems that scale.
               </p>
               <p data-testid="text-about-role">
-                At Intellia AI, I engage high-stakes consulting projects spanning market entry strategy, financial modelling, and value creation planning — translating analytical rigour into decisions with measurable, real-world impact.
+                At Intellia AI, I engage high-stakes consulting projects spanning market entry strategy, financial modelling, and value creation planning, translating analytical rigour into decisions with measurable, real-world impact.
               </p>
             </motion.div>
             <motion.div
@@ -648,10 +648,10 @@ function TimelineItem({ role, company, dates, description, logoSrc, isCurrent = 
 }
 
 const JOBS = [
-  { role: "Senior Analyst", company: "Intellia AI", logoSrc: "/intellia-logo.png", dates: "July 2025 — Present", isCurrent: true, description: "Lead multi-sector consulting engagements with measurable outcomes: facilitated a $1B JV negotiation in KSA through a 2,000+ data-point commercial viability analysis; co-developed a 3-year value creation plan for an oncology clinic to offset a $50M net loss; and built a forecasting model that reduced patient acquisition costs by 10%. Fast-tracked from Analyst to Senior Analyst." },
-  { role: "Associate Product Manager", company: "SnackOut", logoSrc: "/snackout-logo.png", dates: "February 2025 — April 2025", isCurrent: false, description: "Built a conversational AI customer support agent that reduced operational costs by ~70%; implemented automated SEO blog generation via a locally hosted n8n server; and developed an AI-powered restaurant directory through automated web-scraping and form-filling agents." },
-  { role: "Product Management Intern", company: "EZOffice", logoSrc: "/ezo-logo.png", dates: "June 2024 — August 2024", isCurrent: false, description: "Redesigned error messaging and inline guides to reduce helpdesk tickets; updated tutorial video content to align with the latest module functionalities, boosting engagement; and streamlined module workflows to improve operational efficiency and asset management capabilities." },
-  { role: "Creative Lead", company: "Digital Khokha", logoSrc: "/digital-khokha-logo.png", dates: "July 2021 — October 2022", isCurrent: false, description: "Owned end-to-end creative content strategy: social media direction, copywriting, article and blog production, pitch deck proposals, marketing plans, website content, and campaign conceptualisation across digital and conventional channels." },
+  { role: "Senior Analyst", company: "Intellia AI", logoSrc: "/intellia-logo.png", dates: "July 2025 – Present", isCurrent: true, description: "Lead multi-sector consulting engagements with measurable outcomes: facilitated a $1B JV negotiation in KSA through a 2,000+ data-point commercial viability analysis; co-developed a 3-year value creation plan for an oncology clinic to offset a $50M net loss; and built a forecasting model that reduced patient acquisition costs by 10%. Fast-tracked from Analyst to Senior Analyst." },
+  { role: "Associate Product Manager", company: "SnackOut", logoSrc: "/snackout-logo.png", dates: "February 2025 – April 2025", isCurrent: false, description: "Built a conversational AI customer support agent that reduced operational costs by ~70%; implemented automated SEO blog generation via a locally hosted n8n server; and developed an AI-powered restaurant directory through automated web-scraping and form-filling agents." },
+  { role: "Product Management Intern", company: "EZOffice", logoSrc: "/ezo-logo.png", dates: "June 2024 – August 2024", isCurrent: false, description: "Redesigned error messaging and inline guides to reduce helpdesk tickets; updated tutorial video content to align with the latest module functionalities, boosting engagement; and streamlined module workflows to improve operational efficiency and asset management capabilities." },
+  { role: "Creative Lead", company: "Digital Khokha", logoSrc: "/digital-khokha-logo.png", dates: "July 2021 – October 2022", isCurrent: false, description: "Owned end-to-end creative content strategy: social media direction, copywriting, article and blog production, pitch deck proposals, marketing plans, website content, and campaign conceptualisation across digital and conventional channels." },
 ];
 
 function Experience() {

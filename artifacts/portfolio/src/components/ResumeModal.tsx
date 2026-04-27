@@ -215,7 +215,7 @@ export function ResumeModal({ open, onClose }: { open: boolean; onClose: () => v
                 {/* Research */}
                 <SectionTitle>Research & Projects</SectionTitle>
                 <p className="text-xs text-muted-foreground font-light leading-relaxed">
-                  <span className="font-medium text-foreground">Digital Payments Analysis in Pakistan's E-commerce Sector</span> — Conducted primary research on digital payment systems in collaboration with Rayn, surveying 500+ respondents and 30+ interviewees, identifying key areas that could potentially increase digital payment adoption by 20% in the country.
+                  <span className="font-medium text-foreground">Digital Payments Analysis in Pakistan's E-commerce Sector</span>, conducted primary research on digital payment systems in collaboration with Rayn, surveying 500+ respondents and 30+ interviewees, identifying key areas that could potentially increase digital payment adoption by 20% in the country.
                 </p>
 
                 <Divider />

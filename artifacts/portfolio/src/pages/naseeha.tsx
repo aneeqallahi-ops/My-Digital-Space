@@ -33,7 +33,7 @@ const NODES: PipelineNode[] = [
   {
     id: "drive", step: 0, type: "trigger",
     label: "Google Drive Trigger", sublabel: "New lecture file uploaded",
-    description: "The pipeline activates the moment a new lecture recording appears in the designated Google Drive folder — no manual trigger, no human involvement at this stage.",
+    description: "The pipeline activates the moment a new lecture recording appears in the designated Google Drive folder, with no manual trigger or human involvement at this stage.",
     detail: "n8n Google Drive Trigger Node",
   },
   {
@@ -64,7 +64,7 @@ const NODES: PipelineNode[] = [
   {
     id: "with-notes", step: 4, type: "conditional",
     label: "Transcript + Context", sublabel: "With notes branch",
-    description: "When notes are present, they are merged with the transcript before summarisation — enriching the LLM output with the lecturer's own framing, references, and thematic intent.",
+    description: "When notes are present, they are merged with the transcript before summarisation, enriching the LLM output with the lecturer's own framing, references, and thematic intent.",
     detail: "Enriched path · Notes + Transcript → LLM",
     side: "right",
   },
@@ -95,7 +95,7 @@ const NODES: PipelineNode[] = [
   {
     id: "pdf", step: 9, type: "processing",
     label: "PDF Generation", sublabel: "Branded template → convert to PDF",
-    description: "The approved Google Doc is converted to a formatted PDF, retaining all organisational branding — ready for WhatsApp distribution to registered attendees.",
+    description: "The approved Google Doc is converted to a formatted PDF, retaining all organisational branding, ready for WhatsApp distribution to registered attendees.",
     detail: "Google Docs → PDF · Full branding preserved",
   },
   {
@@ -107,13 +107,13 @@ const NODES: PipelineNode[] = [
   {
     id: "loop", step: 11, type: "processing",
     label: "Loop Over Registrants", sublabel: "Wait between sends · anti-spam buffer",
-    description: "The pipeline iterates over each registrant entry with a configurable delay inserted between each WhatsApp send — preventing API spam detection and ensuring reliable, throttled delivery.",
+    description: "The pipeline iterates over each registrant entry with a configurable delay inserted between each WhatsApp send, preventing API spam detection and ensuring reliable, throttled delivery.",
     detail: "n8n Loop Node · Configurable delay · Anti-spam guard",
   },
   {
     id: "whatsapp", step: 12, type: "output",
     label: "WhatsApp Dispatch (WHAPI)", sublabel: "Personalised name + session title",
-    description: "Each registrant receives a personalised WhatsApp message — addressed by name, referencing the specific lecture session they attended — with the branded PDF attached via WHAPI's HTTP integration.",
+    description: "Each registrant receives a personalised WhatsApp message, addressed by name and referencing the specific lecture session they attended, with the branded PDF attached via WHAPI's HTTP integration.",
     detail: "WHAPI · HTTP Node · Personalised per recipient",
   },
   {
@@ -555,7 +555,7 @@ function NaseehaHero() {
             Lecture Intelligence<br className="hidden sm:block" /> Pipeline
           </h1>
           <p className="text-white/60 font-light leading-relaxed text-[15px] sm:text-base md:text-lg max-w-2xl mb-6 sm:mb-8">
-            An end-to-end n8n automation that transcribes multilingual weekly Islamic lectures, generates AI-powered summaries, routes them through a human review workflow, formats branded PDFs, and delivers them personally to registered attendees over WhatsApp — turning each physical gathering into a scalable digital content loop.
+            An end-to-end n8n automation that transcribes multilingual weekly Islamic lectures, generates AI-powered summaries, routes them through a human review workflow, formats branded PDFs, and delivers them personally to registered attendees over WhatsApp, turning each physical gathering into a scalable digital content loop.
           </p>
           {/* Naseeha attribution + logo */}
           <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
@@ -567,7 +567,7 @@ function NaseehaHero() {
             <span className="text-sm text-white/40 font-light leading-snug">
               Built for <span className="text-white/70 font-medium">Naseeha Institute</span>
               <br />
-              <span className="text-white/30 text-xs">— non-profit Islamic education · Lahore</span>
+              <span className="text-white/30 text-xs">· non-profit Islamic education · Lahore</span>
             </span>
           </div>
 
@@ -615,7 +615,7 @@ const GOALS = [
   {
     num: "01",
     title: "Capture and Scale the Physical Footprint",
-    body: "Create a digital content artefact — a summarised, branded PDF — that gives attendees a reason to register in person and extends the session's value beyond the physical gathering.",
+    body: "Create a digital content artefact, a summarised branded PDF, that gives attendees a reason to register in person and extends the session's value beyond the physical gathering.",
   },
   {
     num: "02",
@@ -625,7 +625,7 @@ const GOALS = [
   {
     num: "03",
     title: "Map Funnel Transitions",
-    body: "Understand which regular attendees move into deeper institute offerings — advanced courses, volunteer programmes, structured study circles — providing a complete view of community engagement depth.",
+    body: "Understand which regular attendees move into deeper institute offerings, including advanced courses, volunteer programmes, and structured study circles, providing a complete view of community engagement depth.",
   },
 ];
 
@@ -637,7 +637,7 @@ function GoalSection() {
           <p className="text-xs uppercase tracking-widest font-semibold text-primary mb-3">The Goal</p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground mb-4 sm:mb-5">What We Were Trying to Solve</h2>
           <p className="text-muted-foreground font-light leading-relaxed max-w-2xl text-sm sm:text-base">
-            Naseeha's weekly lectures were reaching people in the room — but stopping there. No systematic way to extend the session's value, no attendance intelligence, no funnel visibility. The pipeline was designed to address three interconnected goals simultaneously — without any manual overhead.
+            Naseeha's weekly lectures were reaching people in the room, but stopping there. No systematic way to extend the session's value, no attendance intelligence, no funnel visibility. The pipeline was designed to address three interconnected goals simultaneously, without any manual overhead.
           </p>
         </div>
         <div className="grid sm:grid-cols-3 gap-5 sm:gap-8">
@@ -659,7 +659,7 @@ function GoalSection() {
 const ARCH = [
   {
     title: "Conditional and Merged Branching",
-    body: "Not every session comes with pre-lecture context notes from the lecturer. The pipeline handles this gracefully through a conditional IF branch: when context notes are present, they are merged with the transcript before being passed to the LLM, enriching the summary with the lecturer's own framing and references. When absent, the pipeline routes to a separate branch that proceeds with the transcript alone. Both branches converge at a merge node before entering summarisation — ensuring a consistent downstream structure regardless of the path taken.",
+    body: "Not every session comes with pre-lecture context notes from the lecturer. The pipeline handles this gracefully through a conditional IF branch: when context notes are present, they are merged with the transcript before being passed to the LLM, enriching the summary with the lecturer's own framing and references. When absent, the pipeline routes to a separate branch that proceeds with the transcript alone. Both branches converge at a merge node before entering summarisation, ensuring a consistent downstream structure regardless of the path taken.",
     color: "#6366f1",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
@@ -680,7 +680,7 @@ const ARCH = [
   },
   {
     title: "Branded Templating via HTTP Node",
-    body: "Rather than generating a plain-text output, the pipeline populates a pre-designed Google Doc template carrying the organisation's branding — logo, typography, section headers, and formatting. Content is inserted and appended to the correct sections via a structured HTTP node call, ensuring every PDF looks like an official Naseeha publication rather than a raw LLM output.",
+    body: "Rather than generating a plain-text output, the pipeline populates a pre-designed Google Doc template carrying the organisation's branding, including logo, typography, section headers, and formatting. Content is inserted and appended to the correct sections via a structured HTTP node call, ensuring every PDF looks like an official Naseeha publication rather than a raw LLM output.",
     color: "#22c55e",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
@@ -691,7 +691,7 @@ const ARCH = [
   },
   {
     title: "LLM Role Segregation for Credits Efficiency",
-    body: "The summarisation workstream uses Claude Haiku — capable enough for nuanced, structured multilingual comprehension while remaining cost-efficient. The system prompt defines organisational context, tone, and output structure; the message prompt passes session-specific inputs. This separation keeps the model focused and the outputs consistent across weeks without over-spending on heavier models for routine tasks.",
+    body: "The summarisation workstream uses Claude Haiku, capable enough for nuanced, structured multilingual comprehension while remaining cost-efficient. The system prompt defines organisational context, tone, and output structure; the message prompt passes session-specific inputs. This separation keeps the model focused and the outputs consistent across weeks without over-spending on heavier models for routine tasks.",
     color: "#f59e0b",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
@@ -703,7 +703,7 @@ const ARCH = [
   },
   {
     title: "Guard Rails and Wait Nodes",
-    body: "Two deliberate guards sit in the pipeline. A wait node after the Drive trigger gives AssemblyAI sufficient processing time before the transcript fetch is attempted — preventing failed pulls on large audio files. A configurable loop delay is inserted between each WhatsApp send within the registrant iteration, preventing the WHAPI account from being flagged for bulk messaging and ensuring reliable delivery.",
+    body: "Two deliberate guards sit in the pipeline. A wait node after the Drive trigger gives AssemblyAI sufficient processing time before the transcript fetch is attempted, preventing failed pulls on large audio files. A configurable loop delay is inserted between each WhatsApp send within the registrant iteration, preventing the WHAPI account from being flagged for bulk messaging and ensuring reliable delivery.",
     color: "#14b8a6",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
@@ -715,7 +715,7 @@ const ARCH = [
   },
   {
     title: "WhatsApp Loop and Anti-Spam Architecture",
-    body: "The Google Sheets query applies a 7-day date filter to the registration data before the loop begins — ensuring only participants from the current week receive the summary and preventing accidental re-delivery to prior attendees. Each loop iteration dispatches a personalised message with the recipient's name and the specific session title, giving the delivery a personal rather than broadcast feel despite being fully automated.",
+    body: "The Google Sheets query applies a 7-day date filter to the registration data before the loop begins, ensuring only participants from the current week receive the summary and preventing accidental re-delivery to prior attendees. Each loop iteration dispatches a personalised message with the recipient's name and the specific session title, giving the delivery a personal rather than broadcast feel despite being fully automated.",
     color: "#a78bfa",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
@@ -778,10 +778,10 @@ function ArchitectureSection() {
 /* ── outcomes section ────────────────────────────────────────── */
 
 const OUTCOMES = [
-  "Deployed a fully automated multilingual transcription and summarisation pipeline across Arabic, English, and Urdu — eliminating all manual transcription and note-taking overhead for a recurring weekly event.",
+  "Deployed a fully automated multilingual transcription and summarisation pipeline across Arabic, English, and Urdu, eliminating all manual transcription and note-taking overhead for a recurring weekly event.",
   "Built a configurable human-in-the-loop review layer with three approval modes and an expert feedback loop, ensuring every output meets the organisation's scholarly and editorial standards before distribution.",
-  "Established a physical-to-digital attendance capture mechanism — each in-person registrant receives a personalised AI-generated summary via WhatsApp, creating a tangible incentive for sign-up and building a longitudinal attendance dataset.",
-  "Created the data infrastructure to track repeat participation and funnel transitions across Naseeha's programme offerings — giving the institute its first systematic view of community engagement depth.",
+  "Established a physical-to-digital attendance capture mechanism: each in-person registrant receives a personalised AI-generated summary via WhatsApp, creating a tangible incentive for sign-up and building a longitudinal attendance dataset.",
+  "Created the data infrastructure to track repeat participation and funnel transitions across Naseeha's programme offerings, giving the institute its first systematic view of community engagement depth.",
   "Automated branded PDF generation from a pre-designed organisational template, ensuring every distributed document is visually consistent with Naseeha's identity.",
 ];
 
@@ -862,7 +862,7 @@ function BackToPortfolio() {
         <svg className="w-4 h-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
         </svg>
-        Back to Portfolio — AI &amp; Automation
+        Back to Portfolio · AI &amp; Automation
       </Link>
     </section>
   );
@@ -873,7 +873,7 @@ function BackToPortfolio() {
 export default function NaseehaPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Lecture Intelligence Pipeline — Aneeq Allahi";
+    document.title = "Lecture Intelligence Pipeline | Aneeq Allahi";
   }, []);
 
   return (
