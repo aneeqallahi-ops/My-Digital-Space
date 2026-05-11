@@ -93,7 +93,7 @@ export const passionProjects: ProjectItem[] = [
     ],
     tools: ["Next.js (App Router, TypeScript)", "Supabase (Postgres)", "Railway (deployment)", "psxterminal API", "Claude API", "Tailwind CSS", "PSX Tax Engine Design", "FY26 CGT Modeling", "Retail Investor Tools", "Claude Code Development"],
     externalUrl: "https://psx-insight-production.up.railway.app/",
-    externalUrlLabel: "psx-insight-production.up.railway.app",
+    externalUrlLabel: "Click here to view the dashboard",
   },
   {
     id: "passion-2",
