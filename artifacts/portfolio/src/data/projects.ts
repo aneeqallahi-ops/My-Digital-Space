@@ -78,19 +78,22 @@ export const consultingProjects: ProjectItem[] = [
 ];
 
 export const passionProjects: ProjectItem[] = [
-  {
+    {
     id: "passion-1",
-    category: "Coming Soon",
+    category: "LIVE",
     title: "PSX Insight: Live Financial Intelligence for the Pakistani Stock Market",
-    description: "An AI-powered financial intelligence platform in development, delivering live and historical PSX analytics, unbiased stock performance analysis, macro and company-level market intelligence, and personalised wealth generation tools for Pakistani retail investors.",
-    extendedDescription: "PSX Insight is a financial intelligence platform in development, built on an n8n automation backend, an MCP integration layer, and a Replit frontend. It is designed for retail investors in Pakistan who lack access to consolidated, real-time financial data for the Pakistan Stock Exchange. The data infrastructure runs on live PSX API feeds and automated scraping pipelines monitoring stock performance in real time and historically. On top of this, the platform generates unbiased, data-driven stock performance analysis across both technical and fundamental dimensions, free from the noise of social media speculation or broker-driven narratives. A macro intelligence layer monitors policy changes, economic indicators, and sector-level developments, surfacing directional market impact assessments for each company in the user's watchlist. The platform also includes a wealth generation calculator, a brokerage onboarding guide, and a financial literacy module, designed to lower the barrier to entry for first-time investors in a market where capital participation sits below 1% of the population.",
+    description: "A live financial intelligence platform for Pakistan Stock Exchange retail investors, combining real-time PSX data, lot-level portfolio tracking, FY26 capital gains tax modelling, XIRR returns, and benchmark comparisons against KSE-100 and KMI-30.",
+    extendedDescription: "PSX Insight is a financial intelligence platform I built for retail investors in the Pakistan Stock Exchange, a market where capital participation sits below 1% of the population and where existing tools either charge for basic data or hide the tax mechanics that determine what you actually take home. The platform consumes live PSX feeds through the psxterminal API and layers a tax-aware portfolio engine on top, built specifically around Pakistan's FY26 capital gains tax regime. Every holding is tracked at the lot level, FIFO is applied automatically on disposals, and the app surfaces both realized and projected CGT live, including harvesting suggestions before fiscal year-end to offset gains with unrealized losses. Returns are reported as XIRR alongside KSE-100 and KMI-30 (Shariah-compliant) benchmarks, not the misleading \"% gain\" most trackers show. I built it end-to-end with no prior coding background, using Claude Code as a pair-programmer and treating the project as a forcing function to learn how modern web apps actually go together.",
     outcomes: [
-      "Live and historical PSX stock monitoring via API feeds and scraping pipelines.",
-      "AI-driven stock performance analysis across technical and fundamental dimensions.",
-      "Macro, policy, and company-level intelligence with directional market impact assessments.",
-      "Wealth generation calculator, brokerage onboarding guide, and financial literacy module.",
+      "Live PSX price and fundamentals data wired up via the psxterminal public API and WebSocket feed, covering all listed symbols",
+      "Lot-level portfolio tracking with automatic FIFO disposal logic, correctly handling Pakistan's five FY26 CGT acquisition-window regimes (pre-2013, Jul13 to Jun22, Jul22 to Jun24, Jul24 to Jun25, post-Jul25)",
+      "Real-time projected and realized CGT calculations per holding, with tax-loss harvesting suggestions surfaced in the second half of each fiscal year",
+      "XIRR-based returns reporting benchmarked against KSE-100 and KMI-30, so users see whether their picks are actually adding alpha",
+      "FBR-ready CSV export of all disposals in a fiscal year for handoff to a tax preparer",
     ],
-    tools: ["n8n Automation", "MCP Integration", "PSX API", "Web Scraping", "Financial Analysis", "AI-Powered Analytics", "Stock Market Intelligence", "Replit Frontend", "Wealth Modelling", "Retail Investor Tools"],
+    tools: ["Next.js (App Router, TypeScript)", "Supabase (Postgres)", "Railway (deployment)", "psxterminal API", "Claude API", "Tailwind CSS", "PSX Tax Engine Design", "FY26 CGT Modeling", "Retail Investor Tools", "Claude Code Development"],
+    externalUrl: "https://psx-insight-production.up.railway.app/",
+    externalUrlLabel: "psx-insight-production.up.railway.app",
   },
   {
     id: "passion-2",
