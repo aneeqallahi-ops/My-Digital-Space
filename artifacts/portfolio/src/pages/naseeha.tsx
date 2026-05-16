@@ -292,62 +292,74 @@ function PipelineDiagram() {
   const [activeStep, setActiveStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const endPauseRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [pauseSource, setPauseSource] = useState<"manual" | "node" | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resumeImmediatelyRef = useRef(false);
   const stepRef = useRef(0);
   const diagramRef = useRef<HTMLDivElement>(null);
 
   const stopTimer = useCallback(() => {
-    if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
-    if (endPauseRef.current) { clearTimeout(endPauseRef.current); endPauseRef.current = null; }
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
   }, []);
 
-  const startTimer = useCallback(() => {
+  const advanceStep = useCallback(() => {
+    const next = (stepRef.current + 1) % TOTAL_STEPS;
+    stepRef.current = next;
+    setActiveStep(next);
+    return next;
+  }, []);
+
+  const startTimer = useCallback((advanceImmediately = false) => {
     stopTimer();
-    timerRef.current = setInterval(() => {
-      const next = (stepRef.current + 1) % TOTAL_STEPS;
-      if (next === 0) {
-        stopTimer();
-        endPauseRef.current = setTimeout(() => {
-          endPauseRef.current = null;
-          stepRef.current = 0;
-          setActiveStep(0);
-          startTimer();
-        }, END_PAUSE_MS);
-      } else {
-        stepRef.current = next;
-        setActiveStep(next);
-      }
-    }, STEP_MS);
-  }, [stopTimer]);
+
+    const scheduleNextStep = (delay: number) => {
+      timerRef.current = setTimeout(() => {
+        const next = advanceStep();
+        scheduleNextStep(next === TOTAL_STEPS - 1 ? END_PAUSE_MS : STEP_MS);
+      }, delay);
+    };
+
+    if (advanceImmediately) {
+      const next = advanceStep();
+      scheduleNextStep(next === TOTAL_STEPS - 1 ? END_PAUSE_MS : STEP_MS);
+    } else {
+      scheduleNextStep(STEP_MS);
+    }
+  }, [advanceStep, stopTimer]);
 
   useEffect(() => {
     if (isPlaying) {
-      startTimer();
+      startTimer(resumeImmediatelyRef.current);
+      resumeImmediatelyRef.current = false;
     } else {
       stopTimer();
     }
+
     return stopTimer;
   }, [isPlaying, startTimer, stopTimer]);
 
   useEffect(() => {
-    if (isPlaying) return;
+    if (isPlaying || pauseSource !== "node") return;
+
     function onDocClick(e: MouseEvent) {
       if (diagramRef.current && !diagramRef.current.contains(e.target as Node)) {
-        setSelectedId(null);
-        setIsPlaying(true);
+        handleResume();
       }
     }
+
     document.addEventListener("mousedown", onDocClick);
     return () => document.removeEventListener("mousedown", onDocClick);
-  }, [isPlaying]);
+  }, [isPlaying, pauseSource]);
 
   function handleNodeClick(id: string, step: number) {
     if (selectedId === id) {
-      setSelectedId(null);
-      setIsPlaying(true);
+      handleResume();
     } else {
       setSelectedId(id);
+      setPauseSource("node");
       setIsPlaying(false);
       stepRef.current = step;
       setActiveStep(step);
@@ -356,7 +368,14 @@ function PipelineDiagram() {
 
   function handleResume() {
     setSelectedId(null);
+    setPauseSource(null);
+    resumeImmediatelyRef.current = true;
     setIsPlaying(true);
+  }
+
+  function handleManualPause() {
+    setPauseSource("manual");
+    setIsPlaying(false);
   }
 
   const mainNodes = NODES.filter(n => !n.side);
@@ -372,7 +391,6 @@ function PipelineDiagram() {
   return (
     <section className="py-16 sm:py-20 px-4 sm:px-6" style={{ background: "#080f1a" }}>
       <div className="max-w-2xl mx-auto">
-        {/* header */}
         <div className="text-center mb-10 sm:mb-14">
           <p className="text-xs uppercase tracking-widest font-semibold text-primary mb-3">Pipeline Visualisation</p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-4">How the Pipeline Works</h2>
@@ -381,7 +399,6 @@ function PipelineDiagram() {
           </p>
         </div>
 
-        {/* legend */}
         <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-12">
           {(Object.entries(COLORS) as [NodeType, typeof COLORS[NodeType]][]).map(([type, c]) => (
             <div key={type} className="flex items-center gap-1.5">
@@ -391,10 +408,13 @@ function PipelineDiagram() {
           ))}
         </div>
 
-        {/* controls */}
         <div className="flex justify-center mb-8 sm:mb-10">
           <button
-            onClick={() => { if (isPlaying) { setIsPlaying(false); } else { handleResume(); } }}
+            type="button"
+            aria-label={isPlaying ? "Pause pipeline animation" : "Resume pipeline animation"}
+            aria-pressed={!isPlaying}
+            data-testid="pipeline-animation-toggle"
+            onClick={() => { if (isPlaying) { handleManualPause(); } else { handleResume(); } }}
             className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold uppercase tracking-widest border border-white/15 text-white/60 hover:text-white hover:border-white/30 transition-colors"
           >
             {isPlaying ? (
@@ -405,9 +425,7 @@ function PipelineDiagram() {
           </button>
         </div>
 
-        {/* diagram */}
         <div ref={diagramRef} className="flex flex-col items-center">
-          {/* nodes before branch */}
           {beforeBranch.map((node, i) => (
             <div key={node.id} className="w-full flex flex-col items-center">
               {i > 0 && (
@@ -425,12 +443,10 @@ function PipelineDiagram() {
             </div>
           ))}
 
-          {/* branch split */}
           <div className="w-full">
             <SplitConnector active={activeStep === 4} />
           </div>
 
-          {/* branch nodes — stacked on mobile, side-by-side on sm+ */}
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {[leftBranch, rightBranch].map((node) => (
               <NodeBox
@@ -443,12 +459,10 @@ function PipelineDiagram() {
             ))}
           </div>
 
-          {/* merge connectors */}
           <div className="w-full">
             <MergeConnector active={activeStep === 5} />
           </div>
 
-          {/* nodes after branch */}
           {afterBranch.map((node) => (
             <div key={node.id} className="w-full flex flex-col items-center">
               <NodeBox
@@ -467,7 +481,6 @@ function PipelineDiagram() {
           ))}
         </div>
 
-        {/* resume hint when paused */}
         <AnimatePresence>
           {!isPlaying && (
             <motion.div
@@ -477,6 +490,8 @@ function PipelineDiagram() {
               className="text-center mt-8 sm:mt-10"
             >
               <button
+                type="button"
+                data-testid="pipeline-resume-hint"
                 onClick={handleResume}
                 className="text-xs text-white/40 hover:text-white/70 transition-colors underline underline-offset-2"
               >
@@ -489,6 +504,7 @@ function PipelineDiagram() {
     </section>
   );
 }
+
 
 /* ── nav ─────────────────────────────────────────────────────── */
 
